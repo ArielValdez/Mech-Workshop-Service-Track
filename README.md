@@ -1,5 +1,5 @@
 # Mech-Workshop-Service-Track
-This is an grade university project that will be developed using `React` for the front-end, and with `C#` for the back-end
+This is a grade university project that will be developed using `React` for the front-end, and with `C#` for the back-end
 
 ## Requirements
 
