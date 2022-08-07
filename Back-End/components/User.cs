@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using enums.Roles;
 
 // Checking the security of the user is important
 public class User

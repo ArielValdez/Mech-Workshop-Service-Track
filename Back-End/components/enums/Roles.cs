@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 
-public enum Role{
-    Admin,
-    Personal,
-    User,
+namespace enums
+{
+        public enum Role{
+        Admin,
+        Personal,
+        User,
+    }
 }
