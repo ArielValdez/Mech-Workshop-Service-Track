@@ -21,3 +21,6 @@ completionBar.defaultProps {
 export default completionBar;
 
 // Video: https://www.youtube.com/watch?v=3sH_Kq9e5hQ
+// Another Video: https://www.youtube.com/watch?v=mT6avAlx-Zg&t=76s
+
+// Using UstStates: https://www.youtube.com/watch?v=AmeoJ7Ngzd4
