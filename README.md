@@ -7,5 +7,7 @@ The purpose of this program is to give users a layer of security when said user 
 ## Build
 The project is been written in `React` for the front-end, built with `expo 5.5.1`, and for the API and the back-end, it is written in C# `.net core 3.1`.
 
+The relational data base is built in `SQL Server`.
+
 
 ![AngryMadeline2](https://user-images.githubusercontent.com/65257215/183744379-e1ee0991-f5bd-4e5f-ad90-479ab0ef3929.jpg)
