@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import completionBar from './components/completionBar';
 import history from './components/history';
-import login from './components/login';
+import login from './components/login/login.js';
 import registerUser from './components/registerUser';
 
 
