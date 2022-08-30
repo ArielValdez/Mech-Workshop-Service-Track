@@ -1,16 +1,15 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import completionBar from './components/completionBar';
-import history from './components/history';
-import login from './components/login/login.js';
-import registerUser from './components/registerUser';
+import { StyleSheet, Text, View} from 'react-native';
+import History from './components/history';
+import RegisterUser from './components/registerUser';
+import SignInScreen from './screens/SignInScreen';
 
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <SignInScreen />
       <StatusBar style="auto" />
     </View>
   );
@@ -19,8 +18,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#F9FBFC',
   },
 });
