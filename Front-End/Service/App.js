@@ -1,10 +1,8 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import History from './components/history';
-import RegisterUser from './components/registerUser';
-import SignInScreen from './screens/SignInScreen';
-import SignUpScreen from './screens/SignUpScreen';
+import SignInScreen from './components/screens/SignInScreen';
+import SignUpScreen from './components/screens/SignUpScreen';
 
 
 export default function App() {
