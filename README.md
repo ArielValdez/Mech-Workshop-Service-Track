@@ -9,5 +9,11 @@ The project is been written in `React` for the front-end, built with `expo 5.5.1
 
 The relational data base is built in `SQL Server`.
 
+### Downloads
+* `Expo 5.5.1`
+  * `React Native JS`
+* `.net core 3.1` API
+   * `C#`
+* `SQL Server 2019 RTM 15.0.2000.5`
 
 ![AngryMadeline2](https://user-images.githubusercontent.com/65257215/183744379-e1ee0991-f5bd-4e5f-ad90-479ab0ef3929.jpg)
