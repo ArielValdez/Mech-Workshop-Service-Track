@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 import { View, Text, StyleSheet, useWindowDimensions, ScrollView } from 'react-native'
 import CustomButton from '../customs/CustomButton'
 import CustomInput from '../customs/CustomInput'
@@ -21,7 +21,7 @@ const ConfirmEmailScreen = () => {
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.container}>
-                <Text style={styles.title}>Confirmar correo</Text>
+                <Text style={styles.title}>Confirmación de correo</Text>
 
                 <CustomInput placeholder='Código de confirmación' value={code} setValue={setCode} keyboardType='numeric'/>
 

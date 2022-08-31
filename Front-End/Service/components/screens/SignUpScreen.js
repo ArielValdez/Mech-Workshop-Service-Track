@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, useWindowDimensions, ScrollView } from 'react-native'
+import { useNavigation } from "@react-navigation/native";
 import CustomButton from '../customs/CustomButton'
 import CustomInput from '../customs/CustomInput'
 import Logo from '../../assets/LogoOficial.png'
@@ -10,13 +11,14 @@ const SignUpScreen = () => {
     const { password, setPassword } = useState('')
     const { confirmPassword, setConfirmPassword} = useState('') 
     const { height, width } = useWindowDimensions()
+    const navigation = useNavigation()
 
     const onRegisterPressed = () => {
         console.warn('Confirm pressed')
     }
 
     const onReturnPressed =() => {
-        console.warn('Return pressed')
+        navigation.navigate('SignIn')
     }
 
     const onTermsOfUsePressed = () => {

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, useWindowDimensions, ScrollView } from 'react-native'
+import { useNavigation } from "@react-navigation/native";
 import CustomInput from "../customs/CustomInput";
 import CustomButton from "../customs/CustomButton";
 import Logo from '../../assets/LogoOficial.png'
@@ -9,12 +10,14 @@ const SignInScreen = () => {
     const { password, setPassword } = useState('') 
     const { height, width } = useWindowDimensions()
 
+    const navigation = useNavigation()
+
     const onSignInPressed = () => {
         console.warn('Sign in pressed')
     }
 
     const onForgotPasswordPressed = () => {
-        console.warn('Forgot password pressed')
+        navigation.navigate('ForgotPassword')
     }
 
     const onSignInFacebook = () => {
@@ -30,7 +33,7 @@ const SignInScreen = () => {
     }
 
     const onSignUpPressed = () => {
-        console.warn('Sign up')
+        navigation.navigate('SignUp')
     }
 
     return (

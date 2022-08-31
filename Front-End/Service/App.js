@@ -4,15 +4,27 @@ import { SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import SignInScreen from './components/screens/SignInScreen';
 import SignUpScreen from './components/screens/SignUpScreen';
 import ConfirmEmailScreen from './components/screens/ConfirmEmailScreen';
+import ForgotPasswordScreen from './components/screens/ForgotPasswordScreen';
+import NewPasswordScreen from './components/screens/NewPasswordScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+const Stack = createNativeStackNavigator()
 
 export default function App() {
-  return (
-    <SafeAreaView style={styles.container}>
-      <ConfirmEmailScreen />
-      <StatusBar style="auto" />
-    </SafeAreaView>
-  );
+	return (
+		<SafeAreaView style={styles.container}>
+			<NavigationContainer>
+        <Stack.Navigator screenOptions={{headerShown: false}}>
+          <Stack.Screen name='SignIn' component={SignInScreen}/>
+          <Stack.Screen name='SignUp' component={SignUpScreen}/>
+          <Stack.Screen name='ForgotPassword' component={ForgotPasswordScreen}/>
+          <Stack.Screen name='NewPassword' component={NewPasswordScreen}/>
+        </Stack.Navigator>
+      </NavigationContainer>
+			<StatusBar style="auto" />
+		</SafeAreaView>
+	);
 }
 
 const styles = StyleSheet.create({
