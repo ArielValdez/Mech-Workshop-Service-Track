@@ -3,18 +3,20 @@ import { View, Text, StyleSheet, Image, useWindowDimensions, ScrollView } from '
 import { useNavigation } from "@react-navigation/native";
 import CustomButton from '../customs/CustomButton'
 import CustomInput from '../customs/CustomInput'
+import AlertModal from "../customs/AlertModal";
 import Logo from '../../assets/LogoOficial.png'
 
 const SignUpScreen = () => {
-    const { username, setUsername} = useState('')
-    const { email, setEmail } = useState('')
-    const { password, setPassword } = useState('')
-    const { confirmPassword, setConfirmPassword} = useState('') 
+    const [ username, setUsername ] = useState('')
+    const [ email, setEmail ] = useState('')
+    const [ password, setPassword ] = useState('')
+    const [ confirmPassword, setConfirmPassword ] = useState('')
+    const [ modalVisible, setModalVisible ] = useState(false) 
     const { height, width } = useWindowDimensions()
     const navigation = useNavigation()
 
     const onRegisterPressed = () => {
-        console.warn('Confirm pressed')
+        setModalVisible(true)
     }
 
     const onReturnPressed =() => {
@@ -32,6 +34,13 @@ const SignUpScreen = () => {
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.container}>
+                <AlertModal 
+                    title='Información' 
+                    text='Su registro ha sido completado de manera satisfactoria'
+                    onClosePress={() => setModalVisible(false)}
+                    visible={modalVisible}
+                />
+
                 <Text style={styles.title}>Creación de cuenta</Text>
                 <Image 
                     source={Logo} 

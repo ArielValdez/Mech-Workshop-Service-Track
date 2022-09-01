@@ -5,7 +5,7 @@ import CustomButton from '../customs/CustomButton'
 import CustomInput from '../customs/CustomInput'
 
 const ForgotPasswordScreen = () => {
-    const { username, setUsername } = useState('')
+    const [ username, setUsername ] = useState('')
 
     const navigation = useNavigation()
 

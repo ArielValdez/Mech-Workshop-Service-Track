@@ -6,8 +6,8 @@ import CustomButton from "../customs/CustomButton";
 import Logo from '../../assets/LogoOficial.png'
 
 const SignInScreen = () => {
-    const { email, setEmail } = useState('')
-    const { password, setPassword } = useState('') 
+    const [ email, setEmail ] = useState('')
+    const [ password, setPassword ] = useState('') 
     const { height, width } = useWindowDimensions()
 
     const navigation = useNavigation()
@@ -44,7 +44,7 @@ const SignInScreen = () => {
                     style={[styles.logo, {height: height * 0.3, width: width * 0.75}]} 
                     resizeMode='contain'
                 />
-
+                
                 <CustomInput placeholder='Correo Electrónico' value={email} setValue={setEmail} keyboardType='email-address'/>
                 <CustomInput placeholder='Contraseña' value={password} setValue={setPassword} secureTextEntry/>
 

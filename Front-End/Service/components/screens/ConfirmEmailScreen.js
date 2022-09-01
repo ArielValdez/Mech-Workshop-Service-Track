@@ -4,7 +4,7 @@ import CustomButton from '../customs/CustomButton'
 import CustomInput from '../customs/CustomInput'
 
 const ConfirmEmailScreen = () => {
-    const {code, setCode} = useState('')
+    const [ code, setCode ] = useState('')
 
     const onConfirmPressed = () => {
         console.warn('Confirm pressed')

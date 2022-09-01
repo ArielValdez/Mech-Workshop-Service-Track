@@ -5,8 +5,8 @@ import CustomButton from '../customs/CustomButton'
 import CustomInput from '../customs/CustomInput'
 
 const NewPasswordScreen = () => {
-    const { newPassword, setNewPassword } = useState('')
-    const { confirmNewPassword, setConfirmNewPassword } = useState('')
+    const [ newPassword, setNewPassword ] = useState('')
+    const [ confirmNewPassword, setConfirmNewPassword ] = useState('')
 
     const navigation = useNavigation()
 
