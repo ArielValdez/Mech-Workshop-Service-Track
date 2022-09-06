@@ -1,4 +1,4 @@
-# Mech Workshop Service Track
+# Mech Workshop Service Track - MWST
 Mech Workshop Service Track is an app for tracking vehicles put in maintenance in a workshop.
 
 ## General Information
