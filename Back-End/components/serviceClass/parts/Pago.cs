@@ -20,16 +20,18 @@ public class Pago {
         {
             if ((int)Forma_Pago.Debito == 0)
             {
-                return "Debito";
+                return "Débito";
             }
             else if((int)Forma_Pago.Credito == 1)
             {
-                return "Credito";
+                return "Crédito";
             }
+            else return "Por favor escoja un método de pago válido.";
         }
-        catch (System.Exception)
+        catch (Exception e)
         {
-            return "An error has occurred";
+            // Rollback is required in case of an exception
+            return $"{e}";
         }   
     }
 }
