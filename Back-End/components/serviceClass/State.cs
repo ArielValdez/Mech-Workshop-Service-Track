@@ -20,19 +20,19 @@ public class State {
     }
 
     //This method is to see the description of the state, given the ID
-    public string ViewDescription(int id) {
+    public string ViewDescription(State Estado) {
         try
         {
-            if (id == null) {
-            return "Nada que ver por el momento";
+            if (Estado.ID_Estado == null) {
+            return "Nada que ver por el momento.";
+            }
+            else { // The ID exists
+                return this.Descripcion;
+            }
         }
-        else { // The ID exists
-             return this.Descripcion;
-        }
-        }
-        catch (System.Exception)
+        catch (Exception e)
         {
-            return "Algo está mal...";
+            return $"{e}";
         }
     }
 }
