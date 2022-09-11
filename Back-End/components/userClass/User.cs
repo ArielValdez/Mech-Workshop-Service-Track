@@ -13,11 +13,6 @@ public class User
     // Role of the user, to check the permissions of said user
     public Role User_Role { get; set; }
 
-    // Foreign key for Profile class
-    public Profile User_Profile;
-
-    public bool Active;
-
     public User()
     {
 

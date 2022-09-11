@@ -4,10 +4,11 @@ using System.Collections;
 public class Profile
 {
     //Key
-    public int ID_Perfil { get; set; }
+    public int ID_User { get; set; }
 
-    //ID del ususario
-    public User user;
+    //Username and password of the user. The user can use either their username or email to log in
+    public string Username { get; set; }
+    public string Password { get; set; }
 
     //Should be limited to thirteen digits in the following manner: 0-1234567-891
     public string Cedula { get; set; }
@@ -15,8 +16,7 @@ public class Profile
     public string PhoneNumber { get; set; }
     public string Email { get; set; }
     
-    //public DateTime Fecha_Creacion { set => DateTime.now }
-    
+    public DateTime Fecha_Creacion { set => DateTime.now }
     private bool Active;
 
     public Profile()
