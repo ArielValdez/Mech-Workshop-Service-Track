@@ -25,6 +25,7 @@ public class Service
     }
 
     // A Notification to email from: https://stackoverflow.com/questions/40229511/email-notification-system-in-c-sharp
+    // Another one here: https://www.c-sharpcorner.com/article/sending-email-using-c-sharp/
     /*
     public class EmailExchange : IDisposable
     {
