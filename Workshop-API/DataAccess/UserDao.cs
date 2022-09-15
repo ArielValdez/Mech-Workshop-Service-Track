@@ -63,8 +63,8 @@ namespace DataAccess
 
                         //Selects the users history
                         command.CommandText = "select Historial.Fecha, Usuario, Pago" +
-                                              "from ((History left join Usuario on Historial.ID_Usuario = Usuario.ID_Usuario)" +
-                                              "right join Pago on History.ID_Pago = Pago.ID_Pago)";
+                                              "from ((History inner join Usuario on Historial.ID_Usuario = Usuario.ID_Usuario)" +
+                                              "inner join Pago on History.ID_Pago = Pago.ID_Pago)";
                         command.CommandType = CommandType.Text;
 
                         SqlDataReader reader = command.ExecuteReader();
