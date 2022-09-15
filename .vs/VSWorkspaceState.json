@@ -2,8 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\Workshop-API",
+    "\\Workshop-API\\DataAccess",
+    "\\Workshop-API\\Domain",
     "\\Workshop-API\\Mech Workshop Service Track"
   ],
-  "SelectedNode": "\\Workshop-API\\Mech Workshop Service Track.sln",
+  "SelectedNode": "\\Workshop-API\\DataAccess\\UserDao.cs",
   "PreviewInSolutionExplorer": false
 }

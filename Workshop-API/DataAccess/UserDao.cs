@@ -9,7 +9,9 @@ namespace DataAccess
     public class UserDao : ConnectionToSql
     {
         /* check and validate the return value of all the methods */
+        /* create stored procedures later */
 
+        #region Accessing
         // This method is called when the user enters their data for authentication
         public bool Login(string username, string password)
         {
@@ -20,7 +22,6 @@ namespace DataAccess
                     connection.Open();
                     using (var command = new SqlCommand())
                     {
-                        //Mas tarde agregar stored procedure
                         command.Connection = connection;
 
                         //Selects the users credential
@@ -48,6 +49,44 @@ namespace DataAccess
             }
         }
 
+        public bool UserHistory(int idUser, int idPay)
+        {
+            try
+            {
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+
+                        //Selects the users history
+                        command.CommandText = "select Historial.Fecha";
+                        command.Parameters.AddWithValue();
+                        command.Parameters.AddWithValue();
+                        command.CommandType = CommandType.Text;
+
+                        SqlDataReader reader = command.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                // Rollback should be added
+                throw e;
+            }
+        }
+        #endregion
+
+        #region Registering
         // This method is used when the user registers into the database
         // Rol should be stored as an enum
         public bool RegisterUser(string username, string password, string email, string nombre,
@@ -118,7 +157,6 @@ namespace DataAccess
                     connection.Open();
                     using (var command = new SqlCommand())
                     {
-                        //Replace this part with stored procedures
                         command.Connection = connection;
 
                         //Inserting values into the database, table PerfilUsuario
@@ -165,7 +203,45 @@ namespace DataAccess
                 throw e;
             }
         }
+        #endregion
+        public void Maintenance(string TipoMantenimiento)
+        {
+            try
+            {
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand())
+                    {
+                        //Replace this part with stored procedures
+                        command.Connection = connection;
 
+                        //Inserting values into the database, table PerfilUsuario
+                        command.CommandText = "insert into Mantenimiento(Tipo_Mantenimiento) values(@tipoMantenimiento)";
+
+                        command.Parameters.Add("@tipoMantenimiento", SqlDbType.VarChar, 30).Value = TipoMantenimiento;
+
+                        command.CommandType = CommandType.Text;
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                // In case of sql malfunctioning, add a rollback here
+                throw e;
+            }
+        }
+
+        public void Service()
+        {
+
+        }
+
+        public void Condition()
+        {
+
+        }
 
         #region Marca&Modelo
         // inserts values into their respective tables
@@ -198,7 +274,7 @@ namespace DataAccess
             }
         }
 
-        private void Modelo(string nombreModelo, int fkMarca)
+        private void Modelo(string nombreModelo, int idMarca)
         {
             try
             {
@@ -214,7 +290,73 @@ namespace DataAccess
                         command.CommandText = "insert into Marca(Nombre_Modelo, ID_Marca) values(@nombreModelo, @fkMarca)";
 
                         command.Parameters.Add("@nombreModelo", SqlDbType.Char, 18).Value = nombreModelo;
-                        command.Parameters.Add("@fkMarca", SqlDbType.Int).Value = fkMarca; // FK of Marca
+                        command.Parameters.Add("@fkMarca", SqlDbType.Int).Value = idMarca; // FK of Marca
+
+                        command.CommandType = CommandType.Text;
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                // In case of sql malfunctioning, add a rollback here
+                throw e;
+            }
+        }
+        #endregion
+        #region Provincia&Municipio
+
+        // Stores provincia of the workshop
+        public void Provincia(string nameProvincia, string description)
+        {
+            try
+            {
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand())
+                    {
+                        //Replace this part with stored procedures
+                        command.Connection = connection;
+
+                        //Inserting values into the database, table PerfilUsuario
+                        command.CommandText = "insert into Provincia(Provincia, Descripcion) values(@provincia, @descripcion)";
+
+                        command.Parameters.Add("@provincia", SqlDbType.VarChar, 30).Value = nameProvincia;
+                        command.Parameters.Add("@descripcion", SqlDbType.VarChar, 255).Value = description;
+
+                        command.CommandType = CommandType.Text;
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                // In case of sql malfunctioning, add a rollback here
+                throw e;
+            }
+        }
+
+        // Stores municipio of the workshop
+        public void Municipio(string nameMunicipio, string description, int idProvincia)
+        {
+            try
+            {
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand())
+                    {
+                        //Replace this part with stored procedures
+                        command.Connection = connection;
+
+                        //Inserting values into the database, table PerfilUsuario
+                        command.CommandText = "insert into Provincia(Municipio, Descripcion, ID_Provincia)" + 
+                                              "values(@municipio, @descripcion, @idProvincia)";
+
+                        command.Parameters.Add("@municipio", SqlDbType.VarChar, 70).Value = nameMunicipio;
+                        command.Parameters.Add("@descripcion", SqlDbType.VarChar, 255).Value = description;
+                        command.Parameters.Add("@idProvincia", SqlDbType.Int).Value = idProvincia;
 
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();

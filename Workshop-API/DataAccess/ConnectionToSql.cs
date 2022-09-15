@@ -8,7 +8,8 @@ namespace DataAccess
         private readonly string connectionString;
         public ConnectionToSql()
         {
-            connectionString = "Server= ;Database= ; integrated security= true"; // Add the connection string
+            // Connection String to an Azure Database
+            connectionString = "Server=proyectofinal-server.database.windows.net;Database=Db administrador;integrated security=true";
         }
 
         protected SqlConnection GetConnection()
