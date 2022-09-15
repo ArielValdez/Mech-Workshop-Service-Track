@@ -49,7 +49,8 @@ namespace DataAccess
             }
         }
 
-        public bool UserHistory(int idUser, int idPay)
+        // This should make show a user history
+        public bool UserHistory()
         {
             try
             {
@@ -61,9 +62,9 @@ namespace DataAccess
                         command.Connection = connection;
 
                         //Selects the users history
-                        command.CommandText = "select Historial.Fecha";
-                        command.Parameters.AddWithValue();
-                        command.Parameters.AddWithValue();
+                        command.CommandText = "select Historial.Fecha, Usuario, Pago" +
+                                              "from ((History left join Usuario on Historial.ID_Usuario = Usuario.ID_Usuario)" +
+                                              "right join Pago on History.ID_Pago = Pago.ID_Pago)";
                         command.CommandType = CommandType.Text;
 
                         SqlDataReader reader = command.ExecuteReader();
