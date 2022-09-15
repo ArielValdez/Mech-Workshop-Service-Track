@@ -85,6 +85,120 @@ namespace DataAccess
                 throw e;
             }
         }
+
+        public bool CheckMaintenance(string tipoMantenimiento)
+        {
+            try
+            {
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+
+                        //Selects the users history
+                        command.CommandText = "select Tipo_Mantenimiento from Mantenimiento where Tipo_Mantenimiento = @tipoMantenimiento";
+                        command.Parameters.AddWithValue("@tipoMantenimiento", tipoMantenimiento);
+                        command.CommandType = CommandType.Text;
+
+                        SqlDataReader reader = command.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                // Rollback should be added
+                throw e;
+            }
+        }
+
+        public bool Service(string tipoServicio, int idMantenimiento)
+        {
+            try
+            {
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+
+                        //Selects the users history
+                        command.CommandText = "select Tipo_Servicio, Tipo_mantenimiento, Fecha_Promesa" +
+                                              "from Servicio inner join Mantenimiento on Mantenimiento.ID_Mantenimiento = Service.ID_Mantenimiento" +
+                                              "where ID_Mantenimiento = @idMantenimiento and Tipo_Servicio = @tipoServicio";
+                        
+                        command.Parameters.AddWithValue("@idMantenimiento", idMantenimiento);
+                        command.Parameters.AddWithValue("@tipoServicio", tipoServicio);
+                        command.CommandType = CommandType.Text;
+                        
+                        SqlDataReader reader = command.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                // Rollback should be added
+                throw e;
+            }
+        }
+
+        public bool Condition(string conditionName, int idService)
+        {
+            try
+            {
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+
+                        //Selects the users history
+                        command.CommandText = "select Nombre_Estado, Descripcion_Estado, Imagen_Estado, Tipo_Servicio" +
+                                              "from Estado inner join Servicio on Servicio.ID_Servicio = Estado.ID_Servicio" +
+                                              "where Nombre_Estado = @conditionName and ID_Servicio = @idServicio";
+                        
+                        command.Parameters.AddWithValue("@conditionName", conditionName);
+                        command.Parameters.AddWithValue("@idService", idService);
+
+                        command.CommandType = CommandType.Text;
+
+                        SqlDataReader reader = command.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                // Rollback should be added
+                throw e;
+            }
+        }
         #endregion
 
         #region Registering
@@ -204,8 +318,8 @@ namespace DataAccess
                 throw e;
             }
         }
-        #endregion
-        public void Maintenance(string TipoMantenimiento)
+
+        public void RegisterMaintenance(string TipoMantenimiento)
         {
             try
             {
@@ -233,16 +347,7 @@ namespace DataAccess
                 throw e;
             }
         }
-
-        public void Service()
-        {
-
-        }
-
-        public void Condition()
-        {
-
-        }
+        #endregion
 
         #region Marca&Modelo
         // inserts values into their respective tables
