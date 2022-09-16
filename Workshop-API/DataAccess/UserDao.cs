@@ -50,6 +50,7 @@ namespace DataAccess
         }
 
         // This should make show a user history
+        // Check later
         public bool UserHistory()
         {
             try
@@ -65,6 +66,47 @@ namespace DataAccess
                         command.CommandText = "select Historial.Fecha, Usuario, Pago" +
                                               "from ((History inner join Usuario on Historial.ID_Usuario = Usuario.ID_Usuario)" +
                                               "inner join Pago on History.ID_Pago = Pago.ID_Pago)";
+                        command.CommandType = CommandType.Text;
+
+                        SqlDataReader reader = command.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                // Rollback should be added
+                throw e;
+            }
+        }
+
+        public bool CheckVehicle(string matricula)
+        {
+            try
+            {
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+
+                        //Selects the users vehicle
+                        command.CommandText = "select Matricula, Usuario.Nombre, Usuario.Apellido, Nombre_Marca, Nombre_Modelo, VIN, Color" +
+                                              "from Vehiculo v inner join Usuario u on u.ID_Usuario = v.ID_Usuario" +
+                                              "inner join Marca m on m.ID_Marca = v.ID_Marca" +
+                                              "inner join Modelo mo on mo.ID_Modelo = v.ID_Modelo" +
+                                              "where Matricula = @matricula";
+
+                        command.Parameters.AddWithValue("@matricula", matricula);
+
                         command.CommandType = CommandType.Text;
 
                         SqlDataReader reader = command.ExecuteReader();
@@ -320,7 +362,7 @@ namespace DataAccess
                         { /* Write the update part here */ }
 
                         SqlDataReader reader = command.ExecuteReader();
-                        if (reader.HasRows)
+                        if (!reader.HasRows)
                         {
                             return true;
                         }
@@ -377,7 +419,9 @@ namespace DataAccess
                         { /* Write the update part here */ }
 
                         SqlDataReader reader = command.ExecuteReader();
-                        if (reader.HasRows)
+
+                        //The part does not exist in the database, and registers it successfully
+                        if (!reader.HasRows)
                         {
                             return true;
                         }
@@ -395,7 +439,7 @@ namespace DataAccess
             }
         }
 
-        public void RegisterMaintenance(string TipoMantenimiento)
+        public bool RegisterMaintenance(string TipoMantenimiento)
         {
             try
             {
@@ -414,6 +458,16 @@ namespace DataAccess
 
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
+
+                        //The part does not exist in the database, and registers it successfully
+                        if (!reader.HasRows)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
                     }
                 }
             }
@@ -427,7 +481,7 @@ namespace DataAccess
 
         #region Marca&Modelo
         // inserts values into their respective tables
-        private void Marca(string nombreMarca)
+        private bool RegisterMarca(string nombreMarca)
         {
             try
             {
@@ -446,6 +500,17 @@ namespace DataAccess
 
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
+
+
+                        //The part does not exist in the database, and registers it successfully
+                        if (!reader.HasRows)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
                     }
                 }
             }
@@ -456,7 +521,7 @@ namespace DataAccess
             }
         }
 
-        private void Modelo(string nombreModelo, int idMarca)
+        private bool RegisterModelo(string nombreModelo, int idMarca)
         {
             try
             {
@@ -476,6 +541,16 @@ namespace DataAccess
 
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
+
+                        //The part does not exist in the database, and registers it successfully
+                        if (!reader.HasRows)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
                     }
                 }
             }
@@ -487,9 +562,8 @@ namespace DataAccess
         }
         #endregion
         #region Provincia&Municipio
-
         // Stores provincia of the workshop
-        public void Provincia(string nameProvincia, string description)
+        public bool Provincia(string nameProvincia, string description)
         {
             try
             {
@@ -509,6 +583,16 @@ namespace DataAccess
 
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
+
+                        //The part does not exist in the database, and registers it successfully
+                        if (!reader.HasRows)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
                     }
                 }
             }
@@ -520,7 +604,7 @@ namespace DataAccess
         }
 
         // Stores municipio of the workshop
-        public void Municipio(string nameMunicipio, string description, int idProvincia)
+        public bool Municipio(string nameMunicipio, string description, int idProvincia)
         {
             try
             {
@@ -542,6 +626,16 @@ namespace DataAccess
 
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
+
+                        //The part does not exist in the database, and registers it successfully
+                        if (!reader.HasRows)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
                     }
                 }
             }
