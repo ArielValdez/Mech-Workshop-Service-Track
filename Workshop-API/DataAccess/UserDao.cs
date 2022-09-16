@@ -199,6 +199,44 @@ namespace DataAccess
                 throw e;
             }
         }
+
+        public bool CheckPayment(int idServicio) {
+            try
+            {
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+
+                        //Selects the users history
+                        command.CommandText = "select Forma_Pago, Pago_Servicio, Tipo_Servicio, FechaPromesa" +
+                                              "from Pago inner join Servicio on Servicio.ID_Servicio = Pago.ID_Servicio" +
+                                              "where ID_Servicio = @idServicio";
+                        
+                        command.Parameters.AddWithValue("@idService", idService);
+
+                        command.CommandType = CommandType.Text;
+
+                        SqlDataReader reader = command.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                // Rollback should be added
+                throw e;
+            }
+        }
         #endregion
 
         #region Registering

@@ -36,6 +36,11 @@ namespace Domain
             bool checking = userDao.Service(conditionName, idService);
             return checking;
         }
+
+        public bool CheckPayment(int idService) {
+            bool checking = userDao.CheckPayment(idService);
+            return checking;
+        }
         #endregion
 
         #region Register
