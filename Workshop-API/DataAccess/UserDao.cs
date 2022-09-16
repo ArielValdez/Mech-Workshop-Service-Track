@@ -280,6 +280,10 @@ namespace DataAccess
             }
         }
 
+        public bool CheckDetail() {
+            //
+        }
+
         public bool CheckParts(int idPayment) { //check later
             try
             {
@@ -291,11 +295,50 @@ namespace DataAccess
                         command.Connection = connection;
 
                         //Selects the users history
-                        command.CommandText = "select Nombre_pieza, Descripcion_Pieza, Precio_Pieza, Cantidad, ID_Pago" +
+                        command.CommandText = "select Nombre_Pieza, Descripcion_Pieza, Precio_Pieza, Cantidad, ID_Pago" +
                                               "from Pieza inner join Pago on Pago.ID_Pago = Pieza.ID_Pago" +
                                               "where ID_Pago = @idPayment";
                         
                         command.Parameters.AddWithValue("@idPayment", idPayment);
+
+                        command.CommandType = CommandType.Text;
+
+                        SqlDataReader reader = command.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                // Rollback should be added
+                throw e;
+            }
+        }
+
+        public bool CheckWorkshop (int idUsuario) {
+            try
+            {
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+
+                        //Selects the users history
+                        command.CommandText = "select Nombre_Taller, Provincia, Encargado" +
+                                              "from Taller_Mecanico t inner join Provincia p on p.ID_Provincia = t.ID_Provincia" +
+                                              "inner join Usuario u on u.ID_Usuario = t.ID_Usuario" +
+                                              "where ID_Usuario = @idUsuario";
+                        
+                        command.Parameters.AddWithValue("@idUsuario", idUsuario);
 
                         command.CommandType = CommandType.Text;
 
@@ -646,5 +689,19 @@ namespace DataAccess
             }
         }
         #endregion
+
+        /* 
+        if(steal()) {
+            IP = this.Location(tuCasa);
+            Exponer(your(IP));
+            Borrar(Mech Workshop Service Track.Code);
+            Borrar(MWST);
+            Explotar(this.PC => tuPC);
+        }
+        else {
+            do(Nothing);
+            return;
+        }
+        */
     }
 }
