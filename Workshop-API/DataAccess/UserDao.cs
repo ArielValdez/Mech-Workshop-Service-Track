@@ -200,7 +200,7 @@ namespace DataAccess
             }
         }
 
-        public bool CheckPayment(int idServicio) {
+        public bool CheckPayment(int idServicio) { //Check later
             try
             {
                 using (var connection = GetConnection())
@@ -216,6 +216,44 @@ namespace DataAccess
                                               "where ID_Servicio = @idServicio";
                         
                         command.Parameters.AddWithValue("@idService", idService);
+
+                        command.CommandType = CommandType.Text;
+
+                        SqlDataReader reader = command.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                // Rollback should be added
+                throw e;
+            }
+        }
+
+        public bool CheckParts(int idPayment) { //check later
+            try
+            {
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+
+                        //Selects the users history
+                        command.CommandText = "select Nombre_pieza, Descripcion_Pieza, Precio_Pieza, Cantidad, ID_Pago" +
+                                              "from Pieza inner join Pago on Pago.ID_Pago = Pieza.ID_Pago" +
+                                              "where ID_Pago = @idPayment";
+                        
+                        command.Parameters.AddWithValue("@idPayment", idPayment);
 
                         command.CommandType = CommandType.Text;
 

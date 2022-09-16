@@ -37,8 +37,15 @@ namespace Domain
             return checking;
         }
 
+        //Check later
         public bool CheckPayment(int idService) {
             bool checking = userDao.CheckPayment(idService);
+            return checking;
+        }
+
+        //Check later
+        public bool CheckParts(int idPayment) {
+            bool checking = userDao.CheckParts(idPayment);
             return checking;
         }
         #endregion
