@@ -60,6 +60,7 @@ namespace Domain
             return registration;
         }
 
+        // Check later
         public bool RegisterUsersVehicle(string matricula, int idUsuario, int idMarca, int idModelo, string vin, string color)
         {
             bool registratingVehicle = userDao.RegisterVehicle(matricula, idUsuario, idMarca, idModelo, vin, color);

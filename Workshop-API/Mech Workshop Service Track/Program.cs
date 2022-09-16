@@ -15,10 +15,24 @@ namespace Mech_Workshop_Service_Track
             Console.WriteLine("* Mech Workshop Service Track MWST *");
             Console.WriteLine("************************************");
             
+/* 
+public bool RegisterUsersVehicle(string matricula, int idUsuario, int idMarca, int idModelo, string vin, string color)
+*/
+
+            bool loginConfirm = userModel.LoginUser(Ariel, 1234);
+            bool registerUserConfirm = userModel.Register1User("Ariel", "1234", "a@a.net", "Ariel", "Valdez", "000-0000000-0", "User", "(809)000-0000", string.Empty);
+            bool registerUsersVehicle = userModel.RegisterVehicle("A000000", 1, 1, 1, "A10000000000000", "RED");
+
+            Console.WriteLine("User has logged in: {0}", loginConfirm);
+            Console.WriteLine("User has registered into the database: {0}", registerUserConfirm);
+            Console.WriteLine("User has register their vehicle into the database: {0}", registerUsersVehicle);
+            Console.WriteLine();
+            Console.WriteLine();
+
             // running and looping while the program is still open
-            while(true) {
+            // while(true) {
                 
-            }
+            // }
         }
     }
 }

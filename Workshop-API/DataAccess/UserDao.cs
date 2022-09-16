@@ -242,7 +242,7 @@ namespace DataAccess
             }
         }
 
-        public bool CheckPayment(int idServicio) { //Check later
+        public bool CheckPayment(int idServicio) { //Detail might need to call Detail
             try
             {
                 using (var connection = GetConnection())
