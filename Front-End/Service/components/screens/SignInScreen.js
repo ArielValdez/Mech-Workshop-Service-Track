@@ -4,16 +4,18 @@ import { useNavigation } from "@react-navigation/native";
 import CustomInput from "../customs/CustomInput";
 import CustomButton from "../customs/CustomButton";
 import Logo from '../../assets/LogoOficial.png'
+import CheckBox from 'expo-checkbox';
 
 const SignInScreen = () => {
     const [ email, setEmail ] = useState('')
-    const [ password, setPassword ] = useState('') 
+    const [ password, setPassword ] = useState('')
+    const [ rememberMe, setRememberMe ] = useState(false) 
     const { height, width } = useWindowDimensions()
 
     const navigation = useNavigation()
 
     const onSignInPressed = () => {
-        console.warn('Sign in pressed')
+        navigation.navigate('Home')
     }
 
     const onForgotPasswordPressed = () => {
@@ -47,9 +49,21 @@ const SignInScreen = () => {
                 
                 <CustomInput placeholder='Correo Electrónico' value={email} setValue={setEmail} keyboardType='email-address'/>
                 <CustomInput placeholder='Contraseña' value={password} setValue={setPassword} secureTextEntry/>
+                
+                <View style={{flexDirection: 'row'}}>
+                    <View style={{flex: 1, flexDirection: 'row'}}>
+                        <CheckBox value={rememberMe} onValueChange={setRememberMe}/>
+                        <Text style={{marginLeft: 5}}>Remember me</Text>
+                    </View>
+                    <View style={{flex: 0.2}}></View>
+                    <View style={{flex: 1.5, marginBottom: 10}}>
+                        <CustomButton onPress={onForgotPasswordPressed} text='Olvide mi contraseña' type='Tertiary'
+                            padding={0.1} marginVertical={0.1}
+                        />
+                    </View>
+                </View>
 
                 <CustomButton onPress={onSignInPressed} text='Iniciar sesión'/>
-                <CustomButton onPress={onForgotPasswordPressed} text='Olvide mi contraseña' type='Tertiary'/>
 
                 <CustomButton onPress={onSignInFacebook} text='Entrar con Facebook' bgColor='#E7EAF4' fgColor='#4765A9'/>
                 <CustomButton onPress={onSignInGoogle} text='Entrar con Google' bgColor='#FAE9EA' fgColor='#DD4D44'/>

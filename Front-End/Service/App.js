@@ -8,6 +8,8 @@ import ForgotPasswordScreen from './components/screens/ForgotPasswordScreen';
 import NewPasswordScreen from './components/screens/NewPasswordScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import MyCarScreen from './components/screens/MyCarScreen';
+import HomeScreen from './components/screens/HomeScreen';
 
 const Stack = createNativeStackNavigator()
 
@@ -20,6 +22,7 @@ export default function App() {
           <Stack.Screen name='SignUp' component={SignUpScreen}/>
           <Stack.Screen name='ForgotPassword' component={ForgotPasswordScreen}/>
           <Stack.Screen name='NewPassword' component={NewPasswordScreen}/>
+          <Stack.Screen name='Home' component={HomeScreen}/>
         </Stack.Navigator>
       </NavigationContainer>
 			<StatusBar style="auto" />
