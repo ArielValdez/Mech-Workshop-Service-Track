@@ -49,9 +49,8 @@ namespace DataAccess
             }
         }
 
-        // This should make show a user history
-        // Check later
-        public bool UserHistory()
+        // This should show a user history
+        public bool UserHistory(int idUser, int idHistory)
         {
             try
             {
@@ -63,9 +62,14 @@ namespace DataAccess
                         command.Connection = connection;
 
                         //Selects the users history
-                        command.CommandText = "select Historial.Fecha, Usuario, Pago" +
-                                              "from ((History inner join Usuario on Historial.ID_Usuario = Usuario.ID_Usuario)" +
-                                              "inner join Pago on History.ID_Pago = Pago.ID_Pago)";
+                        command.CommandText = "select Nombre, Apellido, Cedula, Forma_Pago, Pago_Servicio" +
+                                              "from Historial h inner join Usuario u on u.ID_Usuario = h.ID_Usuario" +
+                                              "inner join Pago p on p.ID_Pago = h.ID_Pago)" +
+                                              "where ID_Usuario = @idUsuario and ID_Historial = @idHistory";
+
+                        command.Parameters.AddWithValue("@idUsuario", idUsuario);
+                        command.Parameters.AddWithValue("@idHistory", idHistory);
+
                         command.CommandType = CommandType.Text;
 
                         SqlDataReader reader = command.ExecuteReader();
@@ -128,7 +132,7 @@ namespace DataAccess
             }
         }
 
-        public bool CheckMaintenance(string tipoMantenimiento)
+        public bool CheckMaintenance(int idMaintenance)
         {
             try
             {
@@ -140,8 +144,8 @@ namespace DataAccess
                         command.Connection = connection;
 
                         //Selects the users history
-                        command.CommandText = "select Tipo_Mantenimiento from Mantenimiento where Tipo_Mantenimiento = @tipoMantenimiento";
-                        command.Parameters.AddWithValue("@tipoMantenimiento", tipoMantenimiento);
+                        command.CommandText = "select Tipo_Mantenimiento from Mantenimiento where ID_Mantenimiento = @idMaintenance";
+                        command.Parameters.AddWithValue("@idMaintenance", idMaintenance);
                         command.CommandType = CommandType.Text;
 
                         SqlDataReader reader = command.ExecuteReader();
@@ -163,7 +167,7 @@ namespace DataAccess
             }
         }
 
-        public bool Service(string tipoServicio, int idMantenimiento)
+        public bool Service(int idService)
         {
             try
             {
@@ -177,10 +181,10 @@ namespace DataAccess
                         //Selects the users history
                         command.CommandText = "select Tipo_Servicio, Tipo_mantenimiento, Fecha_Promesa" +
                                               "from Servicio inner join Mantenimiento on Mantenimiento.ID_Mantenimiento = Service.ID_Mantenimiento" +
-                                              "where ID_Mantenimiento = @idMantenimiento and Tipo_Servicio = @tipoServicio";
+                                              "from Servicio inner join Estado on Estado.ID_Estado = Servicio.ID_Estado" +
+                                              "where ID_Servicio = @idServicio";
                         
-                        command.Parameters.AddWithValue("@idMantenimiento", idMantenimiento);
-                        command.Parameters.AddWithValue("@tipoServicio", tipoServicio);
+                        command.Parameters.AddWithValue("@idService", idService);
                         command.CommandType = CommandType.Text;
                         
                         SqlDataReader reader = command.ExecuteReader();
@@ -202,7 +206,7 @@ namespace DataAccess
             }
         }
 
-        public bool Condition(string conditionName, int idService)
+        public bool Condition(int idCondition)
         {
             try
             {
@@ -216,10 +220,9 @@ namespace DataAccess
                         //Selects the users history
                         command.CommandText = "select Nombre_Estado, Descripcion_Estado, Imagen_Estado, Tipo_Servicio" +
                                               "from Estado inner join Servicio on Servicio.ID_Servicio = Estado.ID_Servicio" +
-                                              "where Nombre_Estado = @conditionName and ID_Servicio = @idServicio";
+                                              "ID_Estado = @idCondition";
                         
-                        command.Parameters.AddWithValue("@conditionName", conditionName);
-                        command.Parameters.AddWithValue("@idService", idService);
+                        command.Parameters.AddWithValue("@idCondition", idCondition);
 
                         command.CommandType = CommandType.Text;
 
@@ -242,7 +245,7 @@ namespace DataAccess
             }
         }
 
-        public bool CheckPayment(int idServicio) { //Detail might need to call Detail
+        public bool CheckPayment(int idPayment) {
             try
             {
                 using (var connection = GetConnection())
@@ -255,48 +258,6 @@ namespace DataAccess
                         //Selects the users history
                         command.CommandText = "select Forma_Pago, Pago_Servicio, Tipo_Servicio, FechaPromesa" +
                                               "from Pago inner join Servicio on Servicio.ID_Servicio = Pago.ID_Servicio" +
-                                              "where ID_Servicio = @idServicio";
-                        
-                        command.Parameters.AddWithValue("@idService", idService);
-
-                        command.CommandType = CommandType.Text;
-
-                        SqlDataReader reader = command.ExecuteReader();
-                        if (reader.HasRows)
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                // Rollback should be added
-                throw e;
-            }
-        }
-
-        public bool CheckDetail() {
-            //
-        }
-
-        public bool CheckParts(int idPayment) { //check later
-            try
-            {
-                using (var connection = GetConnection())
-                {
-                    connection.Open();
-                    using (var command = new SqlCommand())
-                    {
-                        command.Connection = connection;
-
-                        //Selects the users history
-                        command.CommandText = "select Nombre_Pieza, Descripcion_Pieza, Precio_Pieza, Cantidad, ID_Pago" +
-                                              "from Pieza inner join Pago on Pago.ID_Pago = Pieza.ID_Pago" +
                                               "where ID_Pago = @idPayment";
                         
                         command.Parameters.AddWithValue("@idPayment", idPayment);
@@ -322,7 +283,49 @@ namespace DataAccess
             }
         }
 
-        public bool CheckWorkshop (int idUsuario) {
+        public bool CheckDetail(int idPayment) {
+            //
+        }
+
+        public bool CheckParts(int idParts) {
+            try
+            {
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+
+                        //Selects the users history
+                        command.CommandText = "select Nombre_Pieza, Descripcion_Pieza, Precio_Pieza, Cantidad, ID_Pago" +
+                                              "from Pieza inner join Pago on Pago.ID_Pago = Pieza.ID_Pago" +
+                                              "where ID_Pieza = @idParts";
+                        
+                        command.Parameters.AddWithValue("@idParts", idParts);
+
+                        command.CommandType = CommandType.Text;
+
+                        SqlDataReader reader = command.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                // Rollback should be added
+                throw e;
+            }
+        }
+
+        public bool CheckWorkshop (int idWorkshop) {
             try
             {
                 using (var connection = GetConnection())
@@ -336,9 +339,9 @@ namespace DataAccess
                         command.CommandText = "select Nombre_Taller, Provincia, Encargado" +
                                               "from Taller_Mecanico t inner join Provincia p on p.ID_Provincia = t.ID_Provincia" +
                                               "inner join Usuario u on u.ID_Usuario = t.ID_Usuario" +
-                                              "where ID_Usuario = @idUsuario";
+                                              "where ID_Taller = @idWorkshop";
                         
-                        command.Parameters.AddWithValue("@idUsuario", idUsuario);
+                        command.Parameters.AddWithValue("@idWorkshop", idWorkshop);
 
                         command.CommandType = CommandType.Text;
 
@@ -482,6 +485,7 @@ namespace DataAccess
             }
         }
 
+        //This should be hidden from the common user. This adds maintenances
         public bool RegisterMaintenance(string TipoMantenimiento)
         {
             try
@@ -520,11 +524,102 @@ namespace DataAccess
                 throw e;
             }
         }
-        #endregion
+
+        // The users history should be registered automatically
+        public bool RegisterHistory(int idUsuario, int idPago, DateTime fecha) {
+            try
+            {
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand())
+                    {
+                        //Replace this part with stored procedures
+                        command.Connection = connection;
+
+                        //Inserting values into the database, table PerfilUsuario
+                        command.CommandText = "insert into Historial(ID_Usuario, ID_Pago, Fecha) values(@idUsuario, @idPago, @fecha)";
+
+                        command.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;
+                        command.Parameters.Add("@idPago", SqlDbType.Int).Value = idPago;
+                        command.Parameters.Add("@fecha", SqlDbType.DateTime2).Value = fecha;
+
+                        command.CommandType = CommandType.Text;
+                        command.ExecuteNonQuery();
+
+                        //The part does not exist in the database, and registers it successfully
+                        if (!reader.HasRows)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                // In case of sql malfunctioning, add a rollback here
+                throw e;
+            }
+        }
+
+        //This adds the receipt (both the "Pago" and "Detalle"). Not visible for the user to register
+        public bool RegisterReceipt(string way2Pay, double payService, int idVehicle, int idService, int idWorkshop, DateTime fechaInicio, DateTime fechaPromesa, DateTime fechaEntrega) {
+            try
+            {
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand())
+                    {
+                        //Replace this part with stored procedures
+                        command.Connection = connection;
+
+                        //Inserting data into "Detalle"
+                        command.CommandText = "insert into Detalle(Pago_Servicio, ID_Vehiculo, ID_Taller, FechaInicio, FechaPromesa, FechaEntrega)" +
+                                              "values(@payService, @idVehicle, @idService, @fechaInicio, @fechaPromesa, @fechaEntrega)";
+
+                        command.Parameters.Add("@payService", SqlDbType.Decimal).Value = payService;
+                        command.Parameters.Add("@idVehicle", SqlDbType.Int).Value = password;
+                        command.Parameters.Add("@idService", SqlDbType.Int).Value = idService;
+
+                        //Check these values later
+                        command.Parameters.Add("@fechaInicio", SqlDbType.DateTime2).Value = fechaInicio;
+                        command.Parameters.Add("@fechaPromesa", SqlDbType.DateTime2).Value = fechaPromesa;
+                        command.Parameters.Add("@fechaEntrega", SqlDbType.DateTime2).Value = fechaEntrega;
+
+                        //Inserting data into "Pago"
+                        command.CommandText = "insert into Pago(Forma_Pago, Pago_Servicio, ID_Servicio)" +
+                                              "values(@way2Pay, @payService, @idService)";
+                       
+                        // "Forma_Pago" (way2Pay) should store enums (Credito, Debito)
+                        command.Parameters.Add("@way2Pay", SqlDbType.VarChar, 25).Value = way2Pay; //Forma_Pago
+                        command.Parameters.Add("@payService", SqlDbType.Decimal).Value = payService; //Pago_Servicio
+                        command.Parameters.Add("@idService", SqlDbType.Int).Value = idService;
+
+                        command.CommandType = CommandType.Text;
+                        command.ExecuteNonQuery();
+
+                        { /* Write the update part here */ }
+
+                        SqlDataReader reader = command.ExecuteReader();
+                        if (!reader.HasRows)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+        }
 
         #region Marca&Modelo
         // inserts values into their respective tables
-        private bool RegisterMarca(string nombreMarca)
+        public bool RegisterMarca(string nombreMarca)
         {
             try
             {
@@ -564,7 +659,7 @@ namespace DataAccess
             }
         }
 
-        private bool RegisterModelo(string nombreModelo, int idMarca)
+        public bool RegisterModelo(string nombreModelo, int idMarca)
         {
             try
             {
@@ -604,6 +699,8 @@ namespace DataAccess
             }
         }
         #endregion
+        #endregion
+
         #region Provincia&Municipio
         // Stores provincia of the workshop
         public bool Provincia(string nameProvincia, string description)

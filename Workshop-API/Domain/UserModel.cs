@@ -14,8 +14,13 @@ namespace Domain
         }
 
         //Check later
-        public bool CheckHistory() {
-            bool checking = userDao.UserHistory();
+        public bool CheckHistory(int idUser, int idHistory) {
+            bool checking = userDao.UserHistory(idUser, idHistory);
+            return checking;
+        }
+
+        public bool CheckVehicle(string matricula) {
+            bool checking = userDao.CheckVehicle(matricula);
             return checking;
         }
 
@@ -48,23 +53,41 @@ namespace Domain
             bool checking = userDao.CheckParts(idPayment);
             return checking;
         }
+
+        public bool CheckWorkshop(int idWorkshop) {
+            bool checking = userDao.CheckWorkshop(idWorkshop);
+            return checking;
+        }
         #endregion
 
         #region Register
-        // Change data type
-        public bool Register1User(string username, string password, string email, string nombre,
+        public bool RegisterAUser(string username, string password, string email, string nombre,
                                   string apellido, string cedula, string rol,
                                   string telefono, string celular)
         {
-            bool registration = userDao.RegisterUser(username, password, email, nombre, apellido, cedula, rol, telefono, celular);
-            return registration;
+            bool registering = userDao.RegisterUser(username, password, email, nombre, apellido, cedula, rol, telefono, celular);
+            return registering;
         }
 
-        // Check later
-        public bool RegisterUsersVehicle(string matricula, int idUsuario, int idMarca, int idModelo, string vin, string color)
+        public bool RegisterUsersVehicle(string matricula, int idUser, int idMarca, int idModelo, string vin, string color)
         {
-            bool registratingVehicle = userDao.RegisterVehicle(matricula, idUsuario, idMarca, idModelo, vin, color);
-            return registratingVehicle;
+            bool registering = userDao.RegisterVehicle(matricula, idUser, idMarca, idModelo, vin, color);
+            return registering;
+        }
+
+        public bool RegisterMaintenance(string tipoMantenimiento) {
+            bool registering = userDao.RegisterMaintenance(tipoMantenimiento);
+            return registering;
+        }
+
+        public bool RegisterHistory(int idUser, int idPago, DateTime fecha) {
+            bool registering = userDao.RegisterHistory(idUser, idPago, fecha);
+            return registering;
+        }
+
+        public bool RegisterReceipt(string way2Pay, double payService, int idVehicle, int idService, int idWorkshop, DateTime fechaInicio, DateTime fechaPromesa, DateTime fechaEntrega) {
+            bool registering = userDao.RegisterReceipt(way2Pay, payService, idVehicle, idService, idWorkshop, fechaInicio, fechaPromesa, fechaEntrega);
+            return registering;
         }
         #endregion
     }

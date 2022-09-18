@@ -14,13 +14,11 @@ namespace Mech_Workshop_Service_Track
             Console.WriteLine("************************************");
             Console.WriteLine("* Mech Workshop Service Track MWST *");
             Console.WriteLine("************************************");
-            
-/* 
-public bool RegisterUsersVehicle(string matricula, int idUsuario, int idMarca, int idModelo, string vin, string color)
-*/
 
-            bool loginConfirm = userModel.LoginUser(Ariel, 1234);
+            bool loginConfirm = userModel.LoginUser("Ariel", "1234");
             bool registerUserConfirm = userModel.Register1User("Ariel", "1234", "a@a.net", "Ariel", "Valdez", "000-0000000-0", "User", "(809)000-0000", string.Empty);
+            
+            // The users should get to use a combobox with the names of the FK, then add their IDs into the variable
             bool registerUsersVehicle = userModel.RegisterVehicle("A000000", 1, 1, 1, "A10000000000000", "RED");
 
             Console.WriteLine("User has logged in: {0}", loginConfirm);
