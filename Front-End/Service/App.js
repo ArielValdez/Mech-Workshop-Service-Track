@@ -8,7 +8,6 @@ import ForgotPasswordScreen from './components/screens/ForgotPasswordScreen';
 import NewPasswordScreen from './components/screens/NewPasswordScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import MyCarScreen from './components/screens/MyCarScreen';
 import HomeScreen from './components/screens/HomeScreen';
 
 const Stack = createNativeStackNavigator()
@@ -27,7 +26,7 @@ export default function App() {
       </NavigationContainer>
 			<StatusBar style="auto" />
 		</SafeAreaView>
-	);
+	)
 }
 
 const styles = StyleSheet.create({
@@ -35,4 +34,4 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F9FBFC',
   },
-});
+})

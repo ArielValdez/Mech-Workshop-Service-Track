@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { View, Text, StyleSheet, Animated, useWindowDimensions } from 'react-native'
 
-const ProgressBar = ({step, steps, height}) => {4
+const ProgressBar = ({step, steps, height}) => {
     const [width, setWidth] = useState(0)
     const animatedValue = useRef(new Animated.Value(-1000)).current
     const reactive = useRef(new Animated.Value(-1000)).current
@@ -39,7 +39,7 @@ const ProgressBar = ({step, steps, height}) => {4
                 borderRadius: height,
                 overflow: 'hidden',
                 width: '85%',
-                alignSelf: 'center',
+                alignSelf: 'center'
             }}>
                 <Animated.View style={{
                     height,

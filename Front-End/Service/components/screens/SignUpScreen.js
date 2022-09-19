@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 import { View, Text, StyleSheet, Image, useWindowDimensions, ScrollView } from 'react-native'
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native"
 import CustomButton from '../customs/CustomButton'
 import CustomInput from '../customs/CustomInput'
-import AlertModal from "../customs/AlertModal";
+import AlertModal from "../customs/AlertModal"
 import Logo from '../../assets/LogoOficial.png'
 
 const SignUpScreen = () => {
@@ -19,7 +19,7 @@ const SignUpScreen = () => {
         setModalVisible(true)
     }
 
-    const onReturnPressed =() => {
+    const onReturnPressed = () => {
         navigation.navigate('SignIn')
     }
 
@@ -60,7 +60,7 @@ const SignUpScreen = () => {
                 </Text>
 
                 <CustomButton onPress={onRegisterPressed} text='Crear cuenta'/>
-                <CustomButton onPress={onReturnPressed} text='Regresar' type="Tertiary"/>
+                <CustomButton testID='ReturnButton' onPress={onReturnPressed} text='Regresar' type="Tertiary"/>
             </View>
         </ScrollView>
     )

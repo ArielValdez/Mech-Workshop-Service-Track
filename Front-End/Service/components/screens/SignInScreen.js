@@ -63,13 +63,13 @@ const SignInScreen = () => {
                     </View>
                 </View>
 
-                <CustomButton onPress={onSignInPressed} text='Iniciar sesión'/>
+                <CustomButton testID='SignInButton' onPress={onSignInPressed} text='Iniciar sesión'/>
 
                 <CustomButton onPress={onSignInFacebook} text='Entrar con Facebook' bgColor='#E7EAF4' fgColor='#4765A9'/>
                 <CustomButton onPress={onSignInGoogle} text='Entrar con Google' bgColor='#FAE9EA' fgColor='#DD4D44'/>
                 <CustomButton onPress={onSignInApple} text='Entrar con Apple' bgColor='#e3e3e3' fgColor='#363636'/>
 
-                <CustomButton onPress={onSignUpPressed} text='No tienes una cuenta? Crea una' type='Tertiary'/>
+                <CustomButton testID='SignUpButton' onPress={onSignUpPressed} text='No tienes una cuenta? Crea una' type='Tertiary'/>
             </View>
         </ScrollView>
     )
