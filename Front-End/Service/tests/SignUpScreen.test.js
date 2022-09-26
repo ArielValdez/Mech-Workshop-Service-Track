@@ -16,6 +16,10 @@ jest.mock('@react-navigation/native', () => {
 const tree = renderer.create(<SignUpScreen />)
 
 describe('Sign up screen', () => {
+    it('has 1 child', () => {
+        
+        expect(tree.root.children.length).toBe(1)
+    })
     it('Tests that navigation works', () => {
         const returnButton = tree.root.findByProps({testID: 'ReturnButton'}).props
         act(() => returnButton.onPress())

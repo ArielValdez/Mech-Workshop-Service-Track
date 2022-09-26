@@ -5,6 +5,7 @@ import CustomInput from "../customs/CustomInput";
 import CustomButton from "../customs/CustomButton";
 import Logo from '../../assets/LogoOficial.png'
 import CheckBox from 'expo-checkbox';
+import { EmailRegex, InvalidEmailMessage, PasswordRegex, InvalidPasswordMessage } from '../Constants'
 
 const SignInScreen = () => {
     const [ email, setEmail ] = useState('')
@@ -47,8 +48,12 @@ const SignInScreen = () => {
                     resizeMode='contain'
                 />
                 
-                <CustomInput placeholder='Correo Electrónico' value={email} setValue={setEmail} keyboardType='email-address'/>
-                <CustomInput placeholder='Contraseña' value={password} setValue={setPassword} secureTextEntry/>
+                <CustomInput placeholder='Correo Electrónico' value={email} setValue={setEmail} keyboardType='email-address'
+                    errorMessage={InvalidEmailMessage} pattern={EmailRegex}
+                />
+                <CustomInput placeholder='Contraseña' value={password} setValue={setPassword} secureTextEntry
+                    errorMessage={InvalidPasswordMessage} pattern={PasswordRegex}
+                />
                 
                 <View style={{flexDirection: 'row'}}>
                     <View style={{flex: 1, flexDirection: 'row'}}>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { View, Modal, Text, StyleSheet, Pressable, Image } from 'react-native'
 import ImageButton from './ImageButton'
 import LineBreak from './LineBreak'

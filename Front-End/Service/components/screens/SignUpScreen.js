@@ -5,6 +5,8 @@ import CustomButton from '../customs/CustomButton'
 import CustomInput from '../customs/CustomInput'
 import AlertModal from "../customs/AlertModal"
 import Logo from '../../assets/LogoOficial.png'
+import { UsernameRegex, InvalidUsernameMessage, EmailRegex,
+     InvalidEmailMessage, PasswordRegex, InvalidPasswordMessage } from '../Constants'
 
 const SignUpScreen = () => {
     const [ username, setUsername ] = useState('')
@@ -28,7 +30,7 @@ const SignUpScreen = () => {
     }
 
     const onPrivacyPoliticsPressed = () => {
-        console.warn('Privary pol pressed')
+        console.warn('Privacy pol pressed')
     }
 
     return (
@@ -48,10 +50,18 @@ const SignUpScreen = () => {
                     resizeMode='contain'
                 />
 
-                <CustomInput placeholder='Nombre de usuario' value={username} setValue={setUsername} />
-                <CustomInput placeholder='Correo Electrónico' value={email} setValue={setEmail} keyboardType='email-address'/>
-                <CustomInput placeholder='Contraseña' value={password} setValue={setPassword} secureTextEntry/>
-                <CustomInput placeholder='Confirmar contraseña' value={confirmPassword} setValue={setConfirmPassword} secureTextEntry/>
+                <CustomInput placeholder='Nombre de usuario' value={username} setValue={setUsername} 
+                    errorMessage={InvalidUsernameMessage} pattern={UsernameRegex}
+                />
+                <CustomInput placeholder='Correo Electrónico' value={email} setValue={setEmail} keyboardType='email-address'
+                    errorMessage={InvalidEmailMessage} pattern={EmailRegex}
+                />
+                <CustomInput placeholder='Contraseña' value={password} setValue={setPassword} secureTextEntry
+                    errorMessage={InvalidPasswordMessage} pattern={PasswordRegex}
+                />
+                <CustomInput placeholder='Confirmar contraseña' value={confirmPassword} setValue={setConfirmPassword} secureTextEntry
+                    errorMessage={InvalidPasswordMessage} pattern={PasswordRegex}
+                />
                 
                 <Text style={styles.politicsText}>
                     Al registrarse, usted confirma que esta de acuerdo con nuestros{' '}

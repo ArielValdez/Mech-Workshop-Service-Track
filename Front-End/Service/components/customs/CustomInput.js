@@ -1,23 +1,53 @@
-import React from "react";
-import { View, TextInput, StyleSheet } from 'react-native'
+import React, { useRef, useState } from "react";
+import { View, TextInput, StyleSheet, Text } from 'react-native'
 
-const CustomInput = ({value, setValue, placeholder, secureTextEntry, keyboardType}) => {
+const CustomInput = ({value, setValue, placeholder, secureTextEntry, keyboardType, errorMessage, pattern}) => {
+    const textInputRef = useRef()
+    const [ showErrorText, setShowErrorText ] = useState(false)
+
+    const handleChange = (value) => {
+        if (typeof pattern !== 'undefined') {
+            const regex = new RegExp(pattern)
+            console.log(value)
+            if (regex.test(value)) {
+                setShowErrorText(false)
+            }
+            else {
+                setShowErrorText(true)
+            }
+
+            setValue(value)
+        }
+    }
+
     return (
         <View style={styles.container}>
-            <TextInput 
-                value={value}
-                onChangeText={setValue} 
-                placeholder={placeholder}
-                style={styles.input}
-                secureTextEntry={secureTextEntry}
-                keyboardType={keyboardType}
-            />
+            <View style={styles.inputContainer}>
+                <TextInput
+                    ref={textInputRef} 
+                    value={value}
+                    onChangeText={handleChange}
+                    placeholder={placeholder}
+                    secureTextEntry={secureTextEntry}
+                    keyboardType={keyboardType}
+                />
+            </View>
+            { showErrorText &&
+                <Text
+                    style={styles.errorMessage}
+                >
+                    {errorMessage}
+                </Text>
+            }
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
+        width: '100%'
+    },
+    inputContainer: {
         backgroundColor: 'white',
         width: '100%',
 
@@ -29,9 +59,9 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         marginVertical: 5
     },
-    input: {
-        
-    }
+    errorMessage: {
+        color: 'red',
+    },
 })
 
 export default CustomInput
