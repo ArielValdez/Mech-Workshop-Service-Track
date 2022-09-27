@@ -1,8 +1,8 @@
 import { useNavigation } from '@react-navigation/native'
 import React, { useState } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import CustomButton from '../customs/CustomButton'
-import CustomInput from '../customs/CustomInput'
+import CustomButton from '../components/CustomButton'
+import CustomInput from '../components/CustomInput'
 
 const NewPasswordScreen = () => {
     const [ newPassword, setNewPassword ] = useState('')

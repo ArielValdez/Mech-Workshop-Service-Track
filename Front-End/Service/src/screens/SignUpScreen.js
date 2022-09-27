@@ -1,9 +1,9 @@
 import React, { useState } from "react"
 import { View, Text, StyleSheet, Image, useWindowDimensions, ScrollView } from 'react-native'
 import { useNavigation } from "@react-navigation/native"
-import CustomButton from '../customs/CustomButton'
-import CustomInput from '../customs/CustomInput'
-import AlertModal from "../customs/AlertModal"
+import CustomButton from '../components/CustomButton'
+import CustomInput from '../components/CustomInput'
+import AlertModal from "../components/AlertModal"
 import Logo from '../../assets/LogoOficial.png'
 import { UsernameRegex, InvalidUsernameMessage, EmailRegex,
      InvalidEmailMessage, PasswordRegex, InvalidPasswordMessage } from '../Constants'

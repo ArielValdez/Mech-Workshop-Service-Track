@@ -1,4 +1,4 @@
-import SignUpScreen from "../components/screens/SignUpScreen"
+import SignUpScreen from "../src/screens/SignUpScreen"
 import renderer, { act } from 'react-test-renderer'
 
 const mockedNavigate = jest.fn()
@@ -17,7 +17,6 @@ const tree = renderer.create(<SignUpScreen />)
 
 describe('Sign up screen', () => {
     it('has 1 child', () => {
-        
         expect(tree.root.children.length).toBe(1)
     })
     it('Tests that navigation works', () => {

@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { View, Text, StyleSheet, useWindowDimensions, ScrollView } from 'react-native'
-import CustomButton from '../customs/CustomButton'
-import CustomInput from '../customs/CustomInput'
+import CustomButton from '../components/CustomButton'
+import CustomInput from '../components/CustomInput'
 
 const ConfirmEmailScreen = () => {
     const [ code, setCode ] = useState('')

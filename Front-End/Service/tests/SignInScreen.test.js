@@ -1,5 +1,8 @@
-import SignInScreen from "../components/screens/SignInScreen"
+import SignInScreen from "../src/screens/SignInScreen"
 import renderer, { act } from 'react-test-renderer'
+import CustomInput from "../src/components/CustomInput"
+import CheckBox from 'expo-checkbox';
+import { ScrollView } from "react-native";
 
 const mockedNavigate = jest.fn()
 
@@ -14,8 +17,9 @@ jest.mock('@react-navigation/native', () => {
 })
 
 const tree = renderer.create(<SignInScreen />)
+const root = tree.root
 
-describe('<SignInScreen />', () => {
+describe('Rendering tests', () => {
     it('has 1 child', () => {
         expect(tree.root.children.length).toBe(1)
     })
@@ -25,5 +29,9 @@ describe('<SignInScreen />', () => {
         act(() => signInButton.onPress())
         act(() => signUpButton.onPress())
         expect(mockedNavigate).toHaveBeenCalledTimes(2)
+    })
+    it('renders logo', () => {
+        console.log(root.findAllByType('CustomInput'))
+        expect(root.findAllByType('Image').length).toEqual(1)
     })
 })

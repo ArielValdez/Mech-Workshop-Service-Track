@@ -2,13 +2,11 @@ import React, { useRef, useState } from "react";
 import { View, TextInput, StyleSheet, Text } from 'react-native'
 
 const CustomInput = ({value, setValue, placeholder, secureTextEntry, keyboardType, errorMessage, pattern}) => {
-    const textInputRef = useRef()
     const [ showErrorText, setShowErrorText ] = useState(false)
 
     const handleChange = (value) => {
         if (typeof pattern !== 'undefined') {
             const regex = new RegExp(pattern)
-            console.log(value)
             if (regex.test(value)) {
                 setShowErrorText(false)
             }
@@ -24,7 +22,6 @@ const CustomInput = ({value, setValue, placeholder, secureTextEntry, keyboardTyp
         <View style={styles.container}>
             <View style={styles.inputContainer}>
                 <TextInput
-                    ref={textInputRef} 
                     value={value}
                     onChangeText={handleChange}
                     placeholder={placeholder}

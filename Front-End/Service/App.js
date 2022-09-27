@@ -1,14 +1,14 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import SignInScreen from './components/screens/SignInScreen';
-import SignUpScreen from './components/screens/SignUpScreen';
-import ConfirmEmailScreen from './components/screens/ConfirmEmailScreen';
-import ForgotPasswordScreen from './components/screens/ForgotPasswordScreen';
-import NewPasswordScreen from './components/screens/NewPasswordScreen';
+import SignInScreen from './src/screens/SignInScreen';
+import SignUpScreen from './src/screens/SignUpScreen';
+import ConfirmEmailScreen from './src/screens/ConfirmEmailScreen';
+import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
+import NewPasswordScreen from './src/screens/NewPasswordScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from './components/screens/HomeScreen';
+import HomeScreen from './src/screens/HomeScreen';
 
 const Stack = createNativeStackNavigator()
 

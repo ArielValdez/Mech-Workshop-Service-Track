@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Image, StyleSheet, useWindowDimensions } from "react-native";
 import Car from '../../assets/CarPlaceholder.jpg'
-import ProgressBar from "../customs/ProgressBar";
+import ProgressBar from "../components/ProgressBar";
 
 const MyCarScreen = () => {
     const {height, width} = useWindowDimensions()

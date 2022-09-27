@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, useWindowDimensions, ScrollView } from 'react-native'
 import { useNavigation } from "@react-navigation/native";
-import CustomInput from "../customs/CustomInput";
-import CustomButton from "../customs/CustomButton";
+import CustomInput from "../components/CustomInput";
+import CustomButton from "../components/CustomButton";
 import Logo from '../../assets/LogoOficial.png'
 import CheckBox from 'expo-checkbox';
 import { EmailRegex, InvalidEmailMessage, PasswordRegex, InvalidPasswordMessage } from '../Constants'
