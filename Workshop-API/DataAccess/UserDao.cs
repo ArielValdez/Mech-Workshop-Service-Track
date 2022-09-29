@@ -67,7 +67,7 @@ namespace DataAccess
                                               "inner join Pago p on p.ID_Pago = h.ID_Pago)" +
                                               "where ID_Usuario = @idUsuario and ID_Historial = @idHistory";
 
-                        command.Parameters.AddWithValue("@idUsuario", idUsuario);
+                        command.Parameters.AddWithValue("@idUsuario", idUser);
                         command.Parameters.AddWithValue("@idHistory", idHistory);
 
                         command.CommandType = CommandType.Text;
@@ -285,6 +285,7 @@ namespace DataAccess
 
         public bool CheckDetail(int idPayment) {
             //
+            return false;
         }
 
         public bool CheckParts(int idParts) {
@@ -372,19 +373,24 @@ namespace DataAccess
                                  string apellido, string cedula, string rol,
                                  string telefono, string celular)
         {
-            try
+            using (var connection = GetConnection())
             {
-                using (var connection = GetConnection())
+                connection.Open();
+                using (var command = new SqlCommand())
                 {
-                    connection.Open();
-                    using (var command = new SqlCommand())
-                    {
-                        //Replace this part with stored procedures
-                        command.Connection = connection;
+                    SqlTransaction transaction;
+                    //Start transaction
+                    transaction = connection.BeginTransaction();
 
+                    //Replace this part with stored procedures
+                    command.Connection = connection;
+                    command.Transaction = transaction;
+
+                    try
+                    {
                         //Inserting values into the database, table PerfilUsuario
                         command.CommandText = "insert into PerfilUsuario(Username, Password, Telefono, Celular, Email, FechaCreacion)" +
-                                              "values(@username, @password, @telefono, @celular, @email, @fechaCreacion)";
+                                                "values(@username, @password, @telefono, @celular, @email, @fechaCreacion)";
 
                         command.Parameters.Add("@username", SqlDbType.VarChar, 20).Value = username;
                         command.Parameters.Add("@password", SqlDbType.VarChar, 20).Value = password;
@@ -395,8 +401,8 @@ namespace DataAccess
 
                         //Inserting values into the database, table Usuario
                         command.CommandText = "insert into Usuario(Nombre, Apellido, Cedula, Rol)" +
-                                              "values(@nombre, @apellido, @cedula, @rol)";
-                       
+                                                "values(@nombre, @apellido, @cedula, @rol)";
+
                         command.Parameters.Add("@nombre", SqlDbType.VarChar, 30).Value = nombre;
                         command.Parameters.Add("@apellido", SqlDbType.VarChar, 30).Value = apellido;
                         command.Parameters.Add("@cedula", SqlDbType.Char, 11).Value = cedula;
@@ -408,49 +414,57 @@ namespace DataAccess
                         { /* Write the update part here */ }
 
                         SqlDataReader reader = command.ExecuteReader();
-                        if (!reader.HasRows)
+                        if (!reader.HasRows) //Does not exist
                         {
+                            transaction.Commit();
                             return true;
                         }
-                        else
+                        else //Exists
                         {
+                            transaction.Rollback();
+                            return false;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Commit Exception Type: {0}", e.GetType());
+                        Console.WriteLine("  Message: {0}", e.Message);
+                        try
+                        {
+                            transaction.Rollback();
+                            return false;
+                        }
+                        catch (Exception e2)
+                        {
+                            Console.WriteLine("Rollback Exception Type: {0}", e2.GetType());
+                            Console.WriteLine("  Message: {0}", e2.Message);
                             return false;
                         }
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                // In case of sql malfunctioning, add a rollback here
-                throw e;
             }
         }
 
         // This method is used to register the vehicle of an user, after they register as an user
         public bool RegisterVehicle(string matricula, int idUsuario, int idMarca, int idModelo, string vin, string color)
         {
-            try
+            using (var connection = GetConnection())
             {
-                using (var connection = GetConnection())
+                connection.Open();
+                using (var command = new SqlCommand())
                 {
-                    connection.Open();
-                    using (var command = new SqlCommand())
+                    SqlTransaction transaction;
+                    //Start transaction
+                    transaction = connection.BeginTransaction();
+
+                    //Replace this part with stored procedures
+                    command.Connection = connection;
+                    command.Transaction = transaction;
+
+                    try
                     {
-                        command.Connection = connection;
-
-                        //Inserting values into the database, table PerfilUsuario
                         command.CommandText = "insert into Vehiculo(Matricula, ID_Usuario, ID_Marca, ID_Modelo, VIN, Color)" +
-                                              "values(@matricula, @idUsuario, @idMarca, @idModelo, @vin, @color)";
-
-                        if (true)
-                        {
-                            /* The FKs should select the table they come from to instert into this table if they exist in the
-                            database, otherwise, a new row should be created in their respective tables */
-                        }
-                        else
-                        {
-                            // Put all the insertions here
-                        }
+                                          "values(@matricula, @idUsuario, @idMarca, @idModelo, @vin, @color)";
 
                         command.Parameters.Add("@matricula", SqlDbType.Char, 7).Value = matricula;
                         command.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario; // FK of Usuario
@@ -469,36 +483,53 @@ namespace DataAccess
                         //The part does not exist in the database, and registers it successfully
                         if (!reader.HasRows)
                         {
+                            transaction.Commit();
                             return true;
                         }
                         else
                         {
+                            transaction.Rollback();
+                            return false;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Commit Exception Type: {0}", e.GetType());
+                        Console.WriteLine("  Message: {0}", e.Message);
+                        try
+                        {
+                            transaction.Rollback();
+                            return false;
+                        }
+                        catch (Exception e2)
+                        {
+                            Console.WriteLine("Rollback Exception Type: {0}", e2.GetType());
+                            Console.WriteLine("  Message: {0}", e2.Message);
                             return false;
                         }
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                // In case of sql malfunctioning, add a rollback here
-                throw e;
             }
         }
 
         //This should be hidden from the common user. This adds maintenances
         public bool RegisterMaintenance(string TipoMantenimiento)
         {
-            try
+            using (var connection = GetConnection())
             {
-                using (var connection = GetConnection())
+                connection.Open();
+                using (var command = new SqlCommand())
                 {
-                    connection.Open();
-                    using (var command = new SqlCommand())
-                    {
-                        //Replace this part with stored procedures
-                        command.Connection = connection;
+                    SqlTransaction transaction;
+                    //Start transaction
+                    transaction = connection.BeginTransaction();
 
-                        //Inserting values into the database, table PerfilUsuario
+                    //Replace this part with stored procedures
+                    command.Connection = connection;
+                    command.Transaction = transaction;
+
+                    try
+                    {
                         command.CommandText = "insert into Mantenimiento(Tipo_Mantenimiento) values(@tipoMantenimiento)";
 
                         command.Parameters.Add("@tipoMantenimiento", SqlDbType.VarChar, 30).Value = TipoMantenimiento;
@@ -506,37 +537,56 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
 
+                        SqlDataReader reader = command.ExecuteReader();
                         //The part does not exist in the database, and registers it successfully
                         if (!reader.HasRows)
                         {
+                            transaction.Commit();
                             return true;
                         }
                         else
                         {
+                            transaction.Rollback();
+                            return false;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Commit Exception Type: {0}", e.GetType());
+                        Console.WriteLine("  Message: {0}", e.Message);
+                        try
+                        {
+                            transaction.Rollback();
+                            return false;
+                        }
+                        catch (Exception e2)
+                        {
+                            Console.WriteLine("Rollback Exception Type: {0}", e2.GetType());
+                            Console.WriteLine("  Message: {0}", e2.Message);
                             return false;
                         }
                     }
                 }
             }
-            catch (Exception e)
-            {
-                // In case of sql malfunctioning, add a rollback here
-                throw e;
-            }
         }
 
         // The users history should be registered automatically
         public bool RegisterHistory(int idUsuario, int idPago, DateTime fecha) {
-            try
+            using (var connection = GetConnection())
             {
-                using (var connection = GetConnection())
+                connection.Open();
+                using (var command = new SqlCommand())
                 {
-                    connection.Open();
-                    using (var command = new SqlCommand())
-                    {
-                        //Replace this part with stored procedures
-                        command.Connection = connection;
+                    SqlTransaction transaction;
+                    //Start transaction
+                    transaction = connection.BeginTransaction();
 
+                    //Replace this part with stored procedures
+                    command.Connection = connection;
+                    command.Transaction = transaction;
+
+                    try
+                    {
                         //Inserting values into the database, table PerfilUsuario
                         command.CommandText = "insert into Historial(ID_Usuario, ID_Pago, Fecha) values(@idUsuario, @idPago, @fecha)";
 
@@ -547,43 +597,63 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
 
+                        SqlDataReader reader = command.ExecuteReader();
                         //The part does not exist in the database, and registers it successfully
                         if (!reader.HasRows)
                         {
+                            transaction.Commit();
                             return true;
                         }
                         else
                         {
+                            transaction.Rollback();
+                            return false;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Commit Exception Type: {0}", e.GetType());
+                        Console.WriteLine("  Message: {0}", e.Message);
+                        try
+                        {
+                            transaction.Rollback();
+                            return false;
+                        }
+                        catch (Exception e2)
+                        {
+                            Console.WriteLine("Rollback Exception Type: {0}", e2.GetType());
+                            Console.WriteLine("  Message: {0}", e2.Message);
                             return false;
                         }
                     }
                 }
             }
-            catch (Exception e)
-            {
-                // In case of sql malfunctioning, add a rollback here
-                throw e;
-            }
         }
 
         //This adds the receipt (both the "Pago" and "Detalle"). Not visible for the user to register
         public bool RegisterReceipt(string way2Pay, double payService, int idVehicle, int idService, int idWorkshop, DateTime fechaInicio, DateTime fechaPromesa, DateTime fechaEntrega) {
-            try
+            using (var connection = GetConnection())
             {
-                using (var connection = GetConnection())
+                connection.Open();
+                using (var command = new SqlCommand())
                 {
-                    connection.Open();
-                    using (var command = new SqlCommand())
-                    {
-                        //Replace this part with stored procedures
-                        command.Connection = connection;
+                    SqlTransaction transaction;
 
-                        //Inserting data into "Detalle"
+                    //Start transaction
+                    transaction = connection.BeginTransaction();
+
+                    //Replace this part with stored procedures
+                    command.Connection = connection;
+                    command.Transaction = transaction;
+
+                    try
+                    {
+                        //Inserting values into the database, table Detalle
                         command.CommandText = "insert into Detalle(Pago_Servicio, ID_Vehiculo, ID_Taller, FechaInicio, FechaPromesa, FechaEntrega)" +
-                                              "values(@payService, @idVehicle, @idService, @fechaInicio, @fechaPromesa, @fechaEntrega)";
+                                          "values(@payService, @idVehicle, @idService, @fechaInicio, @fechaPromesa, @fechaEntrega)";
 
                         command.Parameters.Add("@payService", SqlDbType.Decimal).Value = payService;
-                        command.Parameters.Add("@idVehicle", SqlDbType.Int).Value = password;
+                        command.Parameters.Add("@idVehicle", SqlDbType.Int).Value = idVehicle;
                         command.Parameters.Add("@idService", SqlDbType.Int).Value = idService;
 
                         //Check these values later
@@ -593,8 +663,8 @@ namespace DataAccess
 
                         //Inserting data into "Pago"
                         command.CommandText = "insert into Pago(Forma_Pago, Pago_Servicio, ID_Servicio)" +
-                                              "values(@way2Pay, @payService, @idService)";
-                       
+                                            "values(@way2Pay, @payService, @idService)";
+
                         // "Forma_Pago" (way2Pay) should store enums (Credito, Debito)
                         command.Parameters.Add("@way2Pay", SqlDbType.VarChar, 25).Value = way2Pay; //Forma_Pago
                         command.Parameters.Add("@payService", SqlDbType.Decimal).Value = payService; //Pago_Servicio
@@ -608,30 +678,55 @@ namespace DataAccess
                         SqlDataReader reader = command.ExecuteReader();
                         if (!reader.HasRows)
                         {
+                            transaction.Commit();
                             return true;
                         }
                         else
                         {
+                            transaction.Rollback();
                             return false;
                         }
                     }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Commit Exception Type: {0}", e.GetType());
+                        Console.WriteLine("  Message: {0}", e.Message);
+                        try
+                        {
+                            transaction.Rollback();
+                            return false;
+                        }
+                        catch (Exception e2)
+                        {
+                            Console.WriteLine("Rollback Exception Type: {0}", e2.GetType());
+                            Console.WriteLine("  Message: {0}", e2.Message);
+                            return false;
+                        }
+                    }
+                }
+            }
         }
 
         #region Marca&Modelo
         // inserts values into their respective tables
         public bool RegisterMarca(string nombreMarca)
         {
-            try
+            using (var connection = GetConnection())
             {
-                using (var connection = GetConnection())
+                connection.Open();
+                using (var command = new SqlCommand())
                 {
-                    connection.Open();
-                    using (var command = new SqlCommand())
-                    {
-                        //Replace this part with stored procedures
-                        command.Connection = connection;
+                    SqlTransaction transaction;
+                    //Start transaction
+                    transaction = connection.BeginTransaction();
 
-                        //Inserting values into the database, table PerfilUsuario
+                    //Replace this part with stored procedures
+                    command.Connection = connection;
+                    command.Transaction = transaction;
+
+                    try
+                    {
+                        //Inserting values into the database, table Marca
                         command.CommandText = "insert into Marca(Nombre) values(@nombreMarca)";
 
                         command.Parameters.Add("@nombreMarca", SqlDbType.Char, 18).Value = nombreMarca;
@@ -639,39 +734,58 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
 
+                        { /* Write the update part here */ }
 
-                        //The part does not exist in the database, and registers it successfully
+                        SqlDataReader reader = command.ExecuteReader();
                         if (!reader.HasRows)
                         {
+                            transaction.Commit();
                             return true;
                         }
                         else
                         {
+                            transaction.Rollback();
+                            return false;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Commit Exception Type: {0}", e.GetType());
+                        Console.WriteLine("  Message: {0}", e.Message);
+                        try
+                        {
+                            transaction.Rollback();
+                            return false;
+                        }
+                        catch (Exception e2)
+                        {
+                            Console.WriteLine("Rollback Exception Type: {0}", e2.GetType());
+                            Console.WriteLine("  Message: {0}", e2.Message);
                             return false;
                         }
                     }
                 }
             }
-            catch (Exception e)
-            {
-                // In case of sql malfunctioning, add a rollback here
-                throw e;
-            }
         }
 
         public bool RegisterModelo(string nombreModelo, int idMarca)
         {
-            try
+            using (var connection = GetConnection())
             {
-                using (var connection = GetConnection())
+                connection.Open();
+                using (var command = new SqlCommand())
                 {
-                    connection.Open();
-                    using (var command = new SqlCommand())
-                    {
-                        //Replace this part with stored procedures
-                        command.Connection = connection;
+                    SqlTransaction transaction;
+                    //Start transaction
+                    transaction = connection.BeginTransaction();
 
-                        //Inserting values into the database, table PerfilUsuario
+                    //Replace this part with stored procedures
+                    command.Connection = connection;
+                    command.Transaction = transaction;
+
+                    try
+                    {
+                        //Inserting values into the database, table Modelo
                         command.CommandText = "insert into Marca(Nombre_Modelo, ID_Marca) values(@nombreModelo, @fkMarca)";
 
                         command.Parameters.Add("@nombreModelo", SqlDbType.Char, 18).Value = nombreModelo;
@@ -680,22 +794,37 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
 
-                        //The part does not exist in the database, and registers it successfully
+                        { /* Write the update part here */ }
+
+                        SqlDataReader reader = command.ExecuteReader();
                         if (!reader.HasRows)
                         {
+                            transaction.Commit();
                             return true;
                         }
                         else
                         {
+                            transaction.Rollback();
+                            return false;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Commit Exception Type: {0}", e.GetType());
+                        Console.WriteLine("  Message: {0}", e.Message);
+                        try
+                        {
+                            transaction.Rollback();
+                            return false;
+                        }
+                        catch (Exception e2)
+                        {
+                            Console.WriteLine("Rollback Exception Type: {0}", e2.GetType());
+                            Console.WriteLine("  Message: {0}", e2.Message);
                             return false;
                         }
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                // In case of sql malfunctioning, add a rollback here
-                throw e;
             }
         }
         #endregion
@@ -705,17 +834,22 @@ namespace DataAccess
         // Stores provincia of the workshop
         public bool Provincia(string nameProvincia, string description)
         {
-            try
+            using (var connection = GetConnection())
             {
-                using (var connection = GetConnection())
+                connection.Open();
+                using (var command = new SqlCommand())
                 {
-                    connection.Open();
-                    using (var command = new SqlCommand())
-                    {
-                        //Replace this part with stored procedures
-                        command.Connection = connection;
+                    SqlTransaction transaction;
+                    //Start transaction
+                    transaction = connection.BeginTransaction();
 
-                        //Inserting values into the database, table PerfilUsuario
+                    //Replace this part with stored procedures
+                    command.Connection = connection;
+                    command.Transaction = transaction;
+
+                    try
+                    {
+                        //Inserting values into the database, table Provincia
                         command.CommandText = "insert into Provincia(Provincia, Descripcion) values(@provincia, @descripcion)";
 
                         command.Parameters.Add("@provincia", SqlDbType.VarChar, 30).Value = nameProvincia;
@@ -724,41 +858,61 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
 
-                        //The part does not exist in the database, and registers it successfully
+                        { /* Write the update part here */ }
+
+                        SqlDataReader reader = command.ExecuteReader();
                         if (!reader.HasRows)
                         {
+                            transaction.Commit();
                             return true;
                         }
                         else
                         {
+                            transaction.Rollback();
+                            return false;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Commit Exception Type: {0}", e.GetType());
+                        Console.WriteLine("  Message: {0}", e.Message);
+                        try
+                        {
+                            transaction.Rollback();
+                            return false;
+                        }
+                        catch (Exception e2)
+                        {
+                            Console.WriteLine("Rollback Exception Type: {0}", e2.GetType());
+                            Console.WriteLine("  Message: {0}", e2.Message);
                             return false;
                         }
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                // In case of sql malfunctioning, add a rollback here
-                throw e;
             }
         }
 
         // Stores municipio of the workshop
         public bool Municipio(string nameMunicipio, string description, int idProvincia)
         {
-            try
+            using (var connection = GetConnection())
             {
-                using (var connection = GetConnection())
+                connection.Open();
+                using (var command = new SqlCommand())
                 {
-                    connection.Open();
-                    using (var command = new SqlCommand())
-                    {
-                        //Replace this part with stored procedures
-                        command.Connection = connection;
+                    SqlTransaction transaction;
+                    //Start transaction
+                    transaction = connection.BeginTransaction();
 
-                        //Inserting values into the database, table PerfilUsuario
-                        command.CommandText = "insert into Provincia(Municipio, Descripcion, ID_Provincia)" + 
-                                              "values(@municipio, @descripcion, @idProvincia)";
+                    //Replace this part with stored procedures
+                    command.Connection = connection;
+                    command.Transaction = transaction;
+
+                    try
+                    {
+                        //Inserting values into the database, table Municipio
+                        command.CommandText = "insert into Provincia(Municipio, Descripcion, ID_Provincia)" +
+                                          "values(@municipio, @descripcion, @idProvincia)";
 
                         command.Parameters.Add("@municipio", SqlDbType.VarChar, 70).Value = nameMunicipio;
                         command.Parameters.Add("@descripcion", SqlDbType.VarChar, 255).Value = description;
@@ -767,38 +921,39 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
 
-                        //The part does not exist in the database, and registers it successfully
+                        { /* Write the update part here */ }
+
+                        SqlDataReader reader = command.ExecuteReader();
                         if (!reader.HasRows)
                         {
+                            transaction.Commit();
                             return true;
                         }
                         else
                         {
+                            transaction.Rollback();
+                            return false;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Commit Exception Type: {0}", e.GetType());
+                        Console.WriteLine("  Message: {0}", e.Message);
+                        try
+                        {
+                            transaction.Rollback();
+                            return false;
+                        }
+                        catch (Exception e2)
+                        {
+                            Console.WriteLine("Rollback Exception Type: {0}", e2.GetType());
+                            Console.WriteLine("  Message: {0}", e2.Message);
                             return false;
                         }
                     }
                 }
             }
-            catch (Exception e)
-            {
-                // In case of sql malfunctioning, add a rollback here
-                throw e;
-            }
         }
         #endregion
-
-        /* 
-        if(steal()) {
-            IP = this.Location(tuCasa);
-            Exponer(your(IP));
-            Borrar(Mech Workshop Service Track.Code);
-            Borrar(MWST);
-            Explotar(this.PC => tuPC);
-        }
-        else {
-            do(Nothing);
-            return;
-        }
-        */
     }
 }

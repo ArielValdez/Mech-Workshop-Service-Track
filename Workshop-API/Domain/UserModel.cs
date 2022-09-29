@@ -25,20 +25,20 @@ namespace Domain
         }
 
         //Check later
-        public bool CheckMaintenance(string tipo) {
-            bool checking = userDao.CheckMaintenance(tipo);
+        public bool CheckMaintenance(int idMaintenance) {
+            bool checking = userDao.CheckMaintenance(idMaintenance);
             return checking;
         }
 
         //Check later
-        public bool CheckService(string tipoServicio, int idMantenimiento) {
-            bool checking = userDao.Service(tipoServicio, idMantenimiento);
+        public bool CheckService(int idService) {
+            bool checking = userDao.Service(idService);
             return checking;
         }
 
         //Check later
-        public bool CheckCondition(string conditionName, int idService) {
-            bool checking = userDao.Service(conditionName, idService);
+        public bool CheckCondition(int idCondition) {
+            bool checking = userDao.Condition(idCondition);
             return checking;
         }
 
