@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading;
 using Domain;
+// using System.Net.Http;
+// using Newtonsoft.Json.Linq;
 
 namespace Mech_Workshop_Service_Track
 {
@@ -24,11 +26,6 @@ namespace Mech_Workshop_Service_Track
             Console.WriteLine("User has logged in: {0}", loginConfirm);
             Console.WriteLine("User has registered into the database: {0}", registerUserConfirm);
             Console.WriteLine("User has register their vehicle into the database: {0}", registerUsersVehicle);
-
-            // running and looping while the program is still open
-            // while(true) {
-                
-            // }
         }
     }
 }

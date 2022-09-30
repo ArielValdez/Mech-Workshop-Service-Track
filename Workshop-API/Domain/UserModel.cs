@@ -10,6 +10,7 @@ namespace Domain
         public bool LoginUser(string username, string password)
         {
             bool satisfactoryLogin = userDao.Login(username, password);
+            Console.WriteLine("Login access: {0}", satisfactoryLogin);
             return satisfactoryLogin;
         }
 
