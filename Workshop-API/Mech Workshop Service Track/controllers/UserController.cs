@@ -5,6 +5,8 @@ using System.Net.Http;
 
 
 // Example: https://alialhaddad.medium.com/how-to-fetch-data-in-c-net-core-ea1ab720e3f9
+// https://medium.com/featurepreneur/react-native-api-call-using-fetch-f0ee847b5ed0
+
 namespace Mech_Workshop_Service_Track.controllers
 {
     public static class UserController
