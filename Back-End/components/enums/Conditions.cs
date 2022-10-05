@@ -3,8 +3,8 @@ using System.Collections;
 
 namespace enums
 {
-    // Revise later
     public enum Condition{
+        EnProceso,
         Reparado,
         Pintado,
         Desabolladura,
