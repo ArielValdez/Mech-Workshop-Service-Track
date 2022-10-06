@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>MWST_API</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.16" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DataAccess">
+      <HintPath>..\..\Workshop-API\Domain\bin\Debug\netcoreapp3.1\DataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="Domain">
+      <HintPath>..\..\Workshop-API\Domain\bin\Debug\netcoreapp3.1\Domain.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+
+</Project>
