@@ -13,13 +13,13 @@ namespace MWST_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class MarcaController : ControllerBase
     {
         private readonly IConfiguration _configuration;
         private readonly Connection con = new Connection();
         private UserModel models = new UserModel();
 
-        public UserController(IConfiguration configuration)
+        public MarcaController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -28,7 +28,7 @@ namespace MWST_API.Controllers
         public JsonResult Get()
         {
             // Query to select the data needed. Change to stored procedures
-            string query = @"select Nombre, Apellido, Cedula, Rol from Usuario";
+            string query = @"select Nombre_Marca from Marca";
 
             DataTable table = new DataTable();
             // New the connection string
@@ -39,7 +39,7 @@ namespace MWST_API.Controllers
             using (SqlConnection connection = new SqlConnection(sqlDataSource))
             {
                 connection.Open();
-                using(SqlCommand command = new SqlCommand(query, connection))
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     reader = command.ExecuteReader();
                     table.Load(reader);
@@ -47,15 +47,16 @@ namespace MWST_API.Controllers
                     connection.Close();
                 }
             }
-
             return new JsonResult(table);
         }
 
+        // There is no Data Access to Register or Update Marca
+        /*
         [HttpPost]
-        public JsonResult Post(User user)
+        public JsonResult Post(Marca brand)
         {
             // Query to insert the data needed
-            bool query = models.RegisterAUser(user.Username, user.Password, user.Email, user.Name, user.Surname, user.Cedula, "Usuario", user.PhoneNumber, user.Cellphone);
+            bool query = models.RegisterBrand();
 
             DataTable table = new DataTable();
             // New the connection string
@@ -79,8 +80,15 @@ namespace MWST_API.Controllers
             }
             else
             {
-                return new JsonResult("Not all parameters have been filled.");
+                return new JsonResult("Not all parameters has been filled.");
             }
         }
+
+        [HttpPut]
+        public JsonResult Put()
+        {
+
+        }
+        */
     }
 }

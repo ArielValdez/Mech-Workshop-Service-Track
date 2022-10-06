@@ -18,6 +18,7 @@ public class User
     public string Cedula { get; set; }
     //Should be limited to thirteen digits in the following order: (809)000-0000
     public string PhoneNumber { get; set; }
+    public string Cellphone { get; set; }
     public string Email { get; set; }
 
     public DateTime Fecha_Creacion;

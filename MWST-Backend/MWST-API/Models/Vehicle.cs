@@ -5,12 +5,13 @@ public class Vehicle
 {
     // Key for Vehicle
     public int ID_Vehicle { get; set; }
+    public string Matricula { get; set; }
     public int ID_User { get; set; } //Should be the id of the user
     public int ID_Marca { get; set; } //FK for Marca
     public int ID_Model { get; set; } //FK for Model
-
-    public string YearModel { get;set; } //This should store years
     public string VIN { get; set; }
+    //Change to an enum or a list
+    public string Color { get; set; }
 
     public Vehicle()
     {
