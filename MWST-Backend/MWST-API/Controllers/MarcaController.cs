@@ -11,7 +11,7 @@ using System.Data.SqlClient;
 
 namespace MWST_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Marca")]
     [ApiController]
     public class MarcaController : ControllerBase
     {

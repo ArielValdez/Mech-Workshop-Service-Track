@@ -7,7 +7,7 @@ public class WorkShop
     public string Name_WorkShop { get; set; }
     public string Location { get; set; } //string is a placeholder for now
 
-    public DateTime OpenTime; //Is this necessary?
+    public DateTime OpenTime;
     public DateTime ClosedTime;
 
     public WorkShop()

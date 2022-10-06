@@ -9,53 +9,27 @@ using Microsoft.Extensions.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 
+// Delete this controller if necessary
 namespace MWST_API.Controllers
 {
-    [Route("api/User")]
+    [Route("api/Login")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class LoginController : ControllerBase
     {
         private readonly IConfiguration _configuration;
         private readonly Connection con = new Connection();
         private UserModel models = new UserModel();
 
-        public UserController(IConfiguration configuration)
+        public LoginController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
         [HttpGet]
-        public JsonResult Get()
+        public JsonResult Get(User user)
         {
             // Query to select the data needed. Change to stored procedures
-            string query = @"select Nombre, Apellido, Cedula, Rol from Usuario";
-
-            DataTable table = new DataTable();
-            // New the connection string
-            string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
-            SqlDataReader reader;
-
-            // Use the domain instead
-            using (SqlConnection connection = new SqlConnection(sqlDataSource))
-            {
-                connection.Open();
-                using(SqlCommand command = new SqlCommand(query, connection))
-                {
-                    reader = command.ExecuteReader();
-                    table.Load(reader);
-                    reader.Close();
-                    connection.Close();
-                }
-            }
-
-            return new JsonResult(table);
-        }
-
-        [HttpPost]
-        public JsonResult Post(User user)
-        {
-            // Query to insert the data needed
-            bool query = models.RegisterAUser(user.Username, user.Password, user.Email, user.Name, user.Surname, user.Cedula, "Usuario", user.PhoneNumber, user.Cellphone);
+            bool query = models.LoginUser(user.Username, user.Password);
 
             DataTable table = new DataTable();
             // New the connection string
@@ -64,6 +38,7 @@ namespace MWST_API.Controllers
 
             if (query)
             {
+                // Use the domain instead
                 using (SqlConnection connection = new SqlConnection(sqlDataSource))
                 {
                     connection.Open();
@@ -79,7 +54,7 @@ namespace MWST_API.Controllers
             }
             else
             {
-                return new JsonResult("Not all parameters have been filled.");
+                return new JsonResult("Incorrect username or password");
             }
         }
     }

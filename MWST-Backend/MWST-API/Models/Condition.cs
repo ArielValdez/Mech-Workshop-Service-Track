@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 
-public class State {
+public class Condition {
     //key
     public int ID_Estado { get; set; }
     //fk
@@ -10,17 +10,17 @@ public class State {
     public string Descripcion { get; set; }
     public string Imagen { get; set; }
 
-    public State(){
+    public Condition(){
 
     }
 
-    public State(string nombre, string desc) {
+    public Condition(string nombre, string desc) {
         this.Nombre_Estado = nombre;
         this.Descripcion = desc;
     }
 
     //This method is to see the description of the state, given the ID
-    public string ViewDescription(State Estado) {
+    public string ViewDescription(Condition Estado) {
         try
         {
             if (Estado.ID_Estado == null) {

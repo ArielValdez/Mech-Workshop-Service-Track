@@ -1,13 +1,12 @@
 using System;
-using System.Collections;
-using enums.FormasPago;
+using enums;
 
 public class Pago {
     //key
     public int ID_Pago { get; set; }
     //fk
     public int ID_Service { get; set; }
-    public FormasPago Forma_Pago { get; set; } //THis should be standardize
+    public FormasPago Forma_Pago { get; set; }
 
     #region Detail
     public int ID_Vehicle { get; set; }
@@ -17,7 +16,7 @@ public class Pago {
     public int ID_History { get; set; }
 
     public float Pago_Servicio { get; set; }
-    public DateTime FechaInicio { set => DateTime.now } //Should be called from the class Service
+    public DateTime FechaInicio; //Should be called from the class Service
     public DateTime FechaPromesa { get; set; }
     public DateTime FechaEntrega { get; set; }
     #endregion
@@ -30,11 +29,12 @@ public class Pago {
     public string FormaPago() {
         try
         {
-            if ((int)Forma_Pago.Debito == 0)
+            int DebitorCredit = (int)Forma_Pago;
+            if (DebitorCredit == 0)
             {
                 return "Débito";
             }
-            else if((int)Forma_Pago.Credito == 1)
+            else if(DebitorCredit == 1)
             {
                 return "Crédito";
             }

@@ -19,6 +19,6 @@ public class Pieza {
         this.Nombre_Pieza = nombre;
         this.Descripcion_Pieza = desc;
         this.Precio = precio;
-        this.cant = Math.Abs(cant); //There cannot be a negative number
+        this.Cantidad = Math.Abs(cant); //There cannot be a negative number
     }
 }
