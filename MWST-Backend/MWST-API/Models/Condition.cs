@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Drawing;
 
 public class Condition {
     //key
@@ -8,10 +9,10 @@ public class Condition {
     public int ID_Service { get; set; }
     public string Nombre_Estado { get; set; }
     public string Descripcion { get; set; }
-    public string Imagen { get; set; }
+    public string Imagen { get; set; } // This one should store an image instead
 
     public Condition(){
-
+        
     }
 
     public Condition(string nombre, string desc) {
@@ -20,15 +21,10 @@ public class Condition {
     }
 
     //This method is to see the description of the state, given the ID
-    public string ViewDescription(Condition Estado) {
+    public string ViewDescription() {
         try
         {
-            if (Estado.ID_Estado == null) {
-            return "Nada que ver por el momento.";
-            }
-            else { // The ID exists
-                return this.Descripcion;
-            }
+            return this.Descripcion;
         }
         catch (Exception e)
         {

@@ -43,6 +43,33 @@ public class User
     }
     #endregion
 
+    // This should be used after the user registers, then verifies the existence of the user
+    public void EmailVerification()
+    {
+        // Implement later
+    }
+
+    public string GetUserRol()
+    {
+        int intRol = (int)User_Role;
+        if (intRol == 0)
+        {
+            return "Usuario";
+        }
+        else if (intRol == 1)
+        {
+            return "Personal";
+        }
+        else if (intRol == 2)
+        {
+            return "Admin";
+        }
+        else
+        {
+            return "Not a Rol";
+        }
+    }
+
     //Profile
     public void Ask4Service() 
     {

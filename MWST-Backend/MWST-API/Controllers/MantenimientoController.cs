@@ -11,54 +11,58 @@ using System.Data.SqlClient;
 
 namespace MWST_API.Controllers
 {
-    [Route("api/User")]
+    [Route("api/Maintenance")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class MantenimientoController : ControllerBase
     {
         private readonly IConfiguration _configuration;
         private readonly Connection con = new Connection();
         private UserModel models = new UserModel();
 
-        public UserController(IConfiguration configuration)
+        public MantenimientoController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
-        //Selects to get information
         [HttpGet]
-        public JsonResult Get()
+        public JsonResult Get(Mantenimiento maintenance)
         {
-            // Query to select the data needed. Change to stored procedures
-            string query = @"select Nombre, Apellido, Cedula, Rol from Usuario";
+            // Query to select the data needed
+            string query = @"Tipo_Mantenimiento from Mantenimiento"; //Delete later, as this creates 2 queries
+            bool validation = models.CheckMaintenance(maintenance.ID_Mantenimiento);
 
             DataTable table = new DataTable();
             // New the connection string
             string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
             SqlDataReader reader;
 
-            // Use the domain instead
-            using (SqlConnection connection = new SqlConnection(sqlDataSource))
+            if (validation)
             {
-                connection.Open();
-                using(SqlCommand command = new SqlCommand(query, connection))
+                using (SqlConnection connection = new SqlConnection(sqlDataSource))
                 {
-                    reader = command.ExecuteReader();
-                    table.Load(reader);
-                    reader.Close();
-                    connection.Close();
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        reader = command.ExecuteReader();
+                        table.Load(reader);
+                        reader.Close();
+                        connection.Close();
+                    }
                 }
+                return new JsonResult(table);
             }
-            return new JsonResult(table);
+            else
+            {
+                return new JsonResult("Nothing to see");
+            }
         }
 
         // Adds information into the database
         [HttpPost]
-        public JsonResult Post(User user)
+        public JsonResult Post(Mantenimiento maintenance)
         {
-            string userRol = user.GetUserRol();
-
             // Query to insert the data needed
-            bool query = models.RegisterAUser(user.Username, user.Password, user.Email, user.Name, user.Surname, user.Cedula, userRol, user.PhoneNumber, user.Cellphone);
+            bool query = models.RegisterMaintenance(maintenance.Tipo_Mantenimiento);
 
             DataTable table = new DataTable();
             // New the connection string
@@ -88,15 +92,14 @@ namespace MWST_API.Controllers
 
         // Updates the information of the user. INCOMPLETE
         [HttpPut]
-        public JsonResult Put(User user)
+        public JsonResult Put(Mantenimiento maintenance)
         {
             // Create, later, a data access for and to update
             // Query to update the information of the user
 
-            // This only updates the table PerfilUsuario
-            string query = @"update PerfilUsuario
-                             set Username = @username, Password = @password, Telefono = @phoneNumber, Celular = @cellphone,
-                             where ID_Usuario = @idUsuario";
+            string query = @"update Mantenimiento
+                             set Tipo_Mantenimiento = @tipoMantenimiento
+                             where ID_Mantenimiento = @idMantenimiento";
 
             DataTable table = new DataTable();
             // New the connection string
@@ -109,12 +112,9 @@ namespace MWST_API.Controllers
                 connection.Open();
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@idUsuario", user.ID_User);
-                    command.Parameters.AddWithValue("@username", user.Username);
-                    command.Parameters.AddWithValue("@password", user.Password);
-                    command.Parameters.AddWithValue("@phoneNumber", user.PhoneNumber);
-                    command.Parameters.AddWithValue("@cellphone", user.Cellphone);
-                    
+                    command.Parameters.AddWithValue("@idMantenimiento", maintenance.ID_Mantenimiento);
+                    command.Parameters.AddWithValue("@tipoMantenimiento", maintenance.Tipo_Mantenimiento);
+
                     reader = command.ExecuteReader();
                     table.Load(reader);
                     reader.Close();
@@ -122,7 +122,7 @@ namespace MWST_API.Controllers
                 }
             }
             // Check for security
-            return new JsonResult("{0}: Successful Update", user.ID_User);
+            return new JsonResult("{0}: Successful Update", maintenance.ID_Mantenimiento);
         }
     }
 }

@@ -38,14 +38,13 @@ namespace MWST_API.Controllers
 
             if (query)
             {
-                // Use the domain instead
                 using (SqlConnection connection = new SqlConnection(sqlDataSource))
                 {
                     connection.Open();
                     using (SqlCommand command = new SqlCommand())
                     {
                         reader = command.ExecuteReader();
-                        table.Load(reader);
+                        table.Load(reader); // Check the use of this table later
                         reader.Close();
                         connection.Close();
                     }
