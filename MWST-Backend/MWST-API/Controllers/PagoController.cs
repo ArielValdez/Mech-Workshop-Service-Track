@@ -55,13 +55,11 @@ namespace MWST_API.Controllers
         }
 
         // Adds information into the database
-        // There is nothing to Register a Receipt. Add later
-        /*
         [HttpPost]
-        public JsonResult Post(Pago payment)
+        public JsonResult Post(Pago payment, Vehicle car, Service service, WorkShop workShop)
         {
             // Query to insert the data needed
-            bool query = ;
+            bool query = models.RegisterReceipt(payment.FormaPago(), payment.Pago_Servicio, car.ID_Vehicle, service.ID_Service, workShop.ID_WorkShop, payment.FechaInicio, payment.FechaPromesa, payment.FechaEntrega);
 
             DataTable table = new DataTable();
             // New the connection string
@@ -88,6 +86,52 @@ namespace MWST_API.Controllers
                 return new JsonResult("Not all parameters have been filled.");
             }
         }
+
+        /* This needs to update both Detalle and Pago tables
+        [HttpPut]
+        public JsonResult Put(User user)
+        {
+            // Create, later, a data access for and to update
+            // Query to update the information of the user
+
+            // This only updates the table PerfilUsuario
+            string query = @"update Pago
+                             set Username = @username, Password = @password, Telefono = @phoneNumber, Celular = @cellphone,
+                             where ID_Usuario = @idUsuario";
+
+            DataTable table = new DataTable();
+            // New the connection string
+            string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
+            SqlDataReader reader;
+
+            // Use the domain instead
+            using (SqlConnection connection = new SqlConnection(sqlDataSource))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@idUsuario", user.ID_User);
+                    command.Parameters.AddWithValue("@username", user.Username);
+                    command.Parameters.AddWithValue("@password", user.Password);
+                    command.Parameters.AddWithValue("@phoneNumber", user.PhoneNumber);
+                    command.Parameters.AddWithValue("@cellphone", user.Cellphone);
+
+                    reader = command.ExecuteReader();
+                    table.Load(reader);
+                    reader.Close();
+                    connection.Close();
+                }
+            }
+            // Check for security
+            return new JsonResult("{0}: Successful Update", user.ID_User);
+        }
         */
+
+        [HttpDelete]
+        public JsonResult Delete()
+        {
+            // A payment not its detail should not be deleted
+            return new JsonResult("Not implemented yet.");
+        }
     }
 }

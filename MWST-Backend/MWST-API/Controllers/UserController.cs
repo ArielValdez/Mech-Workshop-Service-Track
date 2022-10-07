@@ -124,5 +124,12 @@ namespace MWST_API.Controllers
             // Check for security
             return new JsonResult("{0}: Successful Update", user.ID_User);
         }
+
+        [HttpDelete]
+        public JsonResult Delete()
+        {
+            // This should not delete a row. Instead, put a user as "ïnactive".
+            return new JsonResult("Not implemented yet.");
+        }
     }
 }

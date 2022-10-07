@@ -21,8 +21,14 @@ public class Pago {
     public DateTime FechaEntrega { get; set; }
     #endregion
 
+    // Defaulted Forma_Pago as Debito
     public Pago() {
         this.Forma_Pago = FormasPago.Debito;
+    }
+
+    public Pago(FormasPago formas)
+    {
+        this.Forma_Pago = formas;
     }
 
     //Temp: This converts the role into a string
