@@ -8,3 +8,12 @@ namespace enums
          Credito       
     }
 }
+    /*
+    Tipos de pagos
+    Pago cliente
+        Contado,
+        Credito,
+        Seguro
+    Garantia
+    Interno
+    */
