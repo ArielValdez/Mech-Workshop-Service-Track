@@ -1,6 +1,5 @@
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, StatusBar } from 'react-native';
 import SignInScreen from './src/screens/SignInScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
 import ConfirmEmailScreen from './src/screens/ConfirmEmailScreen';
@@ -15,6 +14,10 @@ const Stack = createNativeStackNavigator()
 export default function App() {
 	return (
 		<SafeAreaView style={styles.container}>
+      <StatusBar 
+        barStyle='light-content'
+        backgroundColor='rgba(0, 0, 0, 0.9)'
+      />
 			<NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name='SignIn' component={SignInScreen}/>

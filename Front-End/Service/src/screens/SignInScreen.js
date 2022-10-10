@@ -6,6 +6,7 @@ import CustomButton from "../components/CustomButton";
 import Logo from '../../assets/LogoOficial.png'
 import CheckBox from 'expo-checkbox';
 import { EmailRegex, InvalidEmailMessage, PasswordRegex, InvalidPasswordMessage } from '../Constants'
+import theme from '../Theme'
 
 const SignInScreen = () => {
     const [ email, setEmail ] = useState('')
@@ -40,7 +41,7 @@ const SignInScreen = () => {
     }
 
     return (
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollContainer}>
             <View style={styles.container}>
                 <Image 
                     source={Logo} 
@@ -81,10 +82,13 @@ const SignInScreen = () => {
 }
 
 const styles = StyleSheet.create({
+    scrollContainer: {
+        backgroundColor: theme.colors.primary,
+    },
     container: {
         flex: 1, 
         alignItems: 'center',
-        padding: 20
+        padding: 20,
     },
     logo: {
         flex: 1,

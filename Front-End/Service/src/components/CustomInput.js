@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { View, TextInput, StyleSheet, Text } from 'react-native'
+import theme from '../Theme'
 
 const CustomInput = ({value, setValue, placeholder, secureTextEntry, keyboardType, errorMessage, pattern}) => {
     const [ showErrorText, setShowErrorText ] = useState(false)
@@ -13,18 +14,19 @@ const CustomInput = ({value, setValue, placeholder, secureTextEntry, keyboardTyp
             else {
                 setShowErrorText(true)
             }
-
-            setValue(value)
         }
+
+        setValue(value)
     }
 
     return (
         <View style={styles.container}>
             <View style={styles.inputContainer}>
-                <TextInput
+                <TextInput style={styles.textInput}
                     value={value}
                     onChangeText={handleChange}
                     placeholder={placeholder}
+                    placeholderTextColor={theme.colors.gray}
                     secureTextEntry={secureTextEntry}
                     keyboardType={keyboardType}
                 />
@@ -45,7 +47,7 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     inputContainer: {
-        backgroundColor: 'white',
+        backgroundColor: theme.colors.entriesBackground,
         width: '100%',
 
         borderColor: '#e8e8e8',
@@ -55,6 +57,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 5,
         marginVertical: 5
+    },
+    textInput: {
+        color: theme.colors.white,
     },
     errorMessage: {
         color: 'red',

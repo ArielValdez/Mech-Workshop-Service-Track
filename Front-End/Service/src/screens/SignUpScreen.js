@@ -7,10 +7,15 @@ import AlertModal from "../components/AlertModal"
 import Logo from '../../assets/LogoOficial.png'
 import { UsernameRegex, InvalidUsernameMessage, EmailRegex,
      InvalidEmailMessage, PasswordRegex, InvalidPasswordMessage } from '../Constants'
+import theme from "../Theme"
 
 const SignUpScreen = () => {
-    const [ username, setUsername ] = useState('')
+    const [ firstname, setFirstname ] = useState('')
+    const [ lastname, setLastname ] = useState('')
     const [ email, setEmail ] = useState('')
+    const [ phone, setPhone ] = useState('')
+    const [ carModel, setCarModel ] = useState('')
+    const [ username, setUsername ] = useState('')
     const [ password, setPassword ] = useState('')
     const [ confirmPassword, setConfirmPassword ] = useState('')
     const [ modalVisible, setModalVisible ] = useState(false) 
@@ -34,7 +39,7 @@ const SignUpScreen = () => {
     }
 
     return (
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollContainer}>
             <View style={styles.container}>
                 <AlertModal 
                     title='Información' 
@@ -50,11 +55,16 @@ const SignUpScreen = () => {
                     resizeMode='contain'
                 />
 
-                <CustomInput placeholder='Nombre de usuario' value={username} setValue={setUsername} 
-                    errorMessage={InvalidUsernameMessage} pattern={UsernameRegex}
-                />
+                <CustomInput placeholder='Nombre' value={firstname} setValue={setFirstname} />
+                <CustomInput placeholder='Apellido' value={lastname} setValue={setLastname} />
                 <CustomInput placeholder='Correo Electrónico' value={email} setValue={setEmail} keyboardType='email-address'
                     errorMessage={InvalidEmailMessage} pattern={EmailRegex}
+                />
+                <CustomInput placeholder='Teléfono celular' value={phone} setValue={setPhone} 
+                    keyboardType='number-pad'/>
+                <CustomInput placeholder='Modelo - marca' value={carModel} setValue={setCarModel} />
+                <CustomInput placeholder='Nombre de usuario' value={username} setValue={setUsername} 
+                    errorMessage={InvalidUsernameMessage} pattern={UsernameRegex}
                 />
                 <CustomInput placeholder='Contraseña' value={password} setValue={setPassword} secureTextEntry
                     errorMessage={InvalidPasswordMessage} pattern={PasswordRegex}
@@ -62,6 +72,7 @@ const SignUpScreen = () => {
                 <CustomInput placeholder='Confirmar contraseña' value={confirmPassword} setValue={setConfirmPassword} secureTextEntry
                     errorMessage={InvalidPasswordMessage} pattern={PasswordRegex}
                 />
+
                 
                 <Text style={styles.politicsText}>
                     Al registrarse, usted confirma que esta de acuerdo con nuestros{' '}
@@ -77,6 +88,9 @@ const SignUpScreen = () => {
 }
 
 const styles = StyleSheet.create({
+    scrollContainer: {
+        backgroundColor: theme.colors.primary,
+    },
     container: {
         flex: 1, 
         alignItems: 'center',
@@ -92,7 +106,6 @@ const styles = StyleSheet.create({
         margin: 10,
     },
     politicsText: {
-        color: 'gray',
         marginVertical: 10,
     },
     link: {
