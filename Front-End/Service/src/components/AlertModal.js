@@ -63,7 +63,8 @@ const styles = StyleSheet.create({
         fontSize: 20, 
         flex: 5,
         textAlign: 'center',
-        marginTop: 3,    
+        marginTop: 3,
+        color: 'yellow',    
     },
     closeButton: {
         flex: 1,
