@@ -4,8 +4,8 @@ import Car from '../../assets/CarPlaceholder.jpg'
 import ProgressBar from "../components/ProgressBar";
 
 const MyCarScreen = () => {
-    const {height, width} = useWindowDimensions()
-    const [index, setIndex] = useState(0)
+    const { height, width } = useWindowDimensions()
+    const [ index, setIndex ] = useState(0)
 
     useEffect(() => {
         const interval = setInterval(() => {

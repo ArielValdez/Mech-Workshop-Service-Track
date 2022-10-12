@@ -1,43 +1,75 @@
-import React, { useState, useCallback, useMemo, useEffect } from "react";
+import React, { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import { View, Text, StyleSheet, Image, useWindowDimensions, ScrollView, Modal, FlatList } from 'react-native'
 import { Calendar, CalendarUtils } from 'react-native-calendars'
+import DateTimePicker from '@react-native-community/datetimepicker'
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import theme from "../Theme";
 
-const AppointmentModal = ({visible, onRequestClose, onReturnPress, onOkPress}) => {
+const appointmentTitleRegex = /[a-zA-Z]{3,}/
+const appointmentTitleErrorMessage = 'Título de cita debe tener al menos 3 carácteres'
+
+const AppointmentModal = ({visible, onRequestClose, onReturnPress, onOkPress, timeValue, onTimeChange}) => {
     const [ appointmentTitle, setAppointmentTitle ] = useState('')
+    const [ showTimePicker, setShowTimePicker ] = useState(false)
+    const { height, width } = useWindowDimensions()
 
     return (
         <Modal
             animationType='fade'
             transparent={true}
             visible={visible}
-            onRequestClose={onRequestClose}
+            onRequestClose={() => {
+                setAppointmentTitle('')
+                onRequestClose()
+            }}
         >
             <View style={modalStyles.container}>
-                <View style={modalStyles.view}>
+                <View style={[ modalStyles.view, { height: height * 0.35 } ]}>
                     <Text style={modalStyles.title}>Nueva cita</Text>
-                    <CustomInput value={appointmentTitle} setValue={setAppointmentTitle} placeholder='Título cita'/>
-                    <CustomInput placeholder='Fecha'/>
+                    <CustomInput value={appointmentTitle} setValue={setAppointmentTitle} placeholder='Título cita'
+                        pattern={appointmentTitleRegex} errorMessage={appointmentTitleErrorMessage}
+                    />
+                    <CustomButton text='Seleccionar tiempo' width='75%' type="Tertiary" 
+                        fgColor={theme.colors.primary} onPress={() => setShowTimePicker(true)} />
 
                     <View style={modalStyles.buttonRow}>
                         <CustomButton 
                             text='Regresar' 
                             width='45%' 
                             bgColor={theme.colors.gray}
-                            onPress={onReturnPress}
+                            onPress={() => {
+                                setAppointmentTitle('')
+                                onReturnPress()
+                            }}
                         />
                         <CustomButton 
                             text='Agendar' 
                             width='45%' 
                             bgColor={theme.colors.primary} 
-                            onPress={() => onOkPress(appointmentTitle)}
+                            onPress={() => {
+                                const regex = new RegExp(appointmentTitleRegex)
+                                if (regex.test(appointmentTitle)) { 
+                                    onOkPress(appointmentTitle)
+                                }
+                            }}
                         />
+                       
                     </View>
                 </View>
             </View>
+            {showTimePicker && (
+                <DateTimePicker
+                    value={timeValue} 
+                    mode='time'
+                    is24Hour={true}
+                    onChange={(event, selectedDate) => {
+                        setShowTimePicker(false)
+                        onTimeChange(event, selectedDate)
+                    }}
+                />
+            )}
         </Modal>
     ) 
 }
@@ -51,7 +83,6 @@ const modalStyles = StyleSheet.create({
     },
     view: {
         backgroundColor: theme.colors.white,
-        height: '30%',
         width: '80%',
         borderRadius: 15,
         alignItems: 'center',
@@ -72,11 +103,11 @@ const modalStyles = StyleSheet.create({
 const Appointment = ({title, date}) => {
     return (
         <View style={appointmentStyles.container}>
-            <Text style={styles.header}>
+            <Text style={appointmentStyles.header}>
                 {title}
             </Text>
-            <Text style={styles.date}>
-                {date.dateString}
+            <Text style={appointmentStyles.date}>
+                {date.toLocaleString()}
             </Text>
         </View>
     )
@@ -107,7 +138,7 @@ const appointmentRenderItem = ({item}) => {
 
 const AppointmentsScreen = () => {
     const exampleValues = [
-        { id: 1, title: 'Chequeo Rutinario', date: { dateString: 'Martes, 06 3:35 PM' } }
+        { id: 1, title: 'Chequeo Rutinario', date: new Date()}
     ]
 
     const d = new Date()
@@ -120,8 +151,10 @@ const AppointmentsScreen = () => {
     }
 
     const [ selected, setSelected ] = useState(defaultCalendarValue)
+    const [ selectedTime, setSelectedTime ] = useState(new Date())
     const [ modalVisible, setModalVisible ] = useState(false)
     const [ appointments, setAppointments ] = useState(exampleValues)
+    const idCounter = useRef(2)
 
     const marked = useMemo(() => {
         return {
@@ -135,6 +168,10 @@ const AppointmentsScreen = () => {
 
     const onDayPress = useCallback((date) => {
         setSelected(date.dateString)
+        // Update date object for the time selection
+        selectedTime.setDate(date.day)
+        selectedTime.setMonth(date.month)
+        selectedTime.setFullYear(date.year)
     }, [])
 
     const onAddAppointmentPress = () => {
@@ -142,7 +179,8 @@ const AppointmentsScreen = () => {
     }
 
     const onModalOkPress = (title) => {
-        var newArray = [...appointments, { id: 2, title: title, date: {...selected}}]
+        var newArray = [...appointments, { id: idCounter.current, title: title, date: selectedTime}]
+        idCounter.current = idCounter.current + 1
         setAppointments(newArray)
         setModalVisible(false)
     }
@@ -163,7 +201,12 @@ const AppointmentsScreen = () => {
                 visible={modalVisible} 
                 onRequestClose={() => setModalVisible(false)}
                 onReturnPress={() => setModalVisible(false)}
-                onOkPress={onModalOkPress}    
+                onOkPress={onModalOkPress}
+                timeValue={selectedTime}
+                onTimeChange={(event, selectedDate) => {
+                    console.log(selectedDate)
+                    setSelectedTime(selectedDate)
+                }}    
             />
             <Pressable style={styles.addAppointmentButton} onPressIn={onAddAppointmentPress}>
 
