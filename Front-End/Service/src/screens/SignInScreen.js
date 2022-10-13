@@ -50,16 +50,16 @@ const SignInScreen = () => {
                 />
                 
                 <CustomInput placeholder='Correo Electrónico' value={email} setValue={setEmail} keyboardType='email-address'
-                    errorMessage={InvalidEmailMessage} pattern={EmailRegex}
+                    errorMessage={InvalidEmailMessage} pattern={EmailRegex} marginVertical={10}
                 />
                 <CustomInput placeholder='Contraseña' value={password} setValue={setPassword} secureTextEntry
-                    errorMessage={InvalidPasswordMessage} pattern={PasswordRegex}
+                    errorMessage={InvalidPasswordMessage} pattern={PasswordRegex} marginVertical={10}
                 />
                 
                 <View style={{flexDirection: 'row'}}>
                     <View style={{flex: 1, flexDirection: 'row'}}>
                         <CheckBox value={rememberMe} onValueChange={setRememberMe}/>
-                        <Text style={{marginLeft: 5}}>Remember me</Text>
+                        <Text style={{marginLeft: 5}}>Recuerdame</Text>
                     </View>
                     <View style={{flex: 0.2}}></View>
                     <View style={{flex: 1.5, marginBottom: 10}}>
@@ -69,7 +69,7 @@ const SignInScreen = () => {
                     </View>
                 </View>
 
-                <CustomButton testID='SignInButton' onPress={onSignInPressed} text='Iniciar sesión'/>
+                <CustomButton testID='SignInButton' onPress={onSignInPressed} text='Iniciar sesión' marginVertical={20}/>
 
                 <CustomButton onPress={onSignInFacebook} text='Entrar con Facebook' bgColor='#E7EAF4' fgColor='#4765A9'/>
                 <CustomButton onPress={onSignInGoogle} text='Entrar con Google' bgColor='#FAE9EA' fgColor='#DD4D44'/>
@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
     },
     logo: {
         flex: 1,
+        marginBottom: 10,
     }
 })
 

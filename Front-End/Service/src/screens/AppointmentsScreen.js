@@ -6,6 +6,7 @@ import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import theme from "../Theme";
+import { Entypo, AntDesign } from '@expo/vector-icons'
 
 const appointmentTitleRegex = /[a-zA-Z]{3,}/
 const appointmentTitleErrorMessage = 'Título de cita debe tener al menos 3 carácteres'
@@ -26,11 +27,10 @@ const AppointmentModal = ({visible, onRequestClose, onReturnPress, onOkPress, ti
             }}
         >
             <View style={modalStyles.container}>
-                <View style={[ modalStyles.view, { height: height * 0.35 } ]}>
+                <View style={[ modalStyles.view, { height: height * 0.30 } ]}>
                     <Text style={modalStyles.title}>Nueva cita</Text>
                     <CustomInput value={appointmentTitle} setValue={setAppointmentTitle} placeholder='Título cita'
-                        pattern={appointmentTitleRegex} errorMessage={appointmentTitleErrorMessage}
-                    />
+                        pattern={appointmentTitleRegex} errorMessage={appointmentTitleErrorMessage} />
                     <CustomButton text='Seleccionar tiempo' width='75%' type="Tertiary" 
                         fgColor={theme.colors.primary} onPress={() => setShowTimePicker(true)} />
 
@@ -209,7 +209,7 @@ const AppointmentsScreen = () => {
                 }}    
             />
             <Pressable style={styles.addAppointmentButton} onPressIn={onAddAppointmentPress}>
-
+                <Entypo name="plus" size={50}/>
             </Pressable>
         </View>
     )

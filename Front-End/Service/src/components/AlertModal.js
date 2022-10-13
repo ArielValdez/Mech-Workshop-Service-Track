@@ -3,6 +3,8 @@ import { View, Modal, Text, StyleSheet, Pressable, Image } from 'react-native'
 import ImageButton from './ImageButton'
 import LineBreak from './LineBreak'
 import Close from '../../assets/Close-256.png'
+import CustomButton from './CustomButton'
+import theme from '../Theme'
 
 const AlertModal = ({visible, title, text, onClosePress}) => {
     return (
@@ -21,9 +23,12 @@ const AlertModal = ({visible, title, text, onClosePress}) => {
                             onPress={onClosePress}
                         />
                     </View>
-                    <LineBreak />
+                    <LineBreak marginHorizontal={20} />
                     <View style={styles.body}>
                         <Text>{text}</Text>
+                    </View>
+                    <View style={styles.footer}>
+                        <CustomButton text='Ok' onPress={() => onClosePress()} width='35%' type='Primary' bgColor={theme.colors.primary}/>
                     </View>
                 </View>
             </View>
@@ -36,14 +41,14 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)'
     },
     modalView: {
         backgroundColor: 'white',
+        height: '25%',
         paddingHorizontal: 3,
         paddingTop: 5,
         marginHorizontal: 30,
-        alignItems: 'center',
-        borderRadius: 20,
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
@@ -63,8 +68,7 @@ const styles = StyleSheet.create({
         fontSize: 20, 
         flex: 5,
         textAlign: 'center',
-        marginTop: 3,
-        color: 'yellow',    
+        marginTop: 3,   
     },
     closeButton: {
         flex: 1,
@@ -73,6 +77,11 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         justifyContent: 'center',
         padding: 10,
+    },
+    footer: {
+        flex: 1,
+        alignItems: 'center',
+        paddingTop: 25,
     },
 })
 

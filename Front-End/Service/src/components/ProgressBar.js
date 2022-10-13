@@ -27,7 +27,7 @@ const ProgressBar = ({step, steps, height}) => {
                 marginBottom: 4,
                 alignSelf: 'center',
             }}>
-                ${step}/${steps}
+                {step}/{steps}
             </Text>
             <View onLayout={(e) => {
                 const newWidth = e.nativeEvent.layout.width

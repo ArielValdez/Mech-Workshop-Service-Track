@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
         color: '#3B71F3',
     },
     textTertiary: {
-        color: '#bfbaba',
+        color: '#f2f0f0',
     }
 })
 

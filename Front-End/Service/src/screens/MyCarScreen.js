@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Image, StyleSheet, useWindowDimensions } from "react-native";
-import Car from '../../assets/CarPlaceholder.jpg'
+import Car from '../../assets/CarPlaceholder.png'
 import ProgressBar from "../components/ProgressBar";
 
 const MyCarScreen = () => {
@@ -20,7 +20,6 @@ const MyCarScreen = () => {
     return (
         <View style={styles.container}>
             <View style={styles.centeredContainer}>
-                <Text>My Car</Text>
                 <Image source={Car} style={{height: height * 0.3, width: width * 0.85}}/>
                 <View style={styles.progressText}>
                     <Text style={{flex: 2}}>Tiempo estimado:</Text>
@@ -31,6 +30,7 @@ const MyCarScreen = () => {
             <ProgressBar step={index} steps={10} height={20}/>
             <View style={styles.updatesContainer}>
                 <Text>Actualización en vivo:</Text>
+                <Text> - Chequeo rutinario</Text>
             </View>
         </View>
     )
