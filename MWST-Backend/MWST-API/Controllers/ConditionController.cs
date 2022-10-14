@@ -96,7 +96,8 @@ namespace MWST_API.Controllers
         */
 
         // Upload an image to the database
-        [Route("")]
+        // Check later, as it needs a proper way to be handled
+        [Route("SaveFile")]
         [HttpPost]
         public JsonResult SaveFile()
         {
