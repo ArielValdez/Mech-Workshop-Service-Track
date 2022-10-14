@@ -9,6 +9,33 @@ import { EmailRegex, InvalidEmailMessage, PasswordRegex, InvalidPasswordMessage 
 import theme from '../Theme'
 
 const SignInScreen = () => {
+    {/* Example: https://programmingwithmosh.com/react-native/make-api-calls-in-react-native-using-fetch/
+        Example: https://www.youtube.com/watch?v=ON-Z1iD6Y-c Minute: 38:00
+    
+    useEffect(() => {
+        fetch('http://localhost:44890/api/Login')
+        .then((response) => response.json())
+        .then((json) => setData(json))
+        .catch((error) => console.error(error))
+        .finally(() => setLoading(false));
+    }, []);
+
+    componentMounted() {
+        this.useEffect();
+    }
+
+    render() {
+        const {
+            userLogin
+        } = this.state;
+
+        return(
+            // Here goes HTML constructor
+        )
+    }
+
+    */}
+
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
     const [ rememberMe, setRememberMe ] = useState(false) 
