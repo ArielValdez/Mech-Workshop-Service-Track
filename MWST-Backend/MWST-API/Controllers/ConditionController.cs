@@ -8,6 +8,8 @@ using Domain;
 using Microsoft.Extensions.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace MWST_API.Controllers
 {
@@ -16,12 +18,14 @@ namespace MWST_API.Controllers
     public class ConditionController : ControllerBase
     {
         private readonly IConfiguration _configuration;
+        private readonly IWebHostEnvironment _env;
         private readonly Connection con = new Connection();
         private UserModel models = new UserModel();
 
-        public ConditionController(IConfiguration configuration)
+        public ConditionController(IConfiguration configuration, IWebHostEnvironment env)
         {
             _configuration = configuration;
+            _env = env;
         }
 
         [HttpGet]
@@ -90,6 +94,32 @@ namespace MWST_API.Controllers
             }
         }
         */
+
+        // Upload an image to the database
+        [Route("")]
+        [HttpPost]
+        public JsonResult SaveFile()
+        {
+            try
+            {
+                var httpRequest = Request.Form;
+                var postedFile = httpRequest.Files[0];
+                string filename = postedFile.FileName;
+                var physicalPath = _env.ContentRootPath + "/Photos/" + filename;
+
+                using (var stream = new FileStream(physicalPath, FileMode.Create))
+                {
+                    postedFile.CopyTo(stream);
+                }
+                return new JsonResult(filename);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Excetion Type: {0}", e.GetType());
+                Console.WriteLine("Exception Message: {0}", e.Message);
+                return new JsonResult("searching car.png");
+            }
+        }
 
         // Updates the information of the user. INCOMPLETE
         [HttpPut]
