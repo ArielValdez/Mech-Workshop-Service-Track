@@ -6,10 +6,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Serialization;
+using Microsoft.Extensions.FileProviders;
 
 namespace MWST_API
 {
@@ -58,6 +60,16 @@ namespace MWST_API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            // Example to use a photo with an id
+            // https://stackoverflow.com/questions/23517615/upload-save-and-retrieve-image-from-database-by-using-their-id-in-code-first-met
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "Photos")),
+                RequestPath = "./Photos"
             });
         }
     }
