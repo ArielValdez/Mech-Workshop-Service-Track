@@ -56,10 +56,10 @@ namespace MWST_API.Controllers
 
         // Adds information into the database
         [HttpPost]
-        public JsonResult Post(Pago payment, Vehicle car, Service service, WorkShop workShop)
+        public JsonResult Post(Pago payment)
         {
             // Query to insert the data needed
-            bool query = models.RegisterReceipt(payment.FormaPago(), payment.Pago_Servicio, car.ID_Vehicle, service.ID_Service, workShop.ID_WorkShop, payment.FechaInicio, payment.FechaPromesa, payment.FechaEntrega);
+            bool query = models.RegisterReceipt(payment.FormaPago(), payment.Pago_Servicio, payment.ID_Vehicle, payment.ID_Service, payment.ID_Workshop, payment.FechaInicio, payment.FechaPromesa, payment.FechaEntrega);
 
             DataTable table = new DataTable();
             // New the connection string
