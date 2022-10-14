@@ -1,12 +1,12 @@
 import React from 'react'
 import { SafeAreaView, View, Text, Image, StyleSheet } from 'react-native'
-import Car from '../../assets/CarPlaceholder.jpg'
+import Car from '../../assets/CarPlaceholder.png'
 
 const FeedScreen = () => {
     return (
         <View style={styles.container}>
             <Text>Bienvenido/a</Text>
-            <Text>Usuario</Text>
+            <Text style={styles.username}>Carlos Roque</Text>
             <Image source={Car} style={styles.image} />
             <View style={styles.historyContainer}>
                 <Text style={{alignSelf: 'center'}}>No tienes nada en el Historial</Text>
@@ -23,6 +23,10 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         marginTop: 20,
+    },
+    username: {
+        fontSize: 18,
+        fontWeight: 'bold',
     },
     image: {
         width: 300, 

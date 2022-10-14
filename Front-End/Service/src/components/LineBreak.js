@@ -1,9 +1,12 @@
 import React from "react"
 import { View, Text, StyleSheet } from "react-native"
 
-const LineBreak = () => {
+const LineBreak = ({marginHorizontal}) => {
     return (
-        <View style={styles.linebreak}>
+        <View style={[
+            styles.linebreak, 
+            marginHorizontal ? {marginHorizontal: marginHorizontal} : {} 
+        ]}>
             <Text></Text>
         </View>
     )

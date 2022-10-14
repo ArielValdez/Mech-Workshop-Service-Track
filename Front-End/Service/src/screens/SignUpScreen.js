@@ -43,7 +43,7 @@ const SignUpScreen = () => {
             <View style={styles.container}>
                 <AlertModal 
                     title='Información' 
-                    text='Su registro ha sido completado de manera satisfactoria'
+                    text='Su registro ha sido completado de manera satisfactoria.'
                     onClosePress={() => setModalVisible(false)}
                     visible={modalVisible}
                 />
