@@ -27,10 +27,15 @@ namespace MWST_API.Controllers
 
         // Gets the information of the users history
         [HttpGet]
-        public JsonResult Get(User user, History history)
+        public JsonResult Get(History history)
         {
-            // Query to select the data needed. Change to stored procedures
-            bool query = models.CheckHistory(user.ID_User, history.ID_History);
+            ////Check later
+            //int userHistory = user.history.ID_History;
+
+            //// Query to select the data needed. Change to stored procedures
+            //bool query = models.CheckHistory(user.ID_User, userHistory);
+
+            bool query = models.CheckHistory(history.ID_User, history.ID_History);
 
             DataTable table = new DataTable();
             // New the connection string

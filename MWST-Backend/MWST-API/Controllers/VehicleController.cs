@@ -51,9 +51,9 @@ namespace MWST_API.Controllers
         }
 
         [HttpPost]
-        public JsonResult Post(Vehicle car, User user, Marca brand, Model mod)
+        public JsonResult Post(Vehicle car)
         {
-            bool query = models.RegisterUsersVehicle(car.Matricula, user.ID_User, brand.ID_Marca, mod.ID_Model, car.VIN, car.Color);
+            bool query = models.RegisterUsersVehicle(car.Matricula, car.ID_User, car.ID_Marca, car.ID_Model, car.VIN, car.Color);
 
             DataTable table = new DataTable();
             // New the connection string

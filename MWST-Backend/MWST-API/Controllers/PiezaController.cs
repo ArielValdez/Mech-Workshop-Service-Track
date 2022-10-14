@@ -95,7 +95,7 @@ namespace MWST_API.Controllers
 
         // Updates the information of the user. INCOMPLETE
         [HttpPut]
-        public JsonResult Put(Pieza part, Pago pay)
+        public JsonResult Put(Pieza part)
         {
             // Create, later, a data access for and to update
             // Query to update the information of the user
@@ -116,7 +116,7 @@ namespace MWST_API.Controllers
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@idPieza", part.ID_Pieza);
-                    command.Parameters.AddWithValue("@idPieza", pay.ID_Pago);
+                    command.Parameters.AddWithValue("@idPieza", part.ID_Pago);
                     command.Parameters.AddWithValue("@pieza", part.Nombre_Pieza);
                     command.Parameters.AddWithValue("@descripcion", part.Descripcion_Pieza);
                     command.Parameters.AddWithValue("@cantidad", part.Cantidad);

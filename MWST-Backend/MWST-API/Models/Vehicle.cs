@@ -19,11 +19,11 @@ public class Vehicle
         //Store the id of the user in User
     }
 
-    public Vehicle(int marca, int model, string yearModel, string vin)
+    public Vehicle(int marca, int model, string vin)
     {
         this.ID_Marca = marca;
         this.ID_Model = model;
-        this.YearModel = yearModel;
+        //YearModel = yearModel;
         this.VIN = vin;
     }
 }
