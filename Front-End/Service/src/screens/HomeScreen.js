@@ -2,7 +2,7 @@ import React from "react";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import FeedScreen from "./FeedScreen";
 import MyCarScreen from "./MyCarScreen";
-import MessageScreen from "./MessageScreen";
+import ChatScreen from "./ChatScreen";
 import AppointmentsScreen from "./AppointmentsScreen"
 import { Ionicons, AntDesign } from '@expo/vector-icons'
 
@@ -21,7 +21,7 @@ const HomeScreen = () => {
                     tabBarIcon: ({color, size}) => <Ionicons name='md-car' size={28}/>
                 }}
             />
-            <Tab.Screen name='Message' component={MessageScreen} 
+            <Tab.Screen name='Messages' component={ChatScreen} 
                 options={{
                     tabBarIcon: ({color, size}) => <AntDesign name='message1' size={28}/>
                 }}

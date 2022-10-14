@@ -33,7 +33,7 @@ namespace MWST_API.Controllers
 
             DataTable table = new DataTable();
             // New the connection string
-            string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
+            string sqlDataSource = _configuration.GetConnectionString("WorkshopAppCon");
             SqlDataReader reader;
 
             // Use the domain instead
@@ -62,7 +62,7 @@ namespace MWST_API.Controllers
 
             DataTable table = new DataTable();
             // New the connection string
-            string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
+            string sqlDataSource = _configuration.GetConnectionString("WorkshopAppCon");
             SqlDataReader reader;
 
             if (query)

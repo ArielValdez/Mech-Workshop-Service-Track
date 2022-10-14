@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { View, TextInput, StyleSheet, Text } from 'react-native'
 import theme from '../Theme'
 
-const CustomInput = ({value, setValue, placeholder, secureTextEntry, keyboardType, errorMessage, pattern}) => {
+const CustomInput = ({value, setValue, placeholder, secureTextEntry, keyboardType, errorMessage, pattern, padding, bgColor}) => {
     const [ showErrorText, setShowErrorText ] = useState(false)
 
     const handleChange = (value) => {
@@ -21,8 +21,8 @@ const CustomInput = ({value, setValue, placeholder, secureTextEntry, keyboardTyp
 
     return (
         <View style={styles.container}>
-            <View style={styles.inputContainer}>
-                <TextInput style={styles.textInput}
+            <View style={[styles.inputContainer, bgColor ? {backgroundColor: bgColor} : {}]}>
+                <TextInput style={[styles.textInput, padding ? {padding: padding} : {}]}
                     value={value}
                     onChangeText={handleChange}
                     placeholder={placeholder}
@@ -44,7 +44,7 @@ const CustomInput = ({value, setValue, placeholder, secureTextEntry, keyboardTyp
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%'
+        width: '100%',
     },
     inputContainer: {
         backgroundColor: theme.colors.entriesBackground,
