@@ -65,12 +65,12 @@ namespace MWST_API
             // Example to use a photo with an id
             // https://stackoverflow.com/questions/23517615/upload-save-and-retrieve-image-from-database-by-using-their-id-in-code-first-met
 
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(
-                    Path.Combine(Directory.GetCurrentDirectory(), "Photos")),
-                RequestPath = "./Photos"
-            });
+            //app.UseStaticFiles(new StaticFileOptions
+            //{
+            //    FileProvider = new PhysicalFileProvider(
+            //        Path.Combine(Directory.GetCurrentDirectory(), "Photos")),
+            //    RequestPath = "./Photos"
+            //});
         }
     }
 }
