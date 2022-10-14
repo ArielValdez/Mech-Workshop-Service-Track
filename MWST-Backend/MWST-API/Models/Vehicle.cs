@@ -9,6 +9,7 @@ public class Vehicle
     public int ID_User { get; set; } //Should be the id of the user
     public int ID_Marca { get; set; } //FK for Marca
     public int ID_Model { get; set; } //FK for Model
+    public string YearModel { get; private set; }
     public string VIN { get; set; }
     //Change to an enum or a list
     public string Color { get; set; }

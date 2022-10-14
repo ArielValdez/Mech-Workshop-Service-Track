@@ -27,7 +27,7 @@ const AppointmentModal = ({visible, onRequestClose, onReturnPress, onOkPress, ti
             }}
         >
             <View style={modalStyles.container}>
-                <View style={[ modalStyles.view, { height: height * 0.30 } ]}>
+                <View style={[ modalStyles.view, { height: height * 0.35 } ]}>
                     <Text style={modalStyles.title}>Nueva cita</Text>
                     <CustomInput value={appointmentTitle} setValue={setAppointmentTitle} placeholder='Título cita'
                         pattern={appointmentTitleRegex} errorMessage={appointmentTitleErrorMessage} />
