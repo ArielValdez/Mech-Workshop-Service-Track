@@ -1,17 +1,27 @@
-import React, { useState } from 'react';
-import { Text, View, ScrollView, StyleSheet } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { Text, View, ScrollView, StyleSheet, FlatList } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import CustomInput from '../components/CustomInput';
 import theme from '../Theme';
 import { Ionicons } from '@expo/vector-icons'
 
-const Message = () => {
+const Message = ({senderName, content, isSenderMe}) => {
 	return (
-		<View style={messageStyles.container}>
-			<Ionicons name='person-circle' size={50}/>
-			<View style={messageStyles.messageTextContainer}>
-				<Text style={messageStyles.senderName}>David</Text>
-				<Text>Hola, Mr Carlos</Text>
+		<View style={[
+			messageStyles.container,
+			isSenderMe ? { alignSelf: 'flex-end', marginRight: 10, } : {},
+		]}>
+			{ !isSenderMe && <Ionicons name='person-circle' size={50}/> }
+			<View style={[
+				messageStyles.messageTextContainer,
+			    isSenderMe ? { backgroundColor: 'gray' } : {},
+			]}>
+				<Text style={messageStyles.senderName}>
+					{senderName}
+				</Text>
+				<Text>
+					{content}
+				</Text>
 			</View>
 		</View>
 	)
@@ -35,22 +45,39 @@ const messageStyles = StyleSheet.create({
 	},
 })
 
+const MessageRenderItem = ({item}) => {
+	return (
+		<Message senderName={item.senderName} content={item.content} isSenderMe={item.isSenderMe}/>
+	)
+}
+
 const ChatScreen = () => {
-	const [ message, setMessage ] = useState('')
+	const defaultMessages = [
+		{ id: 1, senderName: 'David', content: 'Saludos, ¿En qué lo puedo ayudar?', isSenderMe: false }
+	]
+
+	const [ messages, setMessages ] = useState(defaultMessages)
+	const [ messageTextBox, setMessageTextBox ] = useState('')
+	const idCounter = useRef(2)
 
 	const onSendPress = () => {
-		console.log(message)
+		const newArray = [...messages, {id: idCounter.current, senderName: 'Carlos Roque', content: messageTextBox, isSenderMe: true}]
+		idCounter.current = idCounter.current + 1
+		setMessages(newArray)
+		setMessageTextBox('')
 	}
 
 	return (
 		<View style={styles.container}>
-			<ScrollView style={styles.messagesContainer}>
-				<Message />
-				<Message />
-			</ScrollView>
+			<FlatList
+				style={styles.messagesContainer} 
+				data={messages}
+				renderItem={MessageRenderItem}
+				keyExtractor={item => item.id}
+			/>
 			<View style={styles.bottomRow}>
 				<View style={styles.messageInputBox}>
-					<CustomInput placeholder='Mensaje' value={message} setValue={setMessage} padding={5} bgColor={theme.colors.white}/>
+					<CustomInput placeholder='Mensaje' value={messageTextBox} setValue={setMessageTextBox} padding={5}/>
 				</View>
 				<View style={styles.sendButton}>
 					<CustomButton text='Enviar' onPress={onSendPress} padding={15} bgColor='gray'/>

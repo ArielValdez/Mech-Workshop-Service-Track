@@ -179,7 +179,7 @@ const AppointmentsScreen = () => {
     }
 
     const onModalOkPress = (title) => {
-        var newArray = [...appointments, { id: idCounter.current, title: title, date: selectedTime}]
+        var newArray = [...appointments, {id: idCounter.current, title: title, date: selectedTime}]
         idCounter.current = idCounter.current + 1
         setAppointments(newArray)
         setModalVisible(false)
