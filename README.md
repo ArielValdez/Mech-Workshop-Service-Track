@@ -12,7 +12,7 @@ The purpose of this program is to give users a layer of security when said user 
 * Rafael Malena - ID: 1075534
 * Mario Pucheu - ID: 1089624
 * Carlos Roque - ID: 1088452
-* Carlos Luciano - ID: 1090096
+* Carlos Luciano - ID: 
 ***
 
 ## Technologies
