@@ -23,7 +23,7 @@ namespace MWST_API.Controllers
         {
             _configuration = configuration;
         }
-
+        
         [HttpGet]
         public JsonResult Get()
         {
@@ -35,20 +35,73 @@ namespace MWST_API.Controllers
             string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
             SqlDataReader reader;
 
-            // Use the domain instead
-            using (SqlConnection connection = new SqlConnection(sqlDataSource))
+            try
             {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand(query, connection))
+                // Use the domain instead
+                using (SqlConnection connection = new SqlConnection(sqlDataSource))
                 {
-                    reader = command.ExecuteReader();
-                    table.Load(reader);
-                    reader.Close();
-                    connection.Close();
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        reader = command.ExecuteReader();
+                        table.Load(reader);
+                        reader.Close();
+                        connection.Close();
+                    }
                 }
+                return new JsonResult(table);
             }
-            return new JsonResult(table);
+            catch (Exception e)
+            {
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Get Request.");
+            }
         }
 
+        [HttpPost]
+        public JsonResult Post()
+        {
+            try
+            {
+                return new JsonResult("Not implemented yet.");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Post Request.");
+            }
+        }
+
+        [HttpPut]
+        public JsonResult Put()
+        {
+            try
+            {
+                return new JsonResult("Not implemented yet.");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Put Request.");
+            }
+        }
+
+        [HttpDelete]
+        public JsonResult Delete()
+        {
+            try
+            {
+                return new JsonResult("Not implemented yet.");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Post Request.");
+            }
+        }
     }
 }

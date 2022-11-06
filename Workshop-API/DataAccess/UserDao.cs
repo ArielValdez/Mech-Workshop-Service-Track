@@ -31,6 +31,8 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
 
                         SqlDataReader reader = command.ExecuteReader();
+
+                        connection.Close();
                         if (reader.HasRows)
                         {
                             return true;
@@ -44,8 +46,9 @@ namespace DataAccess
             }
             catch (Exception e)
             {
-                // Rollback should be added
-                throw e;
+                Console.WriteLine("Commit Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return false;
             }
         }
 
@@ -73,6 +76,8 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
 
                         SqlDataReader reader = command.ExecuteReader();
+
+                        connection.Close();
                         if (reader.HasRows)
                         {
                             return true;
@@ -86,8 +91,9 @@ namespace DataAccess
             }
             catch (Exception e)
             {
-                // Rollback should be added
-                throw e;
+                Console.WriteLine("Commit Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return false;
             }
         }
 
@@ -114,6 +120,8 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
 
                         SqlDataReader reader = command.ExecuteReader();
+
+                        connection.Close();
                         if (reader.HasRows)
                         {
                             return true;
@@ -127,8 +135,9 @@ namespace DataAccess
             }
             catch (Exception e)
             {
-                // Rollback should be added
-                throw e;
+                Console.WriteLine("Commit Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return false;
             }
         }
 
@@ -149,6 +158,8 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
 
                         SqlDataReader reader = command.ExecuteReader();
+
+                        connection.Close();
                         if (reader.HasRows)
                         {
                             return true;
@@ -162,8 +173,9 @@ namespace DataAccess
             }
             catch (Exception e)
             {
-                // Rollback should be added
-                throw e;
+                Console.WriteLine("Commit Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return false;
             }
         }
 
@@ -188,6 +200,8 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
                         
                         SqlDataReader reader = command.ExecuteReader();
+
+                        connection.Close();
                         if (reader.HasRows)
                         {
                             return true;
@@ -201,8 +215,9 @@ namespace DataAccess
             }
             catch (Exception e)
             {
-                // Rollback should be added
-                throw e;
+                Console.WriteLine("Commit Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return false;
             }
         }
 
@@ -227,6 +242,8 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
 
                         SqlDataReader reader = command.ExecuteReader();
+
+                        connection.Close();
                         if (reader.HasRows)
                         {
                             return true;
@@ -240,8 +257,9 @@ namespace DataAccess
             }
             catch (Exception e)
             {
-                // Rollback should be added
-                throw e;
+                Console.WriteLine("Commit Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return false;
             }
         }
 
@@ -265,6 +283,8 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
 
                         SqlDataReader reader = command.ExecuteReader();
+
+                        connection.Close();
                         if (reader.HasRows)
                         {
                             return true;
@@ -278,8 +298,9 @@ namespace DataAccess
             }
             catch (Exception e)
             {
-                // Rollback should be added
-                throw e;
+                Console.WriteLine("Commit Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return false;
             }
         }
 
@@ -308,6 +329,8 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
 
                         SqlDataReader reader = command.ExecuteReader();
+
+                        connection.Close();
                         if (reader.HasRows)
                         {
                             return true;
@@ -321,8 +344,9 @@ namespace DataAccess
             }
             catch (Exception e)
             {
-                // Rollback should be added
-                throw e;
+                Console.WriteLine("Commit Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return false;
             }
         }
 
@@ -347,6 +371,8 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
 
                         SqlDataReader reader = command.ExecuteReader();
+
+                        connection.Close();
                         if (reader.HasRows)
                         {
                             return true;
@@ -360,8 +386,9 @@ namespace DataAccess
             }
             catch (Exception e)
             {
-                // Rollback should be added
-                throw e;
+                Console.WriteLine("Commit Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return false;
             }
         }
         #endregion
@@ -414,14 +441,18 @@ namespace DataAccess
                         { /* Write the update part here */ }
 
                         SqlDataReader reader = command.ExecuteReader();
-                        if (!reader.HasRows) //Does not exist
+
+                        connection.Close();
+                        if (!reader.HasRows)
                         {
                             transaction.Commit();
+                            reader.Close();
                             return true;
                         }
-                        else //Exists
+                        else
                         {
                             transaction.Rollback();
+                            reader.Close();
                             return false;
                         }
                     }
@@ -480,15 +511,17 @@ namespace DataAccess
 
                         SqlDataReader reader = command.ExecuteReader();
 
-                        //The part does not exist in the database, and registers it successfully
+                        connection.Close();
                         if (!reader.HasRows)
                         {
                             transaction.Commit();
+                            reader.Close();
                             return true;
                         }
                         else
                         {
                             transaction.Rollback();
+                            reader.Close();
                             return false;
                         }
                     }
@@ -538,15 +571,18 @@ namespace DataAccess
                         command.ExecuteNonQuery();
 
                         SqlDataReader reader = command.ExecuteReader();
-                        //The part does not exist in the database, and registers it successfully
+
+                        connection.Close();
                         if (!reader.HasRows)
                         {
                             transaction.Commit();
+                            reader.Close();
                             return true;
                         }
                         else
                         {
                             transaction.Rollback();
+                            reader.Close();
                             return false;
                         }
                     }
@@ -598,15 +634,18 @@ namespace DataAccess
                         command.ExecuteNonQuery();
 
                         SqlDataReader reader = command.ExecuteReader();
-                        //The part does not exist in the database, and registers it successfully
+
+                        connection.Close();
                         if (!reader.HasRows)
                         {
                             transaction.Commit();
+                            reader.Close();
                             return true;
                         }
                         else
                         {
                             transaction.Rollback();
+                            reader.Close();
                             return false;
                         }
                     }
@@ -676,14 +715,18 @@ namespace DataAccess
                         { /* Write the update part here */ }
 
                         SqlDataReader reader = command.ExecuteReader();
+
+                        connection.Close();
                         if (!reader.HasRows)
                         {
                             transaction.Commit();
+                            reader.Close();
                             return true;
                         }
                         else
                         {
                             transaction.Rollback();
+                            reader.Close();
                             return false;
                         }
                     }
@@ -861,14 +904,18 @@ namespace DataAccess
                         { /* Write the update part here */ }
 
                         SqlDataReader reader = command.ExecuteReader();
+
+                        connection.Close();
                         if (!reader.HasRows)
                         {
                             transaction.Commit();
+                            reader.Close();
                             return true;
                         }
                         else
                         {
                             transaction.Rollback();
+                            reader.Close();
                             return false;
                         }
                     }
@@ -924,14 +971,18 @@ namespace DataAccess
                         { /* Write the update part here */ }
 
                         SqlDataReader reader = command.ExecuteReader();
+
+                        connection.Close();
                         if (!reader.HasRows)
                         {
                             transaction.Commit();
+                            reader.Close();
                             return true;
                         }
                         else
                         {
                             transaction.Rollback();
+                            reader.Close();
                             return false;
                         }
                     }

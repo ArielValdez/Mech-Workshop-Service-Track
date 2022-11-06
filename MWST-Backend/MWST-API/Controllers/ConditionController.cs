@@ -38,25 +38,33 @@ namespace MWST_API.Controllers
             // New the connection string
             string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
             SqlDataReader reader;
-
-            if (query)
+            try
             {
-                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                if (query)
                 {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand())
+                    using (SqlConnection connection = new SqlConnection(sqlDataSource))
                     {
-                        reader = command.ExecuteReader();
-                        table.Load(reader); // Check the use of this table later
-                        reader.Close();
-                        connection.Close();
+                        connection.Open();
+                        using (SqlCommand command = new SqlCommand())
+                        {
+                            reader = command.ExecuteReader();
+                            table.Load(reader); // Check the use of this table later
+                            reader.Close();
+                            connection.Close();
+                        }
                     }
+                    return new JsonResult(table);
                 }
-                return new JsonResult(table);
+                else
+                {
+                    return new JsonResult("Nothing to see");
+                }
             }
-            else
+            catch (Exception e)
             {
-                return new JsonResult("Nothing to see");
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Get Request.");
             }
         }
 
@@ -140,25 +148,34 @@ namespace MWST_API.Controllers
             SqlDataReader reader;
 
             // Use the domain instead
-            using (SqlConnection connection = new SqlConnection(sqlDataSource))
+            try
             {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand(query, connection))
+                using (SqlConnection connection = new SqlConnection(sqlDataSource))
                 {
-                    command.Parameters.AddWithValue("@idEstado", condition.ID_Estado);
-                    command.Parameters.AddWithValue("@idServicio", condition.ID_Service);
-                    command.Parameters.AddWithValue("@nombreEstado", condition.Nombre_Estado);
-                    command.Parameters.AddWithValue("@descripcion", condition.Descripcion);
-                    command.Parameters.AddWithValue("@imagen", condition.Imagen);
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@idEstado", condition.ID_Estado);
+                        command.Parameters.AddWithValue("@idServicio", condition.ID_Service);
+                        command.Parameters.AddWithValue("@nombreEstado", condition.Nombre_Estado);
+                        command.Parameters.AddWithValue("@descripcion", condition.Descripcion);
+                        command.Parameters.AddWithValue("@imagen", condition.Imagen);
 
-                    reader = command.ExecuteReader();
-                    table.Load(reader);
-                    reader.Close();
-                    connection.Close();
+                        reader = command.ExecuteReader();
+                        table.Load(reader);
+                        reader.Close();
+                        connection.Close();
+                    }
                 }
+                // Check for security
+                return new JsonResult("{0}: Successful Update", condition.ID_Estado);
             }
-            // Check for security
-            return new JsonResult("{0}: Successful Update", condition.ID_Estado);
+            catch (Exception e)
+            {
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Put Request.");
+            }
         }
     }
 }

@@ -28,28 +28,64 @@ namespace MWST_API.Controllers
         public JsonResult Get()
         {
             // This should not delete a row. Instead, put a user as "ïnactive".
-            return new JsonResult("Not implemented yet.");
+            try
+            {
+                return new JsonResult("Not implemented yet.");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Get Request.");
+            }
         }
 
         [HttpPost]
         public JsonResult Post()
         {
             // This should not delete a row. Instead, put a user as "ïnactive".
-            return new JsonResult("Not implemented yet.");
+            try
+            {
+                return new JsonResult("Not implemented yet.");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Post Request.");
+            }
         }
 
         [HttpPut]
         public JsonResult Put()
         {
             // This should not delete a row. Instead, put a user as "ïnactive".
-            return new JsonResult("Not implemented yet.");
+            try
+            {
+                return new JsonResult("Not implemented yet.");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Put Request.");
+            }
         }
 
         [HttpDelete]
         public JsonResult Delete()
         {
             // This should not delete a row. Instead, put a user as "ïnactive".
-            return new JsonResult("Not implemented yet.");
+            try
+            {
+                return new JsonResult("Not implemented yet.");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Delete Request.");
+            }
         }
     }
 }
