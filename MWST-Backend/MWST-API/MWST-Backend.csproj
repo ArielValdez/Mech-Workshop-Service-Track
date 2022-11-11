@@ -11,16 +11,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="DataAccess">
-      <HintPath>..\..\Workshop-API\Domain\bin\Debug\netcoreapp3.1\DataAccess.dll</HintPath>
-    </Reference>
-    <Reference Include="Domain">
-      <HintPath>..\..\Workshop-API\Domain\bin\Debug\netcoreapp3.1\Domain.dll</HintPath>
-    </Reference>
+    <Folder Include="Photos\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Photos\" />
+    <Reference Include="DataAccess">
+      <HintPath>..\..\MWST-APIDao\DataAccess\obj\Debug\netcoreapp3.1\DataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="Domain">
+      <HintPath>..\..\MWST-APIDao\Domain\obj\Debug\netcoreapp3.1\Domain.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 
