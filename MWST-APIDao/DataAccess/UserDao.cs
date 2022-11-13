@@ -8,7 +8,7 @@ namespace DataAccess
 {
     public class UserDao : ConnectionToSql
     {
-        #region Accessing
+        #region Access
         // This method is called when the user enters their data for authentication
         public bool Login(string username, string password)
         {
@@ -176,7 +176,7 @@ namespace DataAccess
             }
         }
 
-        public bool Service(int idService)
+        public bool CheckService(int idService)
         {
             try
             {
@@ -390,7 +390,7 @@ namespace DataAccess
         }
         #endregion
 
-        #region Registering
+        #region Register
         // This method is used when the user registers into the database
         // Rol should be stored as an enum
         public bool RegisterUser(string username, string password, string email, string nombre,
@@ -828,7 +828,7 @@ namespace DataAccess
                     try
                     {
                         //Inserting values into the database, table Modelo
-                        command.CommandText = "insert into Marca(Nombre_Modelo, ID_Marca) values(@nombreModelo, @fkMarca)";
+                        command.CommandText = "insert into Modelo(Nombre_Modelo, ID_Marca) values(@nombreModelo, @fkMarca)";
 
                         command.Parameters.Add("@nombreModelo", SqlDbType.Char, 18).Value = nombreModelo;
                         command.Parameters.Add("@fkMarca", SqlDbType.Int).Value = idMarca; // FK of Marca
@@ -1023,10 +1023,10 @@ namespace DataAccess
 
                     try
                     {
-                        //Inserting values into the database, table PerfilUsuario
                         command.CommandText = "update PerfilUsuario" +
                                                 "set Username = @username, Password = @password, Telefono = @telefono, Celular = @celular, Email = @email, FechaCreacion = @fechaCreacion" +
                                                 "where ID_Usuario = idUsuario";
+                        
                         command.Parameters.AddWithValue("@idUsuario", idUsuario);
                         command.Parameters.Add("@username", SqlDbType.VarChar, 20).Value = username;
                         command.Parameters.Add("@password", SqlDbType.VarChar, 20).Value = password;
@@ -1035,10 +1035,11 @@ namespace DataAccess
                         command.Parameters.Add("@email", SqlDbType.VarChar, 50).Value = email;
                         command.Parameters.AddWithValue("@fechaCreacion", DateTime.Now);
 
-                        //Inserting values into the database, table Usuario
-                        command.CommandText = "insert into Usuario(Nombre, Apellido, Cedula, Rol)" +
-                                                "values(@nombre, @apellido, @cedula, @rol)";
-
+                        command.CommandText = "update Usuario" +
+                                               "Nombre = @nombre, Apellido = @apellido, Cedula = @cedula, Rol = @rol" +
+                                                "where ID_Usuario = @idUsuario";
+                        
+                        command.Parameters.AddWithValue("@idUsuario", idUsuario);
                         command.Parameters.Add("@nombre", SqlDbType.VarChar, 30).Value = nombre;
                         command.Parameters.Add("@apellido", SqlDbType.VarChar, 30).Value = apellido;
                         command.Parameters.Add("@cedula", SqlDbType.Char, 11).Value = cedula;
@@ -1050,7 +1051,7 @@ namespace DataAccess
                         SqlDataReader reader = command.ExecuteReader();
 
                         connection.Close();
-                        if (!reader.HasRows)
+                        if (reader.HasRows)
                         {
                             transaction.Commit();
                             reader.Close();
@@ -1118,7 +1119,7 @@ namespace DataAccess
                         SqlDataReader reader = command.ExecuteReader();
 
                         connection.Close();
-                        if (!reader.HasRows)
+                        if (reader.HasRows)
                         {
                             transaction.Commit();
                             reader.Close();
@@ -1248,7 +1249,7 @@ namespace DataAccess
                         SqlDataReader reader = command.ExecuteReader();
 
                         connection.Close();
-                        if (!reader.HasRows)
+                        if (reader.HasRows)
                         {
                             transaction.Commit();
                             reader.Close();
@@ -1303,7 +1304,7 @@ namespace DataAccess
                         //Inserting values into the database, table Detalle
                         command.CommandText = "update Detalle" +
                                               "set Pago_Servicio = @payService, ID_Vehiculo = @idVehicle, ID_Servicio = @idService, FechaInicio = @fechaInicio, FechaPromesa = @fechaPromesa, FechaEntrega = @fechaEntrega" +
-                                              "where ID_Detalle = @idReceipt";
+                                              "where ID_Pago = @idReceipt";
 
                         command.Parameters.AddWithValue("@idReceipt", idReceipt);
                         command.Parameters.Add("@payService", SqlDbType.Decimal).Value = payService;
@@ -1318,7 +1319,7 @@ namespace DataAccess
                         //Inserting data into "Pago"
                         command.CommandText = "update Pago" +
                                               "set Forma_Pago = @way2pay, Pago_Servicio = @payService, ID_Servicio = idService)" +
-                                              "where ID_Pago = idReceipt";
+                                              "where ID_Pago = @idReceipt";
 
                         // "Forma_Pago" (way2Pay) should store enums (Credito, Debito)
                         command.Parameters.AddWithValue("@idReceipt", idReceipt);
@@ -1329,12 +1330,10 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
 
-                        { /* Write the update part here */ }
-
                         SqlDataReader reader = command.ExecuteReader();
 
                         connection.Close();
-                        if (!reader.HasRows)
+                        if (reader.HasRows)
                         {
                             transaction.Commit();
                             reader.Close();
@@ -1393,10 +1392,8 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
 
-                        { /* Write the update part here */ }
-
                         SqlDataReader reader = command.ExecuteReader();
-                        if (!reader.HasRows)
+                        if (reader.HasRows)
                         {
                             transaction.Commit();
                             return true;
@@ -1445,7 +1442,7 @@ namespace DataAccess
                     try
                     {
                         //Inserting values into the database, table Modelo
-                        command.CommandText = "update Marca set Nombre_Modelo = @nombreModelo, ID_Marca = @fkMarca where ID_Modelo = @idModelo";
+                        command.CommandText = "update Modelo set Nombre_Modelo = @nombreModelo, ID_Marca = @fkMarca where ID_Modelo = @idModelo";
 
                         command.Parameters.AddWithValue("@idModelo", idModelo);
                         command.Parameters.Add("@nombreModelo", SqlDbType.Char, 18).Value = nombreModelo;
@@ -1454,10 +1451,8 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
 
-                        { /* Write the update part here */ }
-
                         SqlDataReader reader = command.ExecuteReader();
-                        if (!reader.HasRows)
+                        if (reader.HasRows)
                         {
                             transaction.Commit();
                             return true;
@@ -1515,12 +1510,10 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
 
-                        { /* Write the update part here */ }
-
                         SqlDataReader reader = command.ExecuteReader();
 
                         connection.Close();
-                        if (!reader.HasRows)
+                        if (reader.HasRows)
                         {
                             transaction.Commit();
                             reader.Close();
@@ -1571,7 +1564,7 @@ namespace DataAccess
                     try
                     {
                         //Inserting values into the database, table Municipio
-                        command.CommandText = "update Provincia" +
+                        command.CommandText = "update Municipio" +
                                           "set Municipio = @municipio, Descripcion = @descripcion, ID_Provincia = @idProvincia" +
                                           "where ID_Municipio = @idMunicipio";
 
@@ -1583,12 +1576,621 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
 
-                        { /* Write the update part here */ }
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        connection.Close();
+                        if (reader.HasRows)
+                        {
+                            transaction.Commit();
+                            reader.Close();
+                            return true;
+                        }
+                        else
+                        {
+                            transaction.Rollback();
+                            reader.Close();
+                            return false;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Commit Exception Type: {0}", e.GetType());
+                        Console.WriteLine("  Message: {0}", e.Message);
+                        try
+                        {
+                            transaction.Rollback();
+                            return false;
+                        }
+                        catch (Exception e2)
+                        {
+                            Console.WriteLine("Rollback Exception Type: {0}", e2.GetType());
+                            Console.WriteLine("  Message: {0}", e2.Message);
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        #endregion
+
+        // For the Back Office BO
+        #region Delete
+        public bool DeleteUser(int idUsuario)
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                using (var command = new SqlCommand())
+                {
+                    SqlTransaction transaction;
+                    //Start transaction
+                    transaction = connection.BeginTransaction();
+
+                    //Replace this part with stored procedures
+                    command.Connection = connection;
+                    command.Transaction = transaction;
+
+                    try
+                    {
+                        //Inserting values into the database, table PerfilUsuario
+                        command.CommandText = "delete PerfilUsuario where ID_Usuario = idUsuario";
+                        command.Parameters.AddWithValue("@idUsuario", idUsuario);
+
+                        //Inserting values into the database, table Usuario
+                        command.CommandText = "delete Usuario where ID_Usuario = idUsuario";
+
+                        command.Parameters.AddWithValue("@idUsuario", idUsuario);
+
+                        command.CommandType = CommandType.Text;
+                        command.ExecuteNonQuery();
 
                         SqlDataReader reader = command.ExecuteReader();
 
                         connection.Close();
-                        if (!reader.HasRows)
+                        if (reader.HasRows)
+                        {
+                            transaction.Commit();
+                            reader.Close();
+                            return true;
+                        }
+                        else
+                        {
+                            transaction.Rollback();
+                            reader.Close();
+                            return false;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Commit Exception Type: {0}", e.GetType());
+                        Console.WriteLine("  Message: {0}", e.Message);
+                        try
+                        {
+                            transaction.Rollback();
+                            return false;
+                        }
+                        catch (Exception e2)
+                        {
+                            Console.WriteLine("Rollback Exception Type: {0}", e2.GetType());
+                            Console.WriteLine("  Message: {0}", e2.Message);
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
+        public bool DeleteVehicle(int idVehiculo)
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                using (var command = new SqlCommand())
+                {
+                    SqlTransaction transaction;
+                    //Start transaction
+                    transaction = connection.BeginTransaction();
+
+                    //Replace this part with stored procedures
+                    command.Connection = connection;
+                    command.Transaction = transaction;
+
+                    try
+                    {
+                        command.CommandText = "delete Vehiculo where ID_Vehiculo = @idVehiculo";
+
+                        command.Parameters.AddWithValue("@idVehiculo", idVehiculo);
+
+                        command.CommandType = CommandType.Text;
+                        command.ExecuteNonQuery();
+
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        connection.Close();
+                        if (reader.HasRows)
+                        {
+                            transaction.Commit();
+                            reader.Close();
+                            return true;
+                        }
+                        else
+                        {
+                            transaction.Rollback();
+                            reader.Close();
+                            return false;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Commit Exception Type: {0}", e.GetType());
+                        Console.WriteLine("  Message: {0}", e.Message);
+                        try
+                        {
+                            transaction.Rollback();
+                            return false;
+                        }
+                        catch (Exception e2)
+                        {
+                            Console.WriteLine("Rollback Exception Type: {0}", e2.GetType());
+                            Console.WriteLine("  Message: {0}", e2.Message);
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
+        public bool DeleteMaintenance(int idMantenimiento)
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                using (var command = new SqlCommand())
+                {
+                    SqlTransaction transaction;
+                    //Start transaction
+                    transaction = connection.BeginTransaction();
+
+                    //Replace this part with stored procedures
+                    command.Connection = connection;
+                    command.Transaction = transaction;
+
+                    try
+                    {
+                        command.CommandText = "delete Mantenimiento where ID_Mantenimiento = @idMantenimiento";
+
+                        command.Parameters.AddWithValue("@idMantenimiento", idMantenimiento);
+
+                        command.CommandType = CommandType.Text;
+                        command.ExecuteNonQuery();
+
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        connection.Close();
+                        if (reader.HasRows)
+                        {
+                            transaction.Commit();
+                            reader.Close();
+                            return true;
+                        }
+                        else
+                        {
+                            transaction.Rollback();
+                            reader.Close();
+                            return false;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Commit Exception Type: {0}", e.GetType());
+                        Console.WriteLine("  Message: {0}", e.Message);
+                        try
+                        {
+                            transaction.Rollback();
+                            return false;
+                        }
+                        catch (Exception e2)
+                        {
+                            Console.WriteLine("Rollback Exception Type: {0}", e2.GetType());
+                            Console.WriteLine("  Message: {0}", e2.Message);
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
+        public bool DeleteCondition(int idCondition)
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                using (var command = new SqlCommand())
+                {
+                    SqlTransaction transaction;
+                    //Start transaction
+                    transaction = connection.BeginTransaction();
+
+                    //Replace this part with stored procedures
+                    command.Connection = connection;
+                    command.Transaction = transaction;
+
+                    try
+                    {
+                        command.CommandText = "delete Estado where ID_Estado = @idCondition";
+
+                        command.Parameters.AddWithValue("@idCondition", idCondition);
+
+                        command.CommandType = CommandType.Text;
+                        command.ExecuteNonQuery();
+
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        connection.Close();
+                        if (reader.HasRows)
+                        {
+                            transaction.Commit();
+                            reader.Close();
+                            return true;
+                        }
+                        else
+                        {
+                            transaction.Rollback();
+                            reader.Close();
+                            return false;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Commit Exception Type: {0}", e.GetType());
+                        Console.WriteLine("  Message: {0}", e.Message);
+                        try
+                        {
+                            transaction.Rollback();
+                            return false;
+                        }
+                        catch (Exception e2)
+                        {
+                            Console.WriteLine("Rollback Exception Type: {0}", e2.GetType());
+                            Console.WriteLine("  Message: {0}", e2.Message);
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
+        public bool DeleteHistory(int idHistory)
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                using (var command = new SqlCommand())
+                {
+                    SqlTransaction transaction;
+                    //Start transaction
+                    transaction = connection.BeginTransaction();
+
+                    //Replace this part with stored procedures
+                    command.Connection = connection;
+                    command.Transaction = transaction;
+
+                    try
+                    {
+                        //Inserting values into the database, table PerfilUsuario
+                        command.CommandText = "delete Historial where ID_Historial = @idHistory";
+
+                        command.Parameters.AddWithValue("@idHistory", idHistory);
+
+                        command.CommandType = CommandType.Text;
+                        command.ExecuteNonQuery();
+
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        connection.Close();
+                        if (reader.HasRows)
+                        {
+                            transaction.Commit();
+                            reader.Close();
+                            return true;
+                        }
+                        else
+                        {
+                            transaction.Rollback();
+                            reader.Close();
+                            return false;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Commit Exception Type: {0}", e.GetType());
+                        Console.WriteLine("  Message: {0}", e.Message);
+                        try
+                        {
+                            transaction.Rollback();
+                            return false;
+                        }
+                        catch (Exception e2)
+                        {
+                            Console.WriteLine("Rollback Exception Type: {0}", e2.GetType());
+                            Console.WriteLine("  Message: {0}", e2.Message);
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
+        //This adds the receipt (both the "Pago" and "Detalle"). Not visible for the user to register
+        public bool DeleteReceipt(int idReceipt)
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                using (var command = new SqlCommand())
+                {
+                    SqlTransaction transaction;
+
+                    //Start transaction
+                    transaction = connection.BeginTransaction();
+
+                    //Replace this part with stored procedures
+                    command.Connection = connection;
+                    command.Transaction = transaction;
+
+                    try
+                    {
+                        command.CommandText = "delete Detalle where ID_Pago = @idReceipt";
+
+                        command.Parameters.AddWithValue("@idReceipt", idReceipt);
+
+                        //Inserting data into "Pago"
+                        command.CommandText = "delete Pago ID_Pago = @idReceipt";
+
+                        command.Parameters.AddWithValue("@idReceipt", idReceipt);
+                        command.CommandType = CommandType.Text;
+                        command.ExecuteNonQuery();
+
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        connection.Close();
+                        if (reader.HasRows)
+                        {
+                            transaction.Commit();
+                            reader.Close();
+                            return true;
+                        }
+                        else
+                        {
+                            transaction.Rollback();
+                            reader.Close();
+                            return false;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Commit Exception Type: {0}", e.GetType());
+                        Console.WriteLine("  Message: {0}", e.Message);
+                        try
+                        {
+                            transaction.Rollback();
+                            return false;
+                        }
+                        catch (Exception e2)
+                        {
+                            Console.WriteLine("Rollback Exception Type: {0}", e2.GetType());
+                            Console.WriteLine("  Message: {0}", e2.Message);
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
+        public bool DeleteMarca(int idMarca)
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                using (var command = new SqlCommand())
+                {
+                    SqlTransaction transaction;
+                    //Start transaction
+                    transaction = connection.BeginTransaction();
+
+                    //Replace this part with stored procedures
+                    command.Connection = connection;
+                    command.Transaction = transaction;
+
+                    try
+                    {
+                        //Inserting values into the database, table Marca
+                        command.CommandText = "delete Marca where ID_Marca = @idMarca";
+
+                        command.Parameters.AddWithValue("@idMarca", idMarca);
+
+                        command.CommandType = CommandType.Text;
+                        command.ExecuteNonQuery();
+
+                        SqlDataReader reader = command.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            transaction.Commit();
+                            return true;
+                        }
+                        else
+                        {
+                            transaction.Rollback();
+                            return false;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Commit Exception Type: {0}", e.GetType());
+                        Console.WriteLine("  Message: {0}", e.Message);
+                        try
+                        {
+                            transaction.Rollback();
+                            return false;
+                        }
+                        catch (Exception e2)
+                        {
+                            Console.WriteLine("Rollback Exception Type: {0}", e2.GetType());
+                            Console.WriteLine("  Message: {0}", e2.Message);
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
+        public bool DeleteModelo(int idModelo)
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                using (var command = new SqlCommand())
+                {
+                    SqlTransaction transaction;
+                    //Start transaction
+                    transaction = connection.BeginTransaction();
+
+                    //Replace this part with stored procedures
+                    command.Connection = connection;
+                    command.Transaction = transaction;
+
+                    try
+                    {
+                        //Inserting values into the database, table Modelo
+                        command.CommandText = "delete Modelo where ID_Modelo = @idModelo";
+
+                        command.Parameters.AddWithValue("@idModelo", idModelo);
+
+                        command.CommandType = CommandType.Text;
+                        command.ExecuteNonQuery();
+
+                        SqlDataReader reader = command.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            transaction.Commit();
+                            return true;
+                        }
+                        else
+                        {
+                            transaction.Rollback();
+                            return false;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Commit Exception Type: {0}", e.GetType());
+                        Console.WriteLine("  Message: {0}", e.Message);
+                        try
+                        {
+                            transaction.Rollback();
+                            return false;
+                        }
+                        catch (Exception e2)
+                        {
+                            Console.WriteLine("Rollback Exception Type: {0}", e2.GetType());
+                            Console.WriteLine("  Message: {0}", e2.Message);
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
+        public bool DeleteProvincia(int idProvincia)
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                using (var command = new SqlCommand())
+                {
+                    SqlTransaction transaction;
+                    //Start transaction
+                    transaction = connection.BeginTransaction();
+
+                    //Replace this part with stored procedures
+                    command.Connection = connection;
+                    command.Transaction = transaction;
+
+                    try
+                    {
+                        //Inserting values into the database, table Provincia
+                        command.CommandText = "update Provincia where ID_Provincia = @idProvincia";
+
+                        command.Parameters.AddWithValue("@idProvincia", idProvincia);
+
+                        command.CommandType = CommandType.Text;
+                        command.ExecuteNonQuery();
+
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        connection.Close();
+                        if (reader.HasRows)
+                        {
+                            transaction.Commit();
+                            reader.Close();
+                            return true;
+                        }
+                        else
+                        {
+                            transaction.Rollback();
+                            reader.Close();
+                            return false;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Commit Exception Type: {0}", e.GetType());
+                        Console.WriteLine("  Message: {0}", e.Message);
+                        try
+                        {
+                            transaction.Rollback();
+                            return false;
+                        }
+                        catch (Exception e2)
+                        {
+                            Console.WriteLine("Rollback Exception Type: {0}", e2.GetType());
+                            Console.WriteLine("  Message: {0}", e2.Message);
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
+        public bool DeleteMunicipio(int idMunicipio)
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                using (var command = new SqlCommand())
+                {
+                    SqlTransaction transaction;
+                    //Start transaction
+                    transaction = connection.BeginTransaction();
+
+                    //Replace this part with stored procedures
+                    command.Connection = connection;
+                    command.Transaction = transaction;
+
+                    try
+                    {
+                        //Inserting values into the database, table Municipio
+                        command.CommandText = "update Municipio where ID_Municipio = @idMunicipio";
+
+                        command.Parameters.AddWithValue("@idMunicipio", idMunicipio);
+
+                        command.CommandType = CommandType.Text;
+                        command.ExecuteNonQuery();
+
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        connection.Close();
+                        if (reader.HasRows)
                         {
                             transaction.Commit();
                             reader.Close();

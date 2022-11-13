@@ -51,7 +51,7 @@ namespace DataAccessTests
         public void ServiceIsValid()
         {
             UserDao userdao = new UserDao();
-            var check = userdao.Service(1);
+            var check = userdao.CheckService(1);
             var validate = check == true ? true : false;
 
             Assert.AreEqual(validate, check);

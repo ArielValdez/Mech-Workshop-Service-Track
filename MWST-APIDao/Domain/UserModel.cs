@@ -6,7 +6,7 @@ namespace Domain
     public class UserModel
     {
         private readonly UserDao userDao = new UserDao();
-        #region Access
+        #region Access: Get
         public bool LoginUser(string username, string password)
         {
             bool satisfactoryLogin = userDao.Login(username, password);
@@ -33,7 +33,7 @@ namespace Domain
 
         //Check later
         public bool CheckService(int idService) {
-            bool checking = userDao.Service(idService);
+            bool checking = userDao.CheckService(idService);
             return checking;
         }
 
@@ -61,7 +61,7 @@ namespace Domain
         }
         #endregion
 
-        #region Register
+        #region Register: Post
         public bool RegisterAUser(string username, string password, string email, string nombre,
                                   string apellido, string cedula, string rol,
                                   string telefono, string celular)
@@ -115,9 +115,11 @@ namespace Domain
             bool registering = userDao.RegisterCondition();
             return registering;
         }
+
+        // One for Workshop
         #endregion
 
-        #region Full Update: Post
+        #region Full Update: Put
         public bool UpdateUser(int idUsuario, string username, string password, string email, string nombre,
                                  string apellido, string cedula, string rol,
                                  string telefono, string celular)
@@ -181,9 +183,73 @@ namespace Domain
             bool updating = userDao.UpdateMunicipio(idMunicipio, nameMunicipio, description, idProvincia);
             return updating;
         }
+
+        // One for Workshop
         #endregion
 
         #region Partial Update: Patch
+        // Nothing of note, yet
+        #endregion
+
+        #region Delete
+        public bool DeleteUser(int idUser)
+        {
+            bool deleting = userDao.DeleteUser(idUser);
+            return deleting;
+        }
+
+        public bool DeleteVehicle(int idVehicle)
+        {
+            bool deleting = userDao.DeleteVehicle(idVehicle);
+            return deleting;
+        }
+
+        public bool DeleteMaintenance(int idMaintenance)
+        {
+            bool deleting = userDao.DeleteMaintenance(idMaintenance);
+            return deleting;
+        }
+
+        public bool DeleteCondition(int idCondition)
+        {
+            bool deleting = userDao.DeleteCondition(idCondition);
+            return deleting;
+        }
+
+        public bool DeleteHistory(int idHistory)
+        {
+            bool deleting = userDao.DeleteHistory(idHistory);
+            return deleting;
+        }
+
+        public bool DeleteReceipt(int idReceipt)
+        {
+            bool deleting = userDao.DeleteReceipt(idReceipt);
+            return deleting;
+        }
+
+        public bool DeleteMarca(int idMarca)
+        {
+            bool deleting = userDao.DeleteMarca(idMarca);
+            return deleting;
+        }
+
+        public bool DeleteModelo(int idModelo){
+            bool deleting = userDao.DeleteModelo(idModelo);
+            return deleting;
+        }
+
+        public bool DeleteProvincia(int idProvincia){
+            bool deleting = userDao.DeleteProvincia(idProvincia);
+            return deleting;
+        }
+
+        public bool DeleteMunicipio(int idMunicipio){
+            bool deleting = userDao.DeleteMunicipio(idMunicipio);
+            return deleting;
+        }
+
+        // One delete for workshop
         #endregion
     }
 }
