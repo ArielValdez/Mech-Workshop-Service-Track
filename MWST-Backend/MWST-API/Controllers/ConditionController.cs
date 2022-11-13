@@ -69,12 +69,11 @@ namespace MWST_API.Controllers
         }
 
         // Create a method to register conditions
-        /*
         [HttpPost]
         public JsonResult Post(Condition condition)
         {
             // Query to insert the data needed
-            bool query = models.Re
+            bool query = models.RegisterCondition();
 
             DataTable table = new DataTable();
             // New the connection string
@@ -98,10 +97,9 @@ namespace MWST_API.Controllers
             }
             else
             {
-                return new JsonResult("Not all parameters have been filled.");
+                return new JsonResult("Not implemented yet.");
             }
         }
-        */
 
         // Upload an image to the database
         // Check later, as it needs a proper way to be handled

@@ -64,7 +64,7 @@ namespace MWST_API.Controllers
         public JsonResult Post(Marca brand)
         {
             // Query to insert the data needed
-            bool query = models.RegisterBrand();
+            bool query = models.RegisterMarca();
 
             DataTable table = new DataTable();
             // New the connection string

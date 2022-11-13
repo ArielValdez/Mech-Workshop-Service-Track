@@ -61,7 +61,7 @@ namespace DataAccessTests
         public void ConditionIsValid()
         {
             UserDao userdao = new UserDao();
-            var check = userdao.Condition(1);
+            var check = userdao.RegisterCondition();
             var validate = check == true ? true : false;
 
             Assert.AreEqual(validate, check);

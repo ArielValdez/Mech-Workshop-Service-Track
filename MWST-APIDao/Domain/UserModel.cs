@@ -5,8 +5,8 @@ namespace Domain
 {
     public class UserModel
     {
-        #region Access
         private readonly UserDao userDao = new UserDao();
+        #region Access
         public bool LoginUser(string username, string password)
         {
             bool satisfactoryLogin = userDao.Login(username, password);
@@ -39,7 +39,7 @@ namespace Domain
 
         //Check later
         public bool CheckCondition(int idCondition) {
-            bool checking = userDao.Condition(idCondition);
+            bool checking = userDao.CheckCondition(idCondition);
             return checking;
         }
 
@@ -90,6 +90,100 @@ namespace Domain
             bool registering = userDao.RegisterReceipt(way2Pay, payService, idVehicle, idService, idWorkshop, fechaInicio, fechaPromesa, fechaEntrega);
             return registering;
         }
+
+        public bool RegisterMarca(string marca) {
+            bool registering = userDao.RegisterMarca(marca);
+            return registering;
+        }
+
+        public bool RegisterModelo(string modelo, int idMarca){
+            bool registering = userDao.RegisterModelo(modelo, idMarca);
+            return registering;
+        }
+
+        public bool RegisterProvincia(string nameProvincia, string description) {
+            bool registering = userDao.RegisterProvincia(nameProvincia, description);
+            return registering;
+        }
+
+        public bool RegisterMunicipio(string nameMunicipio, string description, int idProvincia) {
+            bool registering = userDao.RegisterMunicipio(nameMunicipio, description, idProvincia);
+            return registering;
+        }
+
+        public bool RegisterCondition(){
+            bool registering = userDao.RegisterCondition();
+            return registering;
+        }
+        #endregion
+
+        #region Full Update: Post
+        public bool UpdateUser(int idUsuario, string username, string password, string email, string nombre,
+                                 string apellido, string cedula, string rol,
+                                 string telefono, string celular)
+        {
+            bool updating = userDao.UpdateUser(idUsuario, username, password, email, nombre, apellido, cedula, rol, telefono, celular);
+            return updating;
+        }
+
+        public bool UpdateVehicle(int idVehiculo, string matricula, int idUsuario, int idMarca, int idModelo, string vin, string color)
+        {
+            bool updating = userDao.UpdateVehicle(idVehiculo, matricula, idUsuario, idMarca, idModelo, vin, color);
+            return updating;
+        }
+
+        public bool UpdateMaintenance(int idMantenimiento, string TipoMantenimiento)
+        {
+            bool updating = userDao.UpdateMaintenance(idMantenimiento,TipoMantenimiento);
+            return updating;
+        }
+
+        // Check later
+        public bool UpdateCondition()
+        {
+            bool updating = userDao.UpdateCondition();
+            return updating;
+        }
+
+        public bool UpdateHistory(int idHistory, int idUsuario, int idPago, DateTime fecha)
+        {
+            bool updating = userDao.UpdateHistory(idHistory, idUsuario, idPago, fecha);
+            return updating;
+        }
+
+        // Check ID of Workshop
+        public bool UpdateReceipt(int idReceipt, string way2Pay, double payService, int idVehicle, int idService, int idWorkshop, DateTime fechaInicio, DateTime fechaPromesa, DateTime fechaEntrega)
+        {
+            bool updating = userDao.UpdateReceipt(idReceipt, way2Pay, payService, idVehicle, idService, idWorkshop, fechaInicio, fechaPromesa, fechaEntrega);
+            return updating;
+        }
+
+        public bool UpdateMarca(int idMarca, string nombreMarca)
+        {
+            bool updating = userDao.UpdateMarca(idMarca, nombreMarca);
+            return updating;
+        }
+
+        public bool UpdateModelo(int idModelo, string nombreModelo, int idMarca)
+        {
+            bool updating = userDao.UpdateModelo(idModelo, nombreModelo, idMarca);
+            return updating;
+        }
+
+        public bool UpdateProvincia(int idProvincia, string nameProvincia, string description)
+        {
+            bool updating = userDao.UpdateProvincia(idProvincia, nameProvincia, description);
+            return updating;
+        }
+
+        public bool UpdateMunicipio(int idMunicipio, string nameMunicipio, string description, int idProvincia)
+        {
+            bool updating = userDao.UpdateMunicipio(idMunicipio, nameMunicipio, description, idProvincia);
+            return updating;
+        }
+        #endregion
+
+        #region Partial Update: Patch
         #endregion
     }
 }
