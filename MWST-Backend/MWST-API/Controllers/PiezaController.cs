@@ -34,25 +34,33 @@ namespace MWST_API.Controllers
             // New the connection string
             string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
             SqlDataReader reader;
-
-            if (query)
+            try
             {
-                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                if (query)
                 {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand())
+                    using (SqlConnection connection = new SqlConnection(sqlDataSource))
                     {
-                        reader = command.ExecuteReader();
-                        table.Load(reader); // Check the use of this table later
-                        reader.Close();
-                        connection.Close();
+                        connection.Open();
+                        using (SqlCommand command = new SqlCommand())
+                        {
+                            reader = command.ExecuteReader();
+                            table.Load(reader); // Check the use of this table later
+                            reader.Close();
+                            connection.Close();
+                        }
                     }
+                    return new JsonResult(table);
                 }
-                return new JsonResult(table);
+                else
+                {
+                    return new JsonResult("No pieces in the database.");
+                }
             }
-            else
+            catch (Exception e)
             {
-                return new JsonResult("Incorrect username or password.");
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Get Request.");
             }
         }
 
@@ -109,33 +117,51 @@ namespace MWST_API.Controllers
             string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
             SqlDataReader reader;
 
-            // Use the domain instead
-            using (SqlConnection connection = new SqlConnection(sqlDataSource))
+            try
             {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand(query, connection))
+                // Use the domain instead
+                using (SqlConnection connection = new SqlConnection(sqlDataSource))
                 {
-                    command.Parameters.AddWithValue("@idPieza", part.ID_Pieza);
-                    command.Parameters.AddWithValue("@idPieza", part.ID_Pago);
-                    command.Parameters.AddWithValue("@pieza", part.Nombre_Pieza);
-                    command.Parameters.AddWithValue("@descripcion", part.Descripcion_Pieza);
-                    command.Parameters.AddWithValue("@cantidad", part.Cantidad);
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@idPieza", part.ID_Pieza);
+                        command.Parameters.AddWithValue("@idPieza", part.ID_Pago);
+                        command.Parameters.AddWithValue("@pieza", part.Nombre_Pieza);
+                        command.Parameters.AddWithValue("@descripcion", part.Descripcion_Pieza);
+                        command.Parameters.AddWithValue("@cantidad", part.Cantidad);
 
-                    reader = command.ExecuteReader();
-                    table.Load(reader);
-                    reader.Close();
-                    connection.Close();
+                        reader = command.ExecuteReader();
+                        table.Load(reader);
+                        reader.Close();
+                        connection.Close();
+                    }
                 }
+                // Check for security
+                return new JsonResult("{0}: Successful Update", part.ID_Pieza);
             }
-            // Check for security
-            return new JsonResult("{0}: Successful Update", part.ID_Pieza);
+            catch (Exception e)
+            {
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Put Request.");
+            }
         }
 
         // Make later, to delete
         [HttpDelete]
         public JsonResult Delete()
         {
-            return new JsonResult("Not implemented yet.");
+            try
+            {
+                return new JsonResult("Not implemented yet.");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Put Request.");
+            }
         }
     }
 }

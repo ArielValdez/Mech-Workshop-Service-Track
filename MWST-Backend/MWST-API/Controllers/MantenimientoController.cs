@@ -25,18 +25,16 @@ namespace MWST_API.Controllers
         }
 
         [HttpGet]
-        public JsonResult Get(Mantenimiento maintenance)
+        public JsonResult Get()
         {
-            // Query to select the data needed
-            string query = @"Tipo_Mantenimiento from Mantenimiento"; //Delete later, as this creates 2 queries
-            bool validation = models.CheckMaintenance(maintenance.ID_Mantenimiento);
+            string query = @"Tipo_Mantenimiento from Mantenimiento";
 
             DataTable table = new DataTable();
             // New the connection string
             string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
             SqlDataReader reader;
 
-            if (validation)
+            try
             {
                 using (SqlConnection connection = new SqlConnection(sqlDataSource))
                 {
@@ -51,9 +49,53 @@ namespace MWST_API.Controllers
                 }
                 return new JsonResult(table);
             }
-            else
+            catch (Exception e)
             {
-                return new JsonResult("Nothing to see");
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Get Request.");
+            }
+        }
+
+        [HttpGet]
+        public JsonResult Get(Mantenimiento maintenance)
+        {
+            // Query to select the data needed
+            string query = @"Tipo_Mantenimiento from Mantenimiento"; //Delete later, as this creates 2 queries
+            bool validation = models.CheckMaintenance(maintenance.ID_Mantenimiento);
+
+            DataTable table = new DataTable();
+            // New the connection string
+            string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
+            SqlDataReader reader;
+
+            try
+            {
+                if (validation)
+                {
+                    using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                    {
+                        connection.Open();
+                        using (SqlCommand command = new SqlCommand(query, connection))
+                        {
+                            reader = command.ExecuteReader();
+                            table.Load(reader);
+                            reader.Close();
+                            connection.Close();
+                        }
+                    }
+                    return new JsonResult(table);
+                }
+                else
+                {
+                    return new JsonResult("Nothing to see");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Get Request.");
             }
         }
 
@@ -69,24 +111,33 @@ namespace MWST_API.Controllers
             string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
             SqlDataReader reader;
 
-            if (query)
+            try
             {
-                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                if (query)
                 {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand())
+                    using (SqlConnection connection = new SqlConnection(sqlDataSource))
                     {
-                        reader = command.ExecuteReader();
-                        table.Load(reader);
-                        reader.Close();
-                        connection.Close();
+                        connection.Open();
+                        using (SqlCommand command = new SqlCommand())
+                        {
+                            reader = command.ExecuteReader();
+                            table.Load(reader);
+                            reader.Close();
+                            connection.Close();
+                        }
                     }
+                    return new JsonResult(table);
                 }
-                return new JsonResult(table);
+                else
+                {
+                    return new JsonResult("Not all parameters have been filled.");
+                }
             }
-            else
+            catch (Exception e)
             {
-                return new JsonResult("Not all parameters have been filled.");
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Post Request.");
             }
         }
 
@@ -107,22 +158,46 @@ namespace MWST_API.Controllers
             SqlDataReader reader;
 
             // Use the domain instead
-            using (SqlConnection connection = new SqlConnection(sqlDataSource))
+            try
             {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand(query, connection))
+                using (SqlConnection connection = new SqlConnection(sqlDataSource))
                 {
-                    command.Parameters.AddWithValue("@idMantenimiento", maintenance.ID_Mantenimiento);
-                    command.Parameters.AddWithValue("@tipoMantenimiento", maintenance.Tipo_Mantenimiento);
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@idMantenimiento", maintenance.ID_Mantenimiento);
+                        command.Parameters.AddWithValue("@tipoMantenimiento", maintenance.Tipo_Mantenimiento);
 
-                    reader = command.ExecuteReader();
-                    table.Load(reader);
-                    reader.Close();
-                    connection.Close();
+                        reader = command.ExecuteReader();
+                        table.Load(reader);
+                        reader.Close();
+                        connection.Close();
+                    }
                 }
+                // Check for security
+                return new JsonResult("{0}: Successful Update", maintenance.ID_Mantenimiento);
             }
-            // Check for security
-            return new JsonResult("{0}: Successful Update", maintenance.ID_Mantenimiento);
+            catch (Exception e)
+            {
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Put Request.");
+            }
+        }
+
+        [HttpDelete]
+        public JsonResult Delete(Mantenimiento maintenance)
+        {
+            try
+            {
+                return new JsonResult("Not implemented yet.");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Delete Request.");
+            }
         }
     }
 }

@@ -39,19 +39,28 @@ namespace MWST_API.Controllers
             string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
             SqlDataReader reader;
 
-            // Use the domain instead
-            using (SqlConnection connection = new SqlConnection(sqlDataSource))
+            try
             {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand(query, connection))
+                // Use the domain instead
+                using (SqlConnection connection = new SqlConnection(sqlDataSource))
                 {
-                    reader = command.ExecuteReader();
-                    table.Load(reader);
-                    reader.Close();
-                    connection.Close();
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        reader = command.ExecuteReader();
+                        table.Load(reader);
+                        reader.Close();
+                        connection.Close();
+                    }
                 }
+                return new JsonResult(table);
             }
-            return new JsonResult(table);
+            catch (Exception e)
+            {
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Get Request.");
+            }
         }
 
         // Adds information into the database
@@ -66,24 +75,33 @@ namespace MWST_API.Controllers
             string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
             SqlDataReader reader;
 
-            if (query)
+            try
             {
-                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                if (query)
                 {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand())
+                    using (SqlConnection connection = new SqlConnection(sqlDataSource))
                     {
-                        reader = command.ExecuteReader();
-                        table.Load(reader);
-                        reader.Close();
-                        connection.Close();
+                        connection.Open();
+                        using (SqlCommand command = new SqlCommand())
+                        {
+                            reader = command.ExecuteReader();
+                            table.Load(reader);
+                            reader.Close();
+                            connection.Close();
+                        }
                     }
+                    return new JsonResult(table);
                 }
-                return new JsonResult(table);
+                else
+                {
+                    return new JsonResult("Not all parameters have been filled.");
+                }
             }
-            else
+            catch (Exception e)
             {
-                return new JsonResult("Not all parameters have been filled.");
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Post Request.");
             }
         }
 
@@ -130,8 +148,26 @@ namespace MWST_API.Controllers
         [HttpDelete]
         public JsonResult Delete()
         {
+            //string query = @"select Forma_Pago, Pago_Servicio, Tipo_Servicio, FechaPromesa" +
+            //                "from Pago inner join Servicio on Servicio.ID_Servicio = Pago.ID_Servicio" +
+            //                "where ID_Pago = @idPayment";
+
+            //DataTable table = new DataTable();
+            //// New the connection string
+            //string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
+            //SqlDataReader reader;
+
             // A payment not its detail should not be deleted
-            return new JsonResult("Not implemented yet.");
+            try
+            {
+                return new JsonResult("Not implemented yet.");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Post Request.");
+            }
         }
     }
 }

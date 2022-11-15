@@ -29,12 +29,6 @@ namespace MWST_API.Controllers
         [HttpGet]
         public JsonResult Get(History history)
         {
-            ////Check later
-            //int userHistory = user.history.ID_History;
-
-            //// Query to select the data needed. Change to stored procedures
-            //bool query = models.CheckHistory(user.ID_User, userHistory);
-
             bool query = models.CheckHistory(history.ID_User, history.ID_History);
 
             DataTable table = new DataTable();
@@ -42,25 +36,34 @@ namespace MWST_API.Controllers
             string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
             SqlDataReader reader;
 
-            if (query)
+            try
             {
-                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                if (query)
                 {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand())
+                    using (SqlConnection connection = new SqlConnection(sqlDataSource))
                     {
-                        reader = command.ExecuteReader();
-                        table.Load(reader); // Check the use of this table later
-                        reader.Close();
-                        connection.Close();
+                        connection.Open();
+                        using (SqlCommand command = new SqlCommand())
+                        {
+                            reader = command.ExecuteReader();
+                            table.Load(reader); // Check the use of this table later
+                            reader.Close();
+                            connection.Close();
+                        }
                     }
+                    return new JsonResult(table);
                 }
-                return new JsonResult(table);
+                else
+                {
+                    return new JsonResult("Incorrect username or password");
+                }
             }
-            else
+            catch (Exception e)
             {
-                return new JsonResult("Incorrect username or password");
-            }
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Get Request.");
+            }        
         }
 
         // Adds information into the database
@@ -75,24 +78,33 @@ namespace MWST_API.Controllers
             string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
             SqlDataReader reader;
 
-            if (query)
+            try
             {
-                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                if (query)
                 {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand())
+                    using (SqlConnection connection = new SqlConnection(sqlDataSource))
                     {
-                        reader = command.ExecuteReader();
-                        table.Load(reader); // Check later
-                        reader.Close();
-                        connection.Close();
+                        connection.Open();
+                        using (SqlCommand command = new SqlCommand())
+                        {
+                            reader = command.ExecuteReader();
+                            table.Load(reader); // Check later
+                            reader.Close();
+                            connection.Close();
+                        }
                     }
+                    return new JsonResult(table);
                 }
-                return new JsonResult(table);
+                else
+                {
+                    return new JsonResult("Not all parameters have been filled.");
+                }
             }
-            else
+            catch (Exception e)
             {
-                return new JsonResult("Not all parameters have been filled.");
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Post Request.");
             }
         }
 
@@ -113,22 +125,46 @@ namespace MWST_API.Controllers
             SqlDataReader reader;
 
             // Use the domain instead
-            using (SqlConnection connection = new SqlConnection(sqlDataSource))
+            try
             {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand(query, connection))
+                using (SqlConnection connection = new SqlConnection(sqlDataSource))
                 {
-                    command.Parameters.AddWithValue("@idHistory", history.ID_History);
-                    command.Parameters.AddWithValue("@fecha", history.Fecha);
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@idHistory", history.ID_History);
+                        command.Parameters.AddWithValue("@fecha", history.Fecha);
 
-                    reader = command.ExecuteReader();
-                    table.Load(reader);
-                    reader.Close();
-                    connection.Close();
+                        reader = command.ExecuteReader();
+                        table.Load(reader);
+                        reader.Close();
+                        connection.Close();
+                    }
                 }
+                // Check for security
+                return new JsonResult("{0}: Successful Update", history.ID_History);
             }
-            // Check for security
-            return new JsonResult("{0}: Successful Update", history.ID_History);
+            catch (Exception e)
+            {
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Put Request.");
+            }
+        }
+
+        [HttpDelete]
+        public JsonResult Delete()
+        {
+            try
+            {
+                return new JsonResult("Not implemented yet");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Delete Request.");
+            }
         }
     }
 }

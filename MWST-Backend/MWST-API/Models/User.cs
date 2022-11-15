@@ -28,7 +28,7 @@ public class User
 
     public User()
     {
-
+        this.Active = true;
     }
 
     // Overloads

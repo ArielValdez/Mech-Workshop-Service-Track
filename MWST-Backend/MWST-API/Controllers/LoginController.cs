@@ -26,34 +26,42 @@ namespace MWST_API.Controllers
         }
 
         [HttpGet]
-        public JsonResult Get(User user)
+        public JsonResult Get(string username, string password)
         {
             // Query to select the data needed. Change to stored procedures
-            bool query = models.LoginUser(user.Username, user.Password);
+            bool query = models.LoginUser(username, password);
 
             DataTable table = new DataTable();
             // New the connection string
             string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
             SqlDataReader reader;
-
-            if (query)
+            try
             {
-                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                if (query)
                 {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand())
+                    using (SqlConnection connection = new SqlConnection(sqlDataSource))
                     {
-                        reader = command.ExecuteReader();
-                        table.Load(reader); // Check the use of this table later
-                        reader.Close();
-                        connection.Close();
+                        connection.Open();
+                        using (SqlCommand command = new SqlCommand())
+                        {
+                            reader = command.ExecuteReader();
+                            table.Load(reader); // Check the use of this table later
+                            reader.Close();
+                            connection.Close();
+                        }
                     }
+                    return new JsonResult(table);
                 }
-                return new JsonResult(table);
+                else
+                {
+                    return new JsonResult("Incorrect username or password");
+                }
             }
-            else
+            catch (Exception e)
             {
-                return new JsonResult("Incorrect username or password");
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Get Request.");
             }
         }
     }

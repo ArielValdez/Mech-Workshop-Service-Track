@@ -35,24 +35,33 @@ namespace MWST_API.Controllers
             string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
             SqlDataReader reader;
 
-            if (query)
+            try
             {
-                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                if (query)
                 {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand())
+                    using (SqlConnection connection = new SqlConnection(sqlDataSource))
                     {
-                        reader = command.ExecuteReader();
-                        table.Load(reader); // Check the use of this table later
-                        reader.Close();
-                        connection.Close();
+                        connection.Open();
+                        using (SqlCommand command = new SqlCommand())
+                        {
+                            reader = command.ExecuteReader();
+                            table.Load(reader); // Check the use of this table later
+                            reader.Close();
+                            connection.Close();
+                        }
                     }
+                    return new JsonResult(table);
                 }
-                return new JsonResult(table);
+                else
+                {
+                    return new JsonResult("Incorrect username or password");
+                }
             }
-            else
+            catch (Exception e)
             {
-                return new JsonResult("Incorrect username or password");
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Get Request.");
             }
         }
 
@@ -68,27 +77,36 @@ namespace MWST_API.Controllers
             // New the connection string
             string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
             SqlDataReader reader;
-
-            if (query)
+            
+            try
             {
-                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                if (query)
                 {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand())
+                    using (SqlConnection connection = new SqlConnection(sqlDataSource))
                     {
-                        reader = command.ExecuteReader();
-                        table.Load(reader);
-                        reader.Close();
-                        connection.Close();
+                        connection.Open();
+                        using (SqlCommand command = new SqlCommand())
+                        {
+                            reader = command.ExecuteReader();
+                            table.Load(reader);
+                            reader.Close();
+                            connection.Close();
+                        }
                     }
+                    return new JsonResult(table);
                 }
-                return new JsonResult(table);
+                else
+                {
+                    return new JsonResult("Not all parameters have been filled.");
+                }
             }
-            else
-            {
-                return new JsonResult("Not all parameters have been filled.");
-            }
-        }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                    Console.WriteLine("  Message: {0}", e.Message);
+                    return new JsonResult("An error has occurred during Post Request.");
+                }  
         */
 
         // Updates the information of the user. INCOMPLETE
@@ -108,30 +126,47 @@ namespace MWST_API.Controllers
             SqlDataReader reader;
 
             // Use the domain instead
-            using (SqlConnection connection = new SqlConnection(sqlDataSource))
+            try
             {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand(query, connection))
+                using (SqlConnection connection = new SqlConnection(sqlDataSource))
                 {
-                    command.Parameters.AddWithValue("@idTaller", workShop.ID_WorkShop);
-                    command.Parameters.AddWithValue("@taller", workShop.Name_WorkShop);
-                    command.Parameters.AddWithValue("@encarcago", string.Empty); // Check later
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@idTaller", workShop.ID_WorkShop);
+                        command.Parameters.AddWithValue("@taller", workShop.Name_WorkShop);
+                        command.Parameters.AddWithValue("@encarcago", string.Empty); // Check later
 
-                    reader = command.ExecuteReader();
-                    table.Load(reader);
-                    reader.Close();
-                    connection.Close();
+                        reader = command.ExecuteReader();
+                        table.Load(reader);
+                        reader.Close();
+                        connection.Close();
+                    }
                 }
+                // Check for security
+                return new JsonResult("{0}: Successful Update", workShop.ID_WorkShop);
             }
-            // Check for security
-            return new JsonResult("{0}: Successful Update", workShop.ID_WorkShop);
+            catch (Exception e)
+            {
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Put Request.");
+            }
         }
 
         [HttpDelete]
         public JsonResult Delete()
         {
-            // This should not delete a row. Instead, put a user as "ïnactive".
-            return new JsonResult("Not implemented yet.");
+            try
+            {
+                return new JsonResult("Not implemented yet");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Delete Request.");
+            }
         }
     }
 }

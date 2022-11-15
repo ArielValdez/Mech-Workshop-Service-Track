@@ -30,7 +30,9 @@ The purpose of this program is to give users a layer of security when said user 
 
 **Tests**
 
-Yet to decide
+* Postman: Backend
+* Jest: Frontend
+* Unit Testing
 
 **Programming Languages and Database**
 * `C#` (Back-end)

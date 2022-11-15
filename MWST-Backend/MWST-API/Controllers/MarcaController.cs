@@ -23,7 +23,7 @@ namespace MWST_API.Controllers
         {
             _configuration = configuration;
         }
-
+        
         [HttpGet]
         public JsonResult Get()
         {
@@ -35,19 +35,27 @@ namespace MWST_API.Controllers
             string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
             SqlDataReader reader;
 
-            // Use the domain instead
-            using (SqlConnection connection = new SqlConnection(sqlDataSource))
+            try
             {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand(query, connection))
+                using (SqlConnection connection = new SqlConnection(sqlDataSource))
                 {
-                    reader = command.ExecuteReader();
-                    table.Load(reader);
-                    reader.Close();
-                    connection.Close();
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        reader = command.ExecuteReader();
+                        table.Load(reader);
+                        reader.Close();
+                        connection.Close();
+                    }
                 }
+                return new JsonResult(table);
             }
-            return new JsonResult(table);
+            catch (Exception e)
+            {
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Get Request.");
+            }
         }
 
         // There is no Data Access to Register or Update Marca
@@ -56,7 +64,7 @@ namespace MWST_API.Controllers
         public JsonResult Post(Marca brand)
         {
             // Query to insert the data needed
-            bool query = models.RegisterBrand();
+            bool query = models.RegisterMarca();
 
             DataTable table = new DataTable();
             // New the connection string
@@ -83,12 +91,54 @@ namespace MWST_API.Controllers
                 return new JsonResult("Not all parameters has been filled.");
             }
         }
+        */
 
         [HttpPut]
-        public JsonResult Put()
+        public JsonResult Put(Marca marca)
         {
+            // This only updates the table PerfilUsuario
+            string query = @"update Marca
+                             set Name_Marca = @nombre
+                             where ID_Marca = @idMarca";
 
+            DataTable table = new DataTable();
+            // New the connection string
+            string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
+            SqlDataReader reader;
+
+            // Use the domain instead
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@idMarca", marca.ID_Marca);
+                        command.Parameters.AddWithValue("@nombre", marca.Name_Marca);
+
+                        reader = command.ExecuteReader();
+                        table.Load(reader);
+                        reader.Close();
+                        connection.Close();
+                    }
+                }
+                // Check for security
+                return new JsonResult("{0}: Successful Update", marca.ID_Marca);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Put Request.");
+            }
         }
-        */
+
+        [HttpDelete]
+        public JsonResult Delete()
+        {
+            // Implemente Delete Request
+            return new JsonResult("Not implemented yet.");
+        }
     }
 }
