@@ -102,7 +102,7 @@ const SignInScreen = () => {
                     <View style={{flex: 0.5}}></View>
                     <View style={{flex: 1.3, marginBottom: 10}}>
                         <CustomButton onPress={onForgotPasswordPressed} text='Olvide mi contraseña' type='Tertiary'
-                            padding={0.1} marginVertical={0.1} fgColor={'rgba(255, 255, 255, 1)'} />
+                            padding={0.1} marginVertical={0.1} fgColor={theme.colors.black} />
                     </View>
                 </View>
 

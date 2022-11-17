@@ -80,7 +80,7 @@ const ChatScreen = () => {
 					<CustomInput placeholder='Mensaje' value={messageTextBox} setValue={setMessageTextBox} padding={5}/>
 				</View>
 				<View style={styles.sendButton}>
-					<CustomButton text='Enviar' onPress={onSendPress} padding={15} bgColor='gray'/>
+					<CustomButton text='Enviar' onPress={onSendPress} padding={15} />
 				</View>
 			</View>
 		</View>

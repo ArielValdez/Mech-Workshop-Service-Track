@@ -1,12 +1,11 @@
 import React, { useState, useCallback, useMemo, useEffect, useRef } from "react";
-import { View, Text, StyleSheet, Image, useWindowDimensions, ScrollView, Modal, FlatList } from 'react-native'
-import { Calendar, CalendarUtils } from 'react-native-calendars'
+import { View, Text, StyleSheet, Image, useWindowDimensions, ScrollView, Modal, FlatList, Pressable} from 'react-native'
+import { Calendar, CalendarUtils, LocaleConfig } from 'react-native-calendars'
 import DateTimePicker from '@react-native-community/datetimepicker'
-import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import theme from "../Theme";
-import { Entypo, AntDesign } from '@expo/vector-icons'
+import { FontAwesome5, Entypo, AntDesign } from '@expo/vector-icons'
 
 const appointmentTitleRegex = /[a-zA-Z]{3,}/
 const appointmentTitleErrorMessage = 'Título de cita debe tener al menos 3 carácteres'
@@ -27,12 +26,14 @@ const AppointmentModal = ({visible, onRequestClose, onReturnPress, onOkPress, ti
             }}
         >
             <View style={modalStyles.container}>
-                <View style={[ modalStyles.view, { height: height * 0.35 } ]}>
+                <View style={[ modalStyles.view, { height: height * 0.28 } ]}>
                     <Text style={modalStyles.title}>Nueva cita</Text>
                     <CustomInput value={appointmentTitle} setValue={setAppointmentTitle} placeholder='Título cita'
                         pattern={appointmentTitleRegex} errorMessage={appointmentTitleErrorMessage} />
-                    <CustomButton text='Seleccionar tiempo' width='75%' type="Tertiary" 
-                        fgColor={theme.colors.primary} onPress={() => setShowTimePicker(true)} />
+
+                    <Pressable style={modalStyles.clockIcon} onPress={() => setShowTimePicker(true)}>
+                        <FontAwesome5 name='clock' size={35} />
+                    </Pressable>
 
                     <View style={modalStyles.buttonRow}>
                         <CustomButton 
@@ -93,12 +94,15 @@ const modalStyles = StyleSheet.create({
         fontWeight: 'bold',
 
     },
+    clockIcon: {
+        marginTop: 5,
+    },
     buttonRow: {
-        marginTop: 15,
+        marginTop: 20,
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         width: '100%',
-    }
+    },
 })
 
 const Appointment = ({title, date}) => {
@@ -156,6 +160,7 @@ const AppointmentsScreen = () => {
     const [ modalVisible, setModalVisible ] = useState(false)
     const [ appointments, setAppointments ] = useState(exampleValues)
     const idCounter = useRef(2)
+    const { height, width } = useWindowDimensions()
 
     const marked = useMemo(() => {
         return {
@@ -188,7 +193,7 @@ const AppointmentsScreen = () => {
 
     
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, {height: height * 0.88, width: width}]}>
             <Calendar 
                 onDayPress={onDayPress}
                 markedDates={marked}
@@ -209,6 +214,7 @@ const AppointmentsScreen = () => {
                     setSelectedTime(selectedDate)
                 }}    
             />
+
             <Pressable style={styles.addAppointmentButton} onPressIn={onAddAppointmentPress}>
                 <Entypo name="plus" size={50}/>
             </Pressable>
@@ -219,7 +225,6 @@ const AppointmentsScreen = () => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: theme.colors.bgColor,
-        flex: 1,
     },
     addAppointmentButton: {
         position: 'absolute',
