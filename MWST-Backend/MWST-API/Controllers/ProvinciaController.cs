@@ -24,6 +24,7 @@ namespace MWST_API.Controllers
             _configuration = configuration;
         }
 
+        [Route("getProvincia")]
         [HttpGet]
         public JsonResult Get()
         {
@@ -40,6 +41,7 @@ namespace MWST_API.Controllers
             }
         }
 
+        [Route("postProvincia")]
         [HttpPost]
         public JsonResult Post()
         {
@@ -56,6 +58,7 @@ namespace MWST_API.Controllers
             }
         }
 
+        [Route("putProvincia")]
         [HttpPut]
         public JsonResult Put()
         {
@@ -72,6 +75,7 @@ namespace MWST_API.Controllers
             }
         }
 
+        [Route("deleteProvincia")]
         [HttpDelete]
         public JsonResult Delete()
         {

@@ -24,6 +24,7 @@ namespace MWST_API.Controllers
             _configuration = configuration;
         }
 
+        [Route("getService")]
         [HttpGet]
         public JsonResult Get(Service service)
         {
@@ -67,6 +68,7 @@ namespace MWST_API.Controllers
 
         // Adds information into the database
         /* Data access to register a service does not exist
+        [Route("postService")]
         [HttpPost]
         public JsonResult Post(Service service)
         {
@@ -101,6 +103,7 @@ namespace MWST_API.Controllers
         */
 
         // Updates the information of the user. INCOMPLETE
+        [Route("putService")]
         [HttpPut]
         public JsonResult Put(Service service)
         {
@@ -147,6 +150,7 @@ namespace MWST_API.Controllers
             }
         }
 
+        [Route("deleteService")]
         [HttpDelete]
         public JsonResult Delete()
         {

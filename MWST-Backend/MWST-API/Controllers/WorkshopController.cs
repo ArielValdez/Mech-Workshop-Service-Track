@@ -24,6 +24,7 @@ namespace MWST_API.Controllers
             _configuration = configuration;
         }
 
+        [Route("getWorkshop")]
         [HttpGet]
         public JsonResult Get(WorkShop workShop)
         {
@@ -67,6 +68,7 @@ namespace MWST_API.Controllers
 
         // Adds information into the database
         /* Data access to register a workshop does not exist
+        [Route("postWorkshop")]
         [HttpPost]
         public JsonResult Post(WorkShop workShop)
         {
@@ -110,6 +112,7 @@ namespace MWST_API.Controllers
         */
 
         // Updates the information of the user. INCOMPLETE
+        [Route("putWorkshop")]
         [HttpPut]
         public JsonResult Put(WorkShop workShop)
         {
@@ -154,6 +157,7 @@ namespace MWST_API.Controllers
             }
         }
 
+        [Route("deleteWorkshop")]
         [HttpDelete]
         public JsonResult Delete()
         {

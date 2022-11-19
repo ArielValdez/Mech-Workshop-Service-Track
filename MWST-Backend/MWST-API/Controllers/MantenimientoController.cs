@@ -24,6 +24,7 @@ namespace MWST_API.Controllers
             _configuration = configuration;
         }
 
+        [Route("getMaintenance")]
         [HttpGet]
         public JsonResult Get()
         {
@@ -57,6 +58,7 @@ namespace MWST_API.Controllers
             }
         }
 
+        [Route("getMaintenances")]
         [HttpGet]
         public JsonResult Get(Mantenimiento maintenance)
         {
@@ -100,6 +102,7 @@ namespace MWST_API.Controllers
         }
 
         // Adds information into the database
+        [Route("postMaintenance")]
         [HttpPost]
         public JsonResult Post(Mantenimiento maintenance)
         {
@@ -141,7 +144,8 @@ namespace MWST_API.Controllers
             }
         }
 
-        // Updates the information of the user. INCOMPLETE
+        // Updates the information of the user.
+        [Route("putMaintenance")]
         [HttpPut]
         public JsonResult Put(Mantenimiento maintenance)
         {
@@ -185,6 +189,7 @@ namespace MWST_API.Controllers
             }
         }
 
+        [Route("deleteMaintenance")]
         [HttpDelete]
         public JsonResult Delete(Mantenimiento maintenance)
         {

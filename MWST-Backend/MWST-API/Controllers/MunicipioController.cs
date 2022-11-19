@@ -26,6 +26,7 @@ namespace MWST_API.Controllers
             _configuration = configuration;
         }
 
+        [Route("getMunicipio")]
         [HttpGet]
         public JsonResult Get()
         {
@@ -33,6 +34,7 @@ namespace MWST_API.Controllers
             return new JsonResult("Not implemented yet.");
         }
 
+        [Route("postMunicipio")]
         [HttpPost]
         public JsonResult Post()
         {
@@ -40,6 +42,7 @@ namespace MWST_API.Controllers
             return new JsonResult("Not implemented yet.");
         }
 
+        [Route("putMunicipio")]
         [HttpPut]
         public JsonResult Put()
         {
@@ -47,6 +50,7 @@ namespace MWST_API.Controllers
             return new JsonResult("Not implemented yet.");
         }
 
+        [Route("deleteMunicipio")]
         [HttpDelete]
         public JsonResult Delete()
         {

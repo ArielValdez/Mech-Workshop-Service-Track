@@ -26,6 +26,7 @@ namespace MWST_API.Controllers
         }
 
         // Gets the information of the users history
+        [Route("getHistory")]
         [HttpGet]
         public JsonResult Get(History history)
         {
@@ -67,6 +68,7 @@ namespace MWST_API.Controllers
         }
 
         // Adds information into the database
+        [Route("postHistory")]
         [HttpPost]
         public JsonResult Post(History history)
         {
@@ -109,6 +111,7 @@ namespace MWST_API.Controllers
         }
 
         // Updates the information of the user. INCOMPLETE
+        [Route("putHistory")]
         [HttpPut]
         public JsonResult Put(History history)
         {
@@ -152,6 +155,7 @@ namespace MWST_API.Controllers
             }
         }
 
+        [Route("deleteHistory")]
         [HttpDelete]
         public JsonResult Delete()
         {

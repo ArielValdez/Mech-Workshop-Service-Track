@@ -24,6 +24,7 @@ namespace MWST_API.Controllers
             _configuration = configuration;
         }
 
+        [Route("getVehicle")]
         [HttpGet]
         public JsonResult Get()
         {
@@ -58,6 +59,7 @@ namespace MWST_API.Controllers
             }
         }
 
+        [Route("postVehicle")]
         [HttpPost]
         public JsonResult Post(Vehicle car)
         {
@@ -98,6 +100,7 @@ namespace MWST_API.Controllers
             }
         }
 
+        [Route("putVehicle")]
         [HttpPut]
         public JsonResult Put(Vehicle car)
         {
@@ -140,6 +143,7 @@ namespace MWST_API.Controllers
             }
         }
 
+        [Route("deleteVehicle")]
         [HttpDelete]
         public JsonResult Delete()
         {

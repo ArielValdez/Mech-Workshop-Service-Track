@@ -25,6 +25,7 @@ namespace MWST_API.Controllers
             _configuration = configuration;
         }
 
+        [Route("getLogin")] // Delete if this is generating problems
         [HttpGet]
         public JsonResult Get(string username, string password)
         {

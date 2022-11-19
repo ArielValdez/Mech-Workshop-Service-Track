@@ -25,6 +25,7 @@ namespace MWST_API.Controllers
         }
 
         //Selects to get information
+        [Route("getUser")]
         [HttpGet]
         public JsonResult Get()
         {
@@ -61,6 +62,7 @@ namespace MWST_API.Controllers
         }
 
         // Adds information into the database
+        [Route("postUser")]
         [HttpPost]
         public JsonResult Post(User user)
         {
@@ -104,6 +106,7 @@ namespace MWST_API.Controllers
         }
 
         // Updates the information of the user. INCOMPLETE
+        [Route("putUser")]
         [HttpPut]
         public JsonResult Put(User user)
         {
@@ -151,6 +154,7 @@ namespace MWST_API.Controllers
             }
         }
 
+        [Route("deleteUser")]
         [HttpDelete]
         public JsonResult Delete()
         {

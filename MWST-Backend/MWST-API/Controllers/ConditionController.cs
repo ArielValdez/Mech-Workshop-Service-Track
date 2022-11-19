@@ -27,7 +27,7 @@ namespace MWST_API.Controllers
             _configuration = configuration;
             _env = env;
         }
-
+        [Route("getCondition")]
         [HttpGet]
         public JsonResult Get(Condition condition)
         {
@@ -69,6 +69,7 @@ namespace MWST_API.Controllers
         }
 
         // Create a method to register conditions
+        [Route("postCondition")]
         [HttpPost]
         public JsonResult Post(Condition condition)
         {
@@ -103,7 +104,7 @@ namespace MWST_API.Controllers
 
         // Upload an image to the database
         // Check later, as it needs a proper way to be handled
-        [Route("SaveFile")]
+        [Route("saveFile")]
         [HttpPost]
         public JsonResult SaveFile()
         {
@@ -128,7 +129,7 @@ namespace MWST_API.Controllers
             }
         }
 
-        // Updates the information of the user. INCOMPLETE
+        [Route("putCondition")]
         [HttpPut]
         public JsonResult Put(Condition condition)
         {
@@ -174,6 +175,13 @@ namespace MWST_API.Controllers
                 Console.WriteLine("  Message: {0}", e.Message);
                 return new JsonResult("An error has occurred during Put Request.");
             }
+        }
+
+        [Route("deleteCondition")]
+        [HttpDelete]
+        public JsonResult deleteCondition()
+        {
+            return new JsonResult("Not implemented yet.");
         }
     }
 }

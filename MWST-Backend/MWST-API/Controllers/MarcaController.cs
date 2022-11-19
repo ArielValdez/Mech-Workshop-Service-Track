@@ -23,7 +23,8 @@ namespace MWST_API.Controllers
         {
             _configuration = configuration;
         }
-        
+
+        [Route("getMarca")]
         [HttpGet]
         public JsonResult Get()
         {
@@ -60,6 +61,7 @@ namespace MWST_API.Controllers
 
         // There is no Data Access to Register or Update Marca
         /*
+        [Route("postMarca")]
         [HttpPost]
         public JsonResult Post(Marca brand)
         {
@@ -93,6 +95,7 @@ namespace MWST_API.Controllers
         }
         */
 
+        [Route("putMarca")]
         [HttpPut]
         public JsonResult Put(Marca marca)
         {
@@ -134,6 +137,7 @@ namespace MWST_API.Controllers
             }
         }
 
+        [Route("deleteMarca")]
         [HttpDelete]
         public JsonResult Delete()
         {

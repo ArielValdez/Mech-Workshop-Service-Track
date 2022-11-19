@@ -23,7 +23,8 @@ namespace MWST_API.Controllers
         {
             _configuration = configuration;
         }
-        
+
+        [Route("getModel")]
         [HttpGet]
         public JsonResult Get()
         {
@@ -59,6 +60,7 @@ namespace MWST_API.Controllers
             }
         }
 
+        [Route("postModel")]
         [HttpPost]
         public JsonResult Post()
         {
@@ -74,6 +76,7 @@ namespace MWST_API.Controllers
             }
         }
 
+        [Route("putModel")]
         [HttpPut]
         public JsonResult Put()
         {
@@ -89,6 +92,7 @@ namespace MWST_API.Controllers
             }
         }
 
+        [Route("deleteModel")]
         [HttpDelete]
         public JsonResult Delete()
         {

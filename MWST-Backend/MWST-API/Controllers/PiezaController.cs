@@ -24,6 +24,7 @@ namespace MWST_API.Controllers
             _configuration = configuration;
         }
 
+        [Route("getPieza")]
         [HttpGet]
         public JsonResult Get(Pieza parts)
         {
@@ -66,6 +67,7 @@ namespace MWST_API.Controllers
 
         // Adds information into the database
         /* RegisterPart data access does not exist yet
+        [Route("postPieza")]
         [HttpPost]
         public JsonResult Post(User user)
         {
@@ -102,6 +104,7 @@ namespace MWST_API.Controllers
         */
 
         // Updates the information of the user. INCOMPLETE
+        [Route("putPieza")]
         [HttpPut]
         public JsonResult Put(Pieza part)
         {
@@ -149,6 +152,7 @@ namespace MWST_API.Controllers
         }
 
         // Make later, to delete
+        [Route("deletePieza")]
         [HttpDelete]
         public JsonResult Delete()
         {
