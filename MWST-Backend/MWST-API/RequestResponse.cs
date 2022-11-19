@@ -12,7 +12,23 @@ namespace MWST_API.Models
         private object Request { get; set; }
         private bool Response = false;
 
+        // Status Code from Response
+        public int StatusCode { get; set; }
+
+        // Error Message from Response
+        public string ErrorMessage { get; set; }
+
         public RequestResponse()
+        {
+
+        }
+
+        public void Response1()
+        {
+
+        }
+
+        public void Request1()
         {
 
         }

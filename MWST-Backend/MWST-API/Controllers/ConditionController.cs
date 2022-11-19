@@ -10,6 +10,7 @@ using System.Data;
 using System.Data.SqlClient;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using MWST_API.Models;
 
 namespace MWST_API.Controllers
 {
@@ -104,22 +105,23 @@ namespace MWST_API.Controllers
 
         // Upload an image to the database
         // Check later, as it needs a proper way to be handled
-        [Route("saveFile")]
+        [Route("saveImage")]
         [HttpPost]
-        public JsonResult SaveFile()
+        public JsonResult SaveFile([FromBody] FileModel file)
         {
             try
             {
+
                 var httpRequest = Request.Form;
                 var postedFile = httpRequest.Files[0];
-                string filename = postedFile.FileName;
-                var physicalPath = _env.ContentRootPath + "/Photos/" + filename;
+                file.FileName = postedFile.FileName;
+                var physicalPath = _env.ContentRootPath + "/Photos/" + file.FileName;
 
                 using (var stream = new FileStream(physicalPath, FileMode.Create))
                 {
                     postedFile.CopyTo(stream);
                 }
-                return new JsonResult(filename);
+                return new JsonResult(file.FileName);
             }
             catch (Exception e)
             {
