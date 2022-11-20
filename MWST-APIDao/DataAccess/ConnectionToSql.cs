@@ -9,7 +9,7 @@ namespace DataAccess
         public ConnectionToSql()
         {
             // Connection String to an Azure Database
-            connectionString = "Server=db-mwst.chi0aivlb8yi.us-east-2.rds.amazonaws.com;Database=rdsadmin;User Id=admin;password=Grupo4IDS333;integrated security=true";
+            connectionString = "Server=db-mwst.chi0aivlb8yi.us-east-2.rds.amazonaws.com;Database=MWSTdb;User Id=admin;password=Grupo4IDS333;integrated security=true";
         }
 
         protected SqlConnection GetConnection()
