@@ -4,35 +4,38 @@ import FeedScreen from "./FeedScreen";
 import MyCarScreen from "./MyCarScreen";
 import ChatScreen from "./ChatScreen";
 import AppointmentsScreen from "./AppointmentsScreen"
-import AccountDataScreen from "./AccountDataScreen"
+import AccountDataScreen2 from "./AccountDataScreen2"
 import { Ionicons, AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
+import { useTranslation } from "react-i18next";
 
 const Tab = createBottomTabNavigator()
 
 const HomeScreen = () => {
+    const { t, i18n } = useTranslation()
+
     return (
         <Tab.Navigator>
-            <Tab.Screen name='Feed' component={FeedScreen} 
+            <Tab.Screen name={t('feed')} component={FeedScreen} 
                 options={{
                     tabBarIcon: ({color, size}) => <Ionicons name='md-home' size={28}/>
                 }}
             />
-            <Tab.Screen name='MyCar' component={MyCarScreen} 
+            <Tab.Screen name={t('myCar')} component={MyCarScreen} 
                 options={{
                     tabBarIcon: ({color, size}) => <Ionicons name='md-car' size={28}/>
                 }}
             />
-            <Tab.Screen name='Messages' component={ChatScreen} 
+            <Tab.Screen name={t('messages')} component={ChatScreen} 
                 options={{
                     tabBarIcon: ({color, size}) => <AntDesign name='message1' size={28}/>
                 }}
             />
-            <Tab.Screen name='Citas' component={AppointmentsScreen} 
+            <Tab.Screen name={t('appointments')} component={AppointmentsScreen} 
                 options={{
                     tabBarIcon: ({color, size}) => <Ionicons name='md-calendar' size={28}/>
                 }}
             />
-            <Tab.Screen name='Cuenta' component={AccountDataScreen}
+            <Tab.Screen name={t('account')} component={AccountDataScreen2}
                 options={{
                     tabBarIcon: ({color, size}) => <MaterialCommunityIcons name='account' size={28} />
                 }}

@@ -6,6 +6,7 @@ import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import theme from "../Theme";
 import { FontAwesome5, Entypo, AntDesign } from '@expo/vector-icons'
+import { useTranslation } from "react-i18next";
 
 const appointmentTitleRegex = /[a-zA-Z]{3,}/
 const appointmentTitleErrorMessage = 'Título de cita debe tener al menos 3 carácteres'
@@ -13,8 +14,9 @@ const appointmentTitleErrorMessage = 'Título de cita debe tener al menos 3 car�
 const AppointmentModal = ({visible, onRequestClose, onReturnPress, onOkPress, timeValue, onTimeChange}) => {
     const [ appointmentTitle, setAppointmentTitle ] = useState('')
     const [ showTimePicker, setShowTimePicker ] = useState(false)
-    const { height, width } = useWindowDimensions()
 
+    const { height, width } = useWindowDimensions()
+    
     return (
         <Modal
             animationType='fade'

@@ -1,5 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { View, Text, StyleSheet } from 'react-native'
 import CustomButton from '../components/CustomButton'
 import CustomInput from '../components/CustomInput'
@@ -9,6 +10,7 @@ const NewPasswordScreen = () => {
     const [ confirmNewPassword, setConfirmNewPassword ] = useState('')
 
     const navigation = useNavigation()
+    const { t, i18n } = useTranslation()
 
     const onSendPressed = () => {
         console.warn('Send pressed')
@@ -20,13 +22,13 @@ const NewPasswordScreen = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Reiniciar contraseña</Text>
+            <Text style={styles.title}>{t('restartPassword')}</Text>
 
-            <CustomInput value={newPassword} setValue={setNewPassword} placeholder='Nueva contraseña'/>
-            <CustomInput value={confirmNewPassword} setValue={setConfirmNewPassword} placeholder='Confirmar nueva contraseña'/>
+            <CustomInput value={newPassword} setValue={setNewPassword} placeholder={t('newPassword')}/>
+            <CustomInput value={confirmNewPassword} setValue={setConfirmNewPassword} placeholder={t('confirmNewPassword')}/>
 
-            <CustomButton onPress={onSendPressed} text='Enviar'/>
-            <CustomButton onPress={onReturnPressed} text='Regresar a inicio de sesión' type='Tertiary'/>
+            <CustomButton onPress={onSendPressed} text={t('send')}/>
+            <CustomButton onPress={onReturnPressed} text={t('returnToSignInButtonText')} type='Tertiary'/>
         </View>
     )
 }

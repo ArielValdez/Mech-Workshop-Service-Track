@@ -1,0 +1,59 @@
+{
+    "translation": {
+        "_comment1": "Sign in page translation data",
+
+        "emailInputPlaceholder": "Correo electrónico",
+        "passwordInputPlaceholder": "Contraseña",
+        "rememberMe": "Recuerdame",
+        "forgotPasswordButtonText": "Olvide mi contraseña",
+        "signInButtonText": "Iniciar sesión",
+        "signUpButtonText": "¿No tienes una cuenta? Crea una",
+        
+        
+        "_comment2": "Sign up page translation data",
+        
+        "nameInputPlaceholder": "Nombre",
+        "lastNameInputPlaceholder": "Apellido",
+        "phoneNumberInputPlaceholder": "Teléfono celular",
+        "usernameInputPlaceholder": "Nombre de usuario",
+        "confirmPasswordInputPlaceholder": "Confirmación de contraseña",
+        "politicsText1": "Al registrarse, usted confirma que esta de acuerdo con nuestros",
+        "politicsText2": "términos de uso",
+        "politicsText3": "política de privacidad",
+        "registerButtonText": "Crear cuenta",
+        "returnButtonText": "Regresar",
+
+        "_comment3": "Forgot password screen translation data",
+        
+        "restartPassword": "Reiniciar contraseña",
+        "nextButtonText": "Continuar",
+        "returnToSignInButtonText": "Regresar a página de inicio de sesión",
+
+        "_comment4": "AccountDataScreen translation data",
+
+        "switchLanguage": "Cambiar idioma",
+        "paymentHistory": "Historia de pagos",
+
+        "_comment5": "Home screen translation data",
+        "feed": "Feed",
+        "myCar": "Mi auto",
+        "messages": "Mensajes",
+        "appointments": "Citas",
+        "account": "Datos Per.",
+
+        "_comment6": "ConfirmEmailScreen translation data",
+        "emailConfirmation": "Confirmación de correo",
+        "confirmationCode": "Código de confirmación",
+        "confirm": "Confirmar",
+        "resend": "Reenviar",
+        "return": "Regresar",
+        
+        "_comment7": "",
+        "newPassword": "Nueva contraseña",
+        "confirmNewPassword": "Confirmar nueva contraseña",
+        "send": "Enviar",
+
+        "autoBotMessage": "Saludos, ¿En qué lo puedo ayudar?",
+        "messageInputPlaceholder": "Mensaje"
+    }
+}

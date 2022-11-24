@@ -8,6 +8,7 @@ import Logo from '../../assets/LogoOficial.png'
 import { UsernameRegex, InvalidUsernameMessage, EmailRegex,
      InvalidEmailMessage, PasswordRegex, InvalidPasswordMessage } from '../Constants'
 import theme from "../Theme"
+import { useTranslation } from "react-i18next"
 
 const SignUpScreen = () => {
     const [ firstname, setFirstname ] = useState('')
@@ -18,9 +19,11 @@ const SignUpScreen = () => {
     const [ username, setUsername ] = useState('')
     const [ password, setPassword ] = useState('')
     const [ confirmPassword, setConfirmPassword ] = useState('')
-    const [ modalVisible, setModalVisible ] = useState(false) 
+    const [ modalVisible, setModalVisible ] = useState(false)
+
     const { height, width } = useWindowDimensions()
     const navigation = useNavigation()
+    const { t, i18n } = useTranslation()
 
     const onRegisterPressed = () => {
         // const user = {
@@ -79,27 +82,27 @@ const SignUpScreen = () => {
                     resizeMode='contain'
                 />
 
-                <CustomInput placeholder='Nombre' value={firstname} setValue={setFirstname} />
-                <CustomInput placeholder='Apellido' value={lastname} setValue={setLastname} />
-                <CustomInput placeholder='Correo Electrónico' value={email} setValue={setEmail} 
+                <CustomInput placeholder={t('nameInputPlaceholder')} value={firstname} setValue={setFirstname} />
+                <CustomInput placeholder={t('lastNameInputPlaceholder')} value={lastname} setValue={setLastname} />
+                <CustomInput placeholder={t('emailInputPlaceholder')} value={email} setValue={setEmail} 
                     keyboardType='email-address' errorMessage={InvalidEmailMessage} pattern={EmailRegex} />
-                <CustomInput placeholder='Teléfono celular' value={phone} setValue={setPhone} 
+                <CustomInput placeholder={t('phoneNumberInputPlaceholder')} value={phone} setValue={setPhone} 
                     keyboardType='number-pad' />
-                <CustomInput placeholder='Nombre de usuario' value={username} setValue={setUsername} 
+                <CustomInput placeholder={t('usernameInputPlaceholder')} value={username} setValue={setUsername} 
                     errorMessage={InvalidUsernameMessage} pattern={UsernameRegex} />
-                <CustomInput placeholder='Contraseña' value={password} setValue={setPassword} secureTextEntry
+                <CustomInput placeholder={t('passwordInputPlaceholder')} value={password} setValue={setPassword} secureTextEntry
                     errorMessage={InvalidPasswordMessage} pattern={PasswordRegex} />
-                <CustomInput placeholder='Confirmar contraseña' value={confirmPassword} setValue={setConfirmPassword} 
+                <CustomInput placeholder={t('confirmPasswordInputPlaceholder')} value={confirmPassword} setValue={setConfirmPassword} 
                     secureTextEntry errorMessage={InvalidPasswordMessage} pattern={PasswordRegex} />
                 
                 <Text style={styles.politicsText}>
-                    Al registrarse, usted confirma que esta de acuerdo con nuestros{' '}
-                     <Text style={styles.link} onPress={onTermsOfUsePressed}>términos de uso</Text> y{' '}
-                     <Text style={styles.link} onPress={onPrivacyPoliticsPressed}>política de privacidad</Text>.
+                    {t('politicsText1')}{' '}
+                    <Text style={styles.link} onPress={onTermsOfUsePressed}>{t('politicsText2')}</Text> y{' '}
+                    <Text style={styles.link} onPress={onPrivacyPoliticsPressed}>{t('politicsText3')}</Text>.
                 </Text>
 
-                <CustomButton onPress={onRegisterPressed} text='Crear cuenta' bgColor={theme.colors.darkPrimary}/>
-                <CustomButton testID='ReturnButton' onPress={onReturnPressed} text='Regresar' type="Secondary"/>
+                <CustomButton onPress={onRegisterPressed} text={t('registerButtonText')} bgColor={theme.colors.darkPrimary}/>
+                <CustomButton testID='ReturnButton' onPress={onReturnPressed} text={t('returnButtonText')} type="Secondary"/>
             </View>
         </ScrollView>
     )

@@ -3,12 +3,13 @@ import { View, Text, StyleSheet } from "react-native"
 
 // Note: Line breaks work with padding everywhere but will
 // break when padding is applied dissimilarly to a parent view
-const LineBreak = ({marginHorizontal, height}) => {
+const LineBreak = ({marginHorizontal, height, color}) => {
     return (
         <View style={[
             styles.linebreak, 
             marginHorizontal ? {marginHorizontal: marginHorizontal} : {},
-            height ? {height: height} : {} 
+            height ? {height: height} : {},
+            color ? {color: color} : {} 
         ]}>
             <Text></Text>
         </View>

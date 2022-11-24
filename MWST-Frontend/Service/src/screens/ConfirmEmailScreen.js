@@ -1,10 +1,13 @@
 import React, { useState } from "react"
+import { useTranslation } from "react-i18next"
 import { View, Text, StyleSheet, useWindowDimensions, ScrollView } from 'react-native'
 import CustomButton from '../components/CustomButton'
 import CustomInput from '../components/CustomInput'
 
 const ConfirmEmailScreen = () => {
     const [ code, setCode ] = useState('')
+
+    const { t, i18n } = useTranslation
 
     const onConfirmPressed = () => {
         console.warn('Confirm pressed')
@@ -21,13 +24,13 @@ const ConfirmEmailScreen = () => {
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.container}>
-                <Text style={styles.title}>Confirmación de correo</Text>
+                <Text style={styles.title}>{t('emailConfirmation')}</Text>
 
-                <CustomInput placeholder='Código de confirmación' value={code} setValue={setCode} keyboardType='numeric'/>
+                <CustomInput placeholder={t('confirmationCode')} value={code} setValue={setCode} keyboardType='numeric'/>
 
-                <CustomButton onPress={onConfirmPressed} text='Confirmar'/>
-                <CustomButton onPress={onResendPressed} text='Reenviar' type="Secondary"/>
-                <CustomButton onPress={onReturnPressed} text='Regresar' type="Tertiary"/>
+                <CustomButton onPress={onConfirmPressed} text={t('confirm')}/>
+                <CustomButton onPress={onResendPressed} text={t('resend')} type="Secondary"/>
+                <CustomButton onPress={onReturnPressed} text={t('return')} type="Tertiary"/>
             </View>
         </ScrollView>
     )

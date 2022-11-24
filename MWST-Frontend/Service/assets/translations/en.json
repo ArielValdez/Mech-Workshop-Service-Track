@@ -1,0 +1,58 @@
+{
+    "translation": {
+        "_comment1": "Sign in page translation data",
+
+        "emailInputPlaceholder": "Email",
+        "passwordInputPlaceholder": "Password",
+        "rememberMe": "Remember me",
+        "forgotPasswordButtonText": "Forgot my password",
+        "signInButtonText": "Sign in",
+        "signUpButtonText": "Don't have an account? Create one" ,
+
+        "_comment2": "Sign up page translation data",
+        
+        "nameInputPlaceholder": "Name",
+        "lastNameInputPlaceholder": "Last Name",
+        "phoneNumberInputPlaceholder": "Phone Number",
+        "usernameInputPlaceholder": "Username",
+        "confirmPasswordInputPlaceholder": "Confirm Password",
+        "politicsText1": "By registering, you confirm that you agree with our",
+        "politicsText2": "Terms of use",
+        "politicsText3": "Privacy policty",
+        "registerButtonText": "Create account",
+        "returnButtonText": "Return",
+
+        "_comment3": "Forgot password screen translation data",
+        
+        "restartPassword": "Restart password",
+        "nextButtonText": "Next",
+        "returnToSignInButtonText": "Return to sign in page",
+
+        "_comment4": "",
+
+        "switchLanguage": "Switch language",
+        "paymentHistory": "Payment History",
+
+        "_comment5": "Home screen translation data",
+        "feed": "Feed",
+        "myCar": "My Car",
+        "messages": "Messages",
+        "appointments": "Appointments",
+        "account": "Account",
+
+        "_comment6": "ConfirmEmailScreen translation data",
+        "emailConfirmation": "Email confirmation",
+        "confirmationCode": "Confirmation code",
+        "confirm": "Confirm",
+        "resend": "Resend",
+        "return": "Return",
+        
+        "_comment7": "",
+        "newPassword": "New password",
+        "confirmNewPassword": "Confirm new password",
+        "send": "Send",
+
+        "autoBotMessage": "Hello, What can I help you with?",
+        "messageInputPlaceholder": "Message"
+    }
+}

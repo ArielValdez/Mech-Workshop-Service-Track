@@ -4,6 +4,7 @@ import CustomButton from '../components/CustomButton';
 import CustomInput from '../components/CustomInput';
 import theme from '../Theme';
 import { Ionicons } from '@expo/vector-icons'
+import { useTranslation } from 'react-i18next';
 
 const Message = ({senderName, content, isSenderMe}) => {
 	return (
@@ -52,8 +53,10 @@ const MessageRenderItem = ({item}) => {
 }
 
 const ChatScreen = () => {
+	const { t, i18n } = useTranslation()
+
 	const defaultMessages = [
-		{ id: 1, senderName: 'David', content: 'Saludos, ¿En qué lo puedo ayudar?', isSenderMe: false }
+		{ id: 1, senderName: 'David', content: t('autoBotMessage'), isSenderMe: false }
 	]
 
 	const [ messages, setMessages ] = useState(defaultMessages)
@@ -77,10 +80,11 @@ const ChatScreen = () => {
 			/>
 			<View style={styles.bottomRow}>
 				<View style={styles.messageInputBox}>
-					<CustomInput placeholder='Mensaje' value={messageTextBox} setValue={setMessageTextBox} padding={5}/>
+					<CustomInput placeholder={t('messageInputPlaceholder')} 
+						value={messageTextBox} setValue={setMessageTextBox} padding={5}/>
 				</View>
 				<View style={styles.sendButton}>
-					<CustomButton text='Enviar' onPress={onSendPress} padding={15} />
+					<CustomButton text={t('send')} onPress={onSendPress} padding={15} />
 				</View>
 			</View>
 		</View>

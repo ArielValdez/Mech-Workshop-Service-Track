@@ -39,8 +39,11 @@ const styles = StyleSheet.create({
     },
     historyContainer: {
         backgroundColor: 'white', 
-        width: 250, height: 150, 
+        width: 250, 
+        height: 150, 
         justifyContent: 'center',
+        borderRadius: 5,
+        borderColor: theme.colors.black,
     },
     appointmentContainer: {
         marginTop: 35, 
@@ -48,6 +51,8 @@ const styles = StyleSheet.create({
         width: 250, 
         height: 120, 
         padding: 5,
+        borderRadius: 5,
+        borderColor: theme.colors.black,
     },
 })
 
