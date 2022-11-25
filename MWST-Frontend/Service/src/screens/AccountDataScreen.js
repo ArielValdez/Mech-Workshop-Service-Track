@@ -69,6 +69,7 @@ const AccountDataScreen = () => {
             i18n.changeLanguage('es')
             LocaleConfig.defaultLocale = 'es'
         } 
+        navigation.navigate('Account')
     }
 
     const onPaymentHistoryPress = () => { 

@@ -12,32 +12,38 @@ const Tab = createBottomTabNavigator()
 
 const HomeScreen = () => {
     const { t, i18n } = useTranslation()
+    
 
     return (
         <Tab.Navigator>
-            <Tab.Screen name={t('feed')} component={FeedScreen} 
+            <Tab.Screen name='Feed' component={FeedScreen} 
                 options={{
-                    tabBarIcon: ({color, size}) => <Ionicons name='md-home' size={28}/>
+                    tabBarIcon: ({color, size}) => <Ionicons name='md-home' size={28}/>,
+                    title: t('feed')
                 }}
             />
-            <Tab.Screen name={t('myCar')} component={MyCarScreen} 
+            <Tab.Screen name='MyCar' component={MyCarScreen} 
                 options={{
-                    tabBarIcon: ({color, size}) => <Ionicons name='md-car' size={28}/>
+                    tabBarIcon: ({color, size}) => <Ionicons name='md-car' size={28}/>,
+                    title: t('myCar'),
                 }}
             />
-            <Tab.Screen name={t('messages')} component={ChatScreen} 
+            <Tab.Screen name='Messages' component={ChatScreen} 
                 options={{
-                    tabBarIcon: ({color, size}) => <AntDesign name='message1' size={28}/>
+                    tabBarIcon: ({color, size}) => <AntDesign name='message1' size={28}/>,
+                    title: t('messages')
                 }}
             />
-            <Tab.Screen name={t('appointments')} component={AppointmentsScreen} 
+            <Tab.Screen name='Appointments' component={AppointmentsScreen} 
                 options={{
-                    tabBarIcon: ({color, size}) => <Ionicons name='md-calendar' size={28}/>
+                    tabBarIcon: ({color, size}) => <Ionicons name='md-calendar' size={28}/>,
+                    title: t('appointments')
                 }}
             />
-            <Tab.Screen name={t('account')} component={AccountDataScreen}
+            <Tab.Screen name='Account' component={AccountDataScreen}
                 options={{
-                    tabBarIcon: ({color, size}) => <MaterialCommunityIcons name='account' size={28} />
+                    tabBarIcon: ({color, size}) => <MaterialCommunityIcons name='account' size={28} />,
+                    title: t('account')
                 }}
             />
         </Tab.Navigator>
