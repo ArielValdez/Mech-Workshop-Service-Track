@@ -163,6 +163,7 @@ const AppointmentsScreen = () => {
     const [ appointments, setAppointments ] = useState(exampleValues)
     const idCounter = useRef(2)
     const { height, width } = useWindowDimensions()
+    const { t, i18n } = useTranslation() 
 
     const marked = useMemo(() => {
         return {
@@ -199,6 +200,7 @@ const AppointmentsScreen = () => {
             <Calendar 
                 onDayPress={onDayPress}
                 markedDates={marked}
+                key={i18n.language}
             />
             <FlatList 
                 data={appointments}
