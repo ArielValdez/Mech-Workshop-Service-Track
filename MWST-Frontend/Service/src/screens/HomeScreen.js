@@ -4,7 +4,7 @@ import FeedScreen from "./FeedScreen";
 import MyCarScreen from "./MyCarScreen";
 import ChatScreen from "./ChatScreen";
 import AppointmentsScreen from "./AppointmentsScreen"
-import AccountDataScreen2 from "./AccountDataScreen2"
+import AccountDataScreen from "./AccountDataScreen"
 import { Ionicons, AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 import { useTranslation } from "react-i18next";
 
@@ -35,7 +35,7 @@ const HomeScreen = () => {
                     tabBarIcon: ({color, size}) => <Ionicons name='md-calendar' size={28}/>
                 }}
             />
-            <Tab.Screen name={t('account')} component={AccountDataScreen2}
+            <Tab.Screen name={t('account')} component={AccountDataScreen}
                 options={{
                     tabBarIcon: ({color, size}) => <MaterialCommunityIcons name='account' size={28} />
                 }}

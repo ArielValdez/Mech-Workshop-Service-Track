@@ -1,61 +1,130 @@
 import { React, useState } from 'react'
-import { ScrollView, View, StyleSheet, FlatList, Text } from "react-native"
+import { ScrollView, View, StyleSheet, FlatList, Text, Pressable } from "react-native"
 import { useNavigation } from "@react-navigation/native";
-import { Ionicons, MaterialIcons } from '@expo/vector-icons'
+import { useTranslation } from 'react-i18next';
+import { Ionicons, MaterialIcons, MaterialCommunityIcons, FontAwesome, Octicons, Entypo, AntDesign, FontAwesome5 } from '@expo/vector-icons'
 import LineBreak from '../components/LineBreak'
 import CustomButton from '../components/CustomButton'
 import theme from '../Theme';
+import DropDownPicker from 'react-native-dropdown-picker';
+import { LocaleConfig } from 'react-native-calendars';
+import { LinearGradient } from 'expo-linear-gradient'
 
-const carRenderItem = ({item}) => {
+const AccountDataButton = ({text, greyedText, onPress, LeftIcon, RightIcon}) => {
     return (
-        <View style={carStyles.container}>
-            <Text style={carStyles.brand}>{item.marca}</Text>
-            <Text style={carStyles.model}>{item.modelo} {item.añoModelo}</Text>
-            <Text style={carStyles.plateNumber}>{item.matricula}</Text>
-            <LineBreak style={carStyles.lineBreak} height={2.5}/>
+        <View>
+            <Pressable style={accountDataStyles.container} onPress={onPress}>
+                <View style={accountDataStyles.leftIcon}>
+                    <LeftIcon />
+                </View>
+                <Text style={greyedText ? accountDataStyles.greyedText : accountDataStyles.text}>{text}</Text>
+                <View style={accountDataStyles.rightIcon}>
+                    <RightIcon />
+                </View>
+            </Pressable>
+            <LineBreak />
         </View>
     )
 }
 
-const carStyles = StyleSheet.create({
+const accountDataStyles = StyleSheet.create({
     container: {
-        padding: 10,
+        flexDirection: 'row',
+        marginHorizontal: 10, marginVertical: 10,
+        paddingHorizontal: 10,
+        alignItems: 'center',
     },
-    brand: {
-        fontWeight: 'bold'
+    leftIcon: {
+        flex: 1,
     },
-    model: {
-
+    text: {
+        flex: 5,
+        color: theme.colors.black,
+        textAlign: 'center',
+        paddingLeft: 15,
+        fontSize: 16,
     },
-    plateNumber: {
-        marginBottom: 5,
+    greyedText: {
+        flex: 5,
+        color: '#616160',
+        textAlign: 'center',
+        paddingLeft: 15,
+        fontSize: 16,
+    },
+    rightIcon: {
+        flex: 1
     },
 })
 
 const AccountDataScreen = () => {
-    const defaultCars = [
-        { id: 1, marca: 'Toyota', modelo: 'C    amry', añoModelo: '1993', matricula: 'YX01405' }
-    ]
-
-    const [ cars, setCars ] = useState(defaultCars)
+    const { t, i18n } = useTranslation()
     const navigation = useNavigation()
 
-    const onAddVehiclePress = () => {
-        //navigate to corresponding page
+    const onLanguageSwitchPress = () => {
+        if (i18n.language == 'es') {
+            i18n.changeLanguage('en')
+            LocaleConfig.defaultLocale = 'en'
+        }
+        else {
+            i18n.changeLanguage('es')
+            LocaleConfig.defaultLocale = 'es'
+        } 
+    }
+
+    const onPaymentHistoryPress = () => { 
+        console.log('payment history pressed')
+    }
+
+    const onReturnToSignInPress = () => {
+        navigation.navigate('SignIn')
     }
 
     return (
         <View style={styles.container}>
-            <MaterialIcons style={styles.accountIcon} name='account-circle' size={200}/>
-            <Text style={styles.name}>Carlos Roque</Text>
+            <LinearGradient
+                style={styles.gradientRectangle}
+                colors={[theme.colors.darkPrimary, theme.colors.lightPrimary]}
+                end={{x: 0.8, y: 0.5}} 
+            >
+            </LinearGradient>
+            <View style={styles.whiteCircle}>
+                <MaterialCommunityIcons style={styles.accountIcon} name='account' size={100}/>
+            </View>
             <View style={styles.accountDataContainer}>
-                <Text style={styles.carsHeader}>Automóviles</Text>
-                <FlatList
-                    data={cars}
-                    renderItem={carRenderItem}
-                    keyExtractor={item => item.id}
+                <AccountDataButton 
+                    LeftIcon={() => <MaterialCommunityIcons name='face-man' size={40} color={theme.colors.darkPrimary} />} 
+                    text='Carlos Roque'  
+                    greyedText={true}
+                    RightIcon={() => <Ionicons />}
                 />
-                <CustomButton onPress={onAddVehiclePress} text='Agregar nuevo vehículo' width='60%'/>
+                <AccountDataButton 
+                    LeftIcon={() => <FontAwesome name='phone' size={40} color={theme.colors.darkPrimary} />}
+                    text='(829) 341-2424'
+                    greyedText={true}
+                    RightIcon={() => <Ionicons />}
+                />
+                <AccountDataButton 
+                    LeftIcon={() => <Entypo name='language' size={40} color={theme.colors.darkPrimary} />}
+                    text={t('switchLanguage')}
+                    RightIcon={() => <Octicons name='arrow-switch' size={40} />}
+                    onPress={onLanguageSwitchPress}
+                />
+                <AccountDataButton 
+                    LeftIcon={() => <AntDesign name='creditcard' size={40} color={theme.colors.darkPrimary} />}
+                    text={t('paymentHistory')}
+                    RightIcon={() => <Ionicons />}
+                    onPress={onPaymentHistoryPress}
+                />
+
+                <Pressable onPress={onReturnToSignInPress}>
+                    <LinearGradient 
+                        style={styles.returnButton} 
+                        colors={[theme.colors.darkPrimary, theme.colors.lightPrimary]}
+                        end={{x: 0.9, y: 0.5}}
+                    >
+                        <Text style={styles.returnButtonText}>{t('returnToSignIn')}</Text>
+                    </LinearGradient>
+                </Pressable> 
             </View>
         </View>
     )
@@ -64,21 +133,52 @@ const AccountDataScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: theme.colors.bgColor,
-    },  
+        backgroundColor: theme.colors.white,
+    },
+    gradientRectangle: {
+        height: 150,
+        width: '100%',
+        backgroundColor: theme.colors.darkPrimary,
+        marginBottom: 100,
+    },
+    whiteCircle: {
+        backgroundColor: theme.colors.white,
+        position: 'absolute',
+        left: 125,
+        top: 80,
+        width: 125, height: 125,
+        borderRadius: 125 / 2,
+        borderWidth: 1.5,
+        borderColor: theme.colors.black,
+        alignItems: 'center',
+        justifyContent: 'center',
+    }, 
     accountIcon: {
-        alignSelf: 'center',
+        
     },
     name: {
         fontSize: 28,
         textAlign: 'center'
     },
     accountDataContainer: {
-        padding: 20
+        
     },
     carsHeader: {
         textAlign: 'left'
     },
+    returnButton: {
+        width: '70%', height: 40,
+        marginTop: 30,
+        borderRadius: 15,
+        alignSelf: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    returnButtonText: {
+        color: theme.colors.white,
+        fontWeight: 'bold',
+        fontSize: 16,
+    }
 })
 
 export default AccountDataScreen
