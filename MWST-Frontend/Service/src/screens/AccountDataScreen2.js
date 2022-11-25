@@ -8,6 +8,7 @@ import CustomButton from '../components/CustomButton'
 import theme from '../Theme';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { LocaleConfig } from 'react-native-calendars';
+import { LinearGradient } from 'expo-linear-gradient'
 
 const AccountDataButton = ({text, greyedText, onPress, LeftIcon, RightIcon}) => {
     return (
@@ -57,6 +58,7 @@ const accountDataStyles = StyleSheet.create({
 
 const AccountDataScreen2 = () => {
     const { t, i18n } = useTranslation()
+    const navigation = useNavigation()
 
     const onLanguageSwitchPress = () => {
         if (i18n.language == 'es') {
@@ -73,11 +75,21 @@ const AccountDataScreen2 = () => {
         console.log('payment history pressed')
     }
 
+    const onReturnToSignInPress = () => {
+        navigation.navigate('SignIn')
+    }
+
     return (
         <View style={styles.container}>
-            <View style={styles.blueCircle}>
+            <LinearGradient
+                style={styles.gradientRectangle}
+                colors={[theme.colors.darkPrimary, theme.colors.lightPrimary]}
+                end={{x: 0.8, y: 0.5}} 
+            >
+            </LinearGradient>
+            <View style={styles.whiteCircle}>
+                <MaterialCommunityIcons style={styles.accountIcon} name='account' size={100}/>
             </View>
-            <MaterialIcons style={styles.accountIcon} name='account-circle' size={200}/>
             <View style={styles.accountDataContainer}>
                 <AccountDataButton 
                     LeftIcon={() => <MaterialCommunityIcons name='face-man' size={40} color={theme.colors.darkPrimary} />} 
@@ -102,7 +114,17 @@ const AccountDataScreen2 = () => {
                     text={t('paymentHistory')}
                     RightIcon={() => <Ionicons />}
                     onPress={onPaymentHistoryPress}
-                /> 
+                />
+
+                <Pressable onPress={onReturnToSignInPress}>
+                    <LinearGradient 
+                        style={styles.returnButton} 
+                        colors={[theme.colors.darkPrimary, theme.colors.lightPrimary]}
+                        end={{x: 0.9, y: 0.5}}
+                    >
+                        <Text style={styles.returnButtonText}>{t('returnToSignIn')}</Text>
+                    </LinearGradient>
+                </Pressable> 
             </View>
         </View>
     )
@@ -113,16 +135,26 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: theme.colors.white,
     },
-    blueCircle: {
+    gradientRectangle: {
         height: 150,
         width: '100%',
         backgroundColor: theme.colors.darkPrimary,
         marginBottom: 100,
+    },
+    whiteCircle: {
+        backgroundColor: theme.colors.white,
+        position: 'absolute',
+        left: 125,
+        top: 80,
+        width: 125, height: 125,
+        borderRadius: 125 / 2,
+        borderWidth: 1.5,
+        borderColor: theme.colors.black,
+        alignItems: 'center',
+        justifyContent: 'center',
     }, 
     accountIcon: {
-        position: 'absolute',
-        left: 100,
-        top: 50
+        
     },
     name: {
         fontSize: 28,
@@ -134,6 +166,19 @@ const styles = StyleSheet.create({
     carsHeader: {
         textAlign: 'left'
     },
+    returnButton: {
+        width: '70%', height: 40,
+        marginTop: 30,
+        borderRadius: 15,
+        alignSelf: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    returnButtonText: {
+        color: theme.colors.white,
+        fontWeight: 'bold',
+        fontSize: 16,
+    }
 })
 
 export default AccountDataScreen2

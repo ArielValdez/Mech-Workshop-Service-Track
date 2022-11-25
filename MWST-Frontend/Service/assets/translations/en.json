@@ -28,10 +28,11 @@
         "nextButtonText": "Next",
         "returnToSignInButtonText": "Return to sign in page",
 
-        "_comment4": "",
+        "_comment4": "AccountDetailScreen translation data",
 
         "switchLanguage": "Switch language",
         "paymentHistory": "Payment History",
+        "returnToSignIn": "Return to sign in",
 
         "_comment5": "Home screen translation data",
         "feed": "Feed",
@@ -54,5 +55,6 @@
 
         "autoBotMessage": "Hello, What can I help you with?",
         "messageInputPlaceholder": "Message"
+
     }
 }
