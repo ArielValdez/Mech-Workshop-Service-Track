@@ -55,6 +55,9 @@
         "send": "Enviar",
 
         "autoBotMessage": "Saludos, ¿En qué lo puedo ayudar?",
-        "messageInputPlaceholder": "Mensaje"
+        "messageInputPlaceholder": "Mensaje",
+
+        "newAppointment": "Nueva cita",
+        "schedule": "Agendar"
     }
 }

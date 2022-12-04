@@ -16,6 +16,7 @@ const AppointmentModal = ({visible, onRequestClose, onReturnPress, onOkPress, ti
     const [ showTimePicker, setShowTimePicker ] = useState(false)
 
     const { height, width } = useWindowDimensions()
+    const { t, i18n } = useTranslation()
     
     return (
         <Modal
@@ -29,7 +30,7 @@ const AppointmentModal = ({visible, onRequestClose, onReturnPress, onOkPress, ti
         >
             <View style={modalStyles.container}>
                 <View style={[ modalStyles.view, { height: height * 0.28 } ]}>
-                    <Text style={modalStyles.title}>Nueva cita</Text>
+                    <Text style={modalStyles.title}>{t('newAppointment')}</Text>
                     <CustomInput value={appointmentTitle} setValue={setAppointmentTitle} placeholder='Título cita'
                         pattern={appointmentTitleRegex} errorMessage={appointmentTitleErrorMessage} />
 
@@ -39,7 +40,7 @@ const AppointmentModal = ({visible, onRequestClose, onReturnPress, onOkPress, ti
 
                     <View style={modalStyles.buttonRow}>
                         <CustomButton 
-                            text='Regresar' 
+                            text={t('return')} 
                             width='45%' 
                             bgColor={theme.colors.lightSecondary}
                             fgColor={theme.colors.black}
@@ -49,7 +50,7 @@ const AppointmentModal = ({visible, onRequestClose, onReturnPress, onOkPress, ti
                             }}
                         />
                         <CustomButton 
-                            text='Agendar' 
+                            text={t('schedule')} 
                             width='45%' 
                             bgColor={theme.colors.darkPrimary} 
                             onPress={() => {

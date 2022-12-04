@@ -1,0 +1,86 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "profileId": "1",
+      "name": "Carlos",
+      "lastname": "Roque",
+      "password": "1D456d",
+      "role": "Client",
+      "active": "true"
+    },
+    {
+      "id": "2",
+      "name": "Jose",
+      "lastname": "Burgos",
+      "password": "1D452",
+      "role": "Client",
+      "active": "false"
+    },
+    {
+      "id": "3",
+      "name": "Pedro",
+      "lastname": "Alonzo",
+      "password": "1D4dfjaP",
+      "role": "Client",
+      "active": "true"
+    },
+    {
+      "name": "Pepe",
+      "lastname": "Tehehe",
+      "password": "123456",
+      "role": "client",
+      "active": true,
+      "id": "cpmw5aa"
+    }
+  ],
+  "userProfiles": [
+    {
+      "profileId": "1",
+      "identificationCard": "402-3335212-20",
+      "telephone": "8095622091",
+      "phone": "8293412424",
+      "email": "carlosroque197@gmail.com",
+      "createdAt": "11/3/2022 9:07"
+    }
+  ],
+  "services": [
+    {
+      "id": "1",
+      "serviceType": "Reparation",
+      "description": "Morning checkup",
+      "state": "In Process...",
+      "plate": "44922",
+      "startedAt": "10/3/2022",
+      "expectedAt": "10/3/2022",
+      "finishedAt": "10/3/2022"
+    }
+  ],
+  "workshops": [
+    {
+      "id": "1",
+      "name": "Mech Workshop Santo Domingo",
+      "managerId": "2",
+      "locationId": "1",
+      "openAt": "12/3/2022 9:00",
+      "closedAt": "12/3/2022 22:00"
+    }
+  ],
+  "payments": [
+    {
+      "id": "1",
+      "service_id": "1",
+      "payment_type": "credit card",
+      "amount": "10000"
+    }
+  ],
+  "vehicles": [
+    {
+      "id": "1",
+      "user_id": "1",
+      "plate": "A759686",
+      "model": "Ford F-Series",
+      "vin": "4Y1SL65848Z411439"
+    }
+  ]
+}

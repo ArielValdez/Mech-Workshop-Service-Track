@@ -54,7 +54,9 @@
         "send": "Send",
 
         "autoBotMessage": "Hello, What can I help you with?",
-        "messageInputPlaceholder": "Message"
+        "messageInputPlaceholder": "Message",
 
+        "newAppointment": "New Appointment",
+        "schedule": "Schedule"
     }
 }
