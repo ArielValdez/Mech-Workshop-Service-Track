@@ -52,8 +52,8 @@
       "state": "In Process...",
       "plate": "44922",
       "startedAt": "10/3/2022",
-      "expectedAt": "10/3/2022",
-      "finishedAt": "10/3/2022"
+      "expectedAt": "2022-10-03T18:30:00.000Z",
+      "finishedAt": "2022-10-03T19:00:00.000Z"
     }
   ],
   "workshops": [

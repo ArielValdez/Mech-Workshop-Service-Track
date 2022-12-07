@@ -9,9 +9,9 @@ export const ServiceList = (props) => {
                 <TextField source='description' />
                 <TextField source='state' />
                 <TextField source='plate' label='Car'/>
-                <DateField source='startedAt' />
-                <DateField source='expectedAt' />
-                <DateField source='finishedAt' />
+                <DateField source='startedAt' showTime showDate />
+                <DateField source='expectedAt' showTime showDate />
+                <DateField source='finishedAt' showTime showDate />
                 <EditButton />
                 <DeleteButton />
             </Datagrid>
@@ -37,7 +37,11 @@ export const ServiceEdit = (props) => {
     return (
         <Edit title='Edit service' {...props}>
             <SimpleForm>
-                
+                <TextInput source='description' multiline/>
+                <TextInput source='plate' placeholder='0F00105'/>
+                <DateTimeInput source='startedAt' />
+                <DateTimeInput source='expectedAt' />
+                <DateTimeInput source='finishedAt'/>
             </SimpleForm>
         </Edit>
     )
