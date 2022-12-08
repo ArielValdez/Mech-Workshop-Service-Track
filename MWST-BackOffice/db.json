@@ -4,9 +4,9 @@
       "id": "1",
       "profileId": "1",
       "name": "Carlos",
-      "lastname": "Roque",
+      "lastname": "Burgos",
       "password": "1D456d",
-      "role": "Client",
+      "role": "client",
       "active": "true"
     },
     {
@@ -18,20 +18,12 @@
       "active": "false"
     },
     {
-      "id": "3",
       "name": "Pedro",
       "lastname": "Alonzo",
-      "password": "1D4dfjaP",
-      "role": "Client",
-      "active": "true"
-    },
-    {
-      "name": "Pepe",
-      "lastname": "Tehehe",
       "password": "123456",
-      "role": "client",
-      "active": true,
-      "id": "cpmw5aa"
+      "role": "assistant",
+      "active": false,
+      "id": "zlNwt9g"
     }
   ],
   "userProfiles": [
@@ -64,6 +56,14 @@
       "locationId": "1",
       "openAt": "12/3/2022 9:00",
       "closedAt": "12/3/2022 22:00"
+    },
+    {
+      "name": "Nuevo Taller",
+      "managerId": "1",
+      "locationId": "Santo Domingo",
+      "openAt": "2022-12-08T13:00:43.869Z",
+      "closedAt": "2022-12-08T22:00:52.948Z",
+      "id": "dwbmVbz"
     }
   ],
   "payments": [

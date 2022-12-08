@@ -1,5 +1,5 @@
 import { PropaneSharp } from "@mui/icons-material"
-import { Create, Datagrid, Edit, List, SimpleForm, TextField, TextInput } from "react-admin"
+import { Create, Datagrid, DeleteButton, Edit, EditButton, List, SimpleForm, TextField, TextInput } from "react-admin"
 
 export const VehicleList = (props) => {
     return (
@@ -10,6 +10,8 @@ export const VehicleList = (props) => {
                 <TextField source='plate' />
                 <TextField source='model' />
                 <TextField source='vin' />
+                <EditButton />
+                <DeleteButton />
             </Datagrid>
         </List>
     )
