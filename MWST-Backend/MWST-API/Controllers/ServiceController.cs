@@ -15,13 +15,12 @@ namespace MWST_API.Controllers
     [ApiController]
     public class ServiceController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
         private readonly Connection con = new Connection();
         private UserModel models = new UserModel();
 
-        public ServiceController(IConfiguration configuration)
+        public ServiceController()
         {
-            _configuration = configuration;
+            
         }
 
         [Route("getService")]
@@ -33,7 +32,7 @@ namespace MWST_API.Controllers
 
             DataTable table = new DataTable();
             // New the connection string
-            string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
+            string sqlDataSource = (con.ReturnConnection().ConnectionString);
             SqlDataReader reader;
 
             try
@@ -111,13 +110,13 @@ namespace MWST_API.Controllers
             // Query to update the information of the user
 
             // This only updates the table PerfilUsuario
-            string query = @"update Servicio
+            string query = @"update tblServicio
                              set Tipo_Servicio = @service, FechaPromesa = @promesa
                              where ID_Servicio = @idService and ID_Mantenimiento = @idMantenimiento";
 
             DataTable table = new DataTable();
             // New the connection string
-            string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
+            string sqlDataSource = (con.ReturnConnection().ConnectionString);
             SqlDataReader reader;
 
             // Use the domain instead

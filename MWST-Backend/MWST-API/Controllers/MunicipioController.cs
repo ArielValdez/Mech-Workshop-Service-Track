@@ -17,13 +17,11 @@ namespace MWST_API.Controllers
     [ApiController]
     public class MunicipioController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
         private readonly Connection con = new Connection();
         private UserModel models = new UserModel();
 
-        public MunicipioController(IConfiguration configuration)
+        public MunicipioController()
         {
-            _configuration = configuration;
         }
 
         [Route("getMunicipio")]

@@ -16,13 +16,11 @@ namespace MWST_API.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
         private readonly Connection con = new Connection();
         private UserModel models = new UserModel();
 
-        public LoginController(IConfiguration configuration)
+        public LoginController()
         {
-            _configuration = configuration;
         }
 
         [Route("getLogin")] // Delete if this is generating problems
@@ -34,7 +32,7 @@ namespace MWST_API.Controllers
 
             DataTable table = new DataTable();
             // New the connection string
-            string sqlDataSource = _configuration.GetConnectionString("WorkshopAppCon");
+            string sqlDataSource = con.ReturnConnection().ConnectionString;
             SqlDataReader reader;
             try
             {
