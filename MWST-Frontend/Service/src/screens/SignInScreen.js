@@ -47,36 +47,19 @@ const SignInScreen = () => {
     const { t, i18n } = useTranslation()
 
     const onSignInPressed = () => {
-        // console.log('Sign in pressed')
-        // const user = {
-        //     username: 'Carlos Roque',
-        //     password: 12345,
-        // }
-        // fetch(`http://10.0.0.7:44890/api/Login?username=${user.username}&password=${user.password}`, {
-        //     method: 'GET',
-        // })
-        //     .then(response => response.json())
-        //     .then(result => console.log(result))
-        //     .catch(error => console.log(error))
-        navigation.navigate('Home')
+        fetch(`http://10.0.0.7:3000/users?email=${email}&password=${password}`, {
+            method: 'GET',
+        })
+            .then(response => response.json())
+            .then(result => console.log(result))
+            .catch(error => console.log(error))
+            .finally(() => navigation.navigate('Home'))
     }
 
     const onForgotPasswordPressed = () => {
         navigation.navigate('ForgotPassword')
     }
-    /*
-    const onSignInFacebook = () => {
-        console.warn('Sign in with facebook')
-    }
 
-    const onSignInGoogle = () => {
-        console.warn('Sign in with google')
-    }
-
-    const onSignInApple = () => {
-        console.warn('Sign in with apple')
-    }
-    */
     const onSignUpPressed = () => {
         navigation.navigate('SignUp')
     }

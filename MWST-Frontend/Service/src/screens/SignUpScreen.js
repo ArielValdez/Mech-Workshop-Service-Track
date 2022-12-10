@@ -15,8 +15,8 @@ const SignUpScreen = () => {
     const [ lastname, setLastname ] = useState('')
     const [ email, setEmail ] = useState('')
     const [ phone, setPhone ] = useState('')
-    const [ carModel, setCarModel ] = useState('')
     const [ username, setUsername ] = useState('')
+    const [ idCard, setIdCard ] = useState('')
     const [ password, setPassword ] = useState('')
     const [ confirmPassword, setConfirmPassword ] = useState('')
     const [ modalVisible, setModalVisible ] = useState(false)
@@ -26,33 +26,30 @@ const SignUpScreen = () => {
     const { t, i18n } = useTranslation()
 
     const onRegisterPressed = () => {
-        // const user = {
-        //     username: username,
-        //     password: password,
-        //     email: email,
-        //     name: firstname,
-        //     surname: lastname,
-        //     //Should be limited to thirteen digits in the following manner: 0-1234567-891
-        //     cedula: '402-3041820-0',
-        //     userRol: 'Usuario',
-        //     //Should be limited to thirteen digits in the following order: (809)000-0000
-        //     phoneNumber: phone,
-        //     cellPhone: phone,
-        // }
+		const user = {
+		    username: username,
+		    password: password,
+		    email: email,
+		    name: firstname,
+		    lastname: lastname,
+		    //Should be limited to thirteen digits in the following manner: 0-1234567-891
+		    id_card: '402-3041120-0',
+		    role: 'Client',
+		    //Should be limited to thirteen digits in the following order: (809)000-0000
+		    phone_number: phone
+		}
 
-        // fetch('http://10.0.0.7:44890/api/User', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-type': 'application/json'
-        //     },
-        //     body: JSON.stringify(user)
-        // })
-        //     .then(response => response.text())
-        //     .then(result => console.log('Success: ', result))
-        //     .catch(error => console.log('Error: ', error))
-
-        setModalVisible(true)
-    }
+		fetch('http://10.0.0.7:3000/users', {
+		    method: 'POST',
+		    headers: {
+		        'Content-type': 'application/json'
+		    },
+		    body: JSON.stringify(user)
+		})
+		    .then(response => response.json())
+		    .then(result => setModalVisible(true))
+		    .catch(error => console.log('Error: ', error))
+	}
 
     const onReturnPressed = () => {
         navigation.navigate('SignIn')
@@ -90,6 +87,8 @@ const SignUpScreen = () => {
                     keyboardType='number-pad' />
                 <CustomInput placeholder={t('usernameInputPlaceholder')} value={username} setValue={setUsername} 
                     errorMessage={InvalidUsernameMessage} pattern={UsernameRegex} />
+                <CustomInput placeholder='001-0000000-1' value={idCard} setValue={setIdCard} 
+                    keyboardType='number-pad' />
                 <CustomInput placeholder={t('passwordInputPlaceholder')} value={password} setValue={setPassword} secureTextEntry
                     errorMessage={InvalidPasswordMessage} pattern={PasswordRegex} />
                 <CustomInput placeholder={t('confirmPasswordInputPlaceholder')} value={confirmPassword} setValue={setConfirmPassword} 

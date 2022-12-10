@@ -11,10 +11,11 @@ import BuildIcon from '@mui/icons-material/Build';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar'
+import authProvider from "./AuthProvider";
 
 const App = () => {
 	return (
-		<Admin dataProvider={restProvider("http://localhost:3000")}>
+		<Admin dataProvider={restProvider("http://localhost:3000")} authProvider={authProvider}>
 			<Resource name="users" list={UserList} create={UserCreate} edit={UserEdit} icon={PersonIcon}></Resource>
 			<Resource name="workshops" list={WorkshopList} create={WorkshopCreate} edit={WorkshopEdit} icon={HomeRepairServiceIcon}></Resource>
 			<Resource name="services" list={ServiceList} create={ServiceCreate} edit={ServiceEdit} icon={BuildIcon}></Resource>

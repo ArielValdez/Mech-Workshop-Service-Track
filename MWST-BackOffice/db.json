@@ -2,28 +2,25 @@
   "users": [
     {
       "id": "1",
-      "profileId": "1",
+      "username": "example_username",
+      "password": "contra@123",
+      "email": "carlosroque197@gmail.com",
       "name": "Carlos",
-      "lastname": "Burgos",
-      "password": "1D456d",
-      "role": "client",
-      "active": "true"
-    },
-    {
-      "id": "2",
-      "name": "Jose",
-      "lastname": "Burgos",
-      "password": "1D452",
+      "lastname": "Roque",
+      "id_card": "402-3041820-0",
       "role": "Client",
-      "active": "false"
+      "phone_number": "829-341-2424"
     },
     {
+      "username": "Pedro",
+      "password": "contra@123",
+      "email": "Pedro1876@gmail.com",
       "name": "Pedro",
       "lastname": "Alonzo",
-      "password": "123456",
-      "role": "assistant",
-      "active": false,
-      "id": "zlNwt9g"
+      "id_card": "402-3041120-0",
+      "role": "Client",
+      "phone_number": "8096257412",
+      "id": "1s8jE4q"
     }
   ],
   "userProfiles": [

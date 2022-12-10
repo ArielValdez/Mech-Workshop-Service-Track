@@ -1,19 +1,17 @@
 import { List, Datagrid, TextField, DateField, EditButton,
     DeleteButton, Create, SimpleForm, Edit, TextInput, PasswordInput,
-    BooleanInput, SelectInput, ReferenceField, EmailField, SearchInput } from 'react-admin'
+    BooleanInput, SelectInput, ReferenceField, EmailField, SearchInput, ReferenceInput } from 'react-admin'
 
-const postFilters = [
-    <SearchInput source='q' alwaysOn />
-]
 
 export const UserList = (props) => {
     return (
-        <List title='User list' {...props} filters={postFilters}>
+        <List title='User list' {...props}>
             <Datagrid>
                 <TextField source='id' />
                 <TextField source='name' />
                 <TextField source='lastname' />
                 <TextField source='password' />
+                <TextField source='id_card'/>
                 <TextField source='role' />
                 <TextField source='active' />
                 <EditButton />
