@@ -12,6 +12,8 @@ namespace Mech_Workshop_Service_Track
         {
             // https://docs.microsoft.com/en-us/dotnet/api/system.threading.thread?view=net-6.0
             // API Console
+            UserModel user = new UserModel();
+            user.LoginUser("Ariel", "1234");
         }
     }
 }

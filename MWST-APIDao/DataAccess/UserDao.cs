@@ -22,14 +22,13 @@ namespace DataAccess
                         command.Connection = connection;
 
                         //Selects the users credential
-                        command.CommandText = "select * from PerfilUsuario where Username=@username and Password=@password";
+                        command.CommandText = "select * from tblPerfilUsuario where Username=@username and uPassword=@password";
                         command.Parameters.AddWithValue("@username", username);
                         command.Parameters.AddWithValue("@password", password);
                         command.CommandType = CommandType.Text;
 
                         SqlDataReader reader = command.ExecuteReader();
 
-                        connection.Close();
                         if (reader.HasRows)
                         {
                             return true;
@@ -74,7 +73,6 @@ namespace DataAccess
 
                         SqlDataReader reader = command.ExecuteReader();
 
-                        connection.Close();
                         if (reader.HasRows)
                         {
                             return true;
@@ -118,7 +116,6 @@ namespace DataAccess
 
                         SqlDataReader reader = command.ExecuteReader();
 
-                        connection.Close();
                         if (reader.HasRows)
                         {
                             return true;
@@ -156,7 +153,6 @@ namespace DataAccess
 
                         SqlDataReader reader = command.ExecuteReader();
 
-                        connection.Close();
                         if (reader.HasRows)
                         {
                             return true;
@@ -198,7 +194,6 @@ namespace DataAccess
                         
                         SqlDataReader reader = command.ExecuteReader();
 
-                        connection.Close();
                         if (reader.HasRows)
                         {
                             return true;
@@ -240,7 +235,6 @@ namespace DataAccess
 
                         SqlDataReader reader = command.ExecuteReader();
 
-                        connection.Close();
                         if (reader.HasRows)
                         {
                             return true;
@@ -281,7 +275,6 @@ namespace DataAccess
 
                         SqlDataReader reader = command.ExecuteReader();
 
-                        connection.Close();
                         if (reader.HasRows)
                         {
                             return true;
@@ -327,7 +320,6 @@ namespace DataAccess
 
                         SqlDataReader reader = command.ExecuteReader();
 
-                        connection.Close();
                         if (reader.HasRows)
                         {
                             return true;
@@ -369,7 +361,6 @@ namespace DataAccess
 
                         SqlDataReader reader = command.ExecuteReader();
 
-                        connection.Close();
                         if (reader.HasRows)
                         {
                             return true;
@@ -439,7 +430,6 @@ namespace DataAccess
 
                         SqlDataReader reader = command.ExecuteReader();
 
-                        connection.Close();
                         if (!reader.HasRows)
                         {
                             transaction.Commit();
@@ -508,7 +498,6 @@ namespace DataAccess
 
                         SqlDataReader reader = command.ExecuteReader();
 
-                        connection.Close();
                         if (!reader.HasRows)
                         {
                             transaction.Commit();
@@ -569,7 +558,6 @@ namespace DataAccess
 
                         SqlDataReader reader = command.ExecuteReader();
 
-                        connection.Close();
                         if (!reader.HasRows)
                         {
                             transaction.Commit();
@@ -636,7 +624,6 @@ namespace DataAccess
 
                         SqlDataReader reader = command.ExecuteReader();
 
-                        connection.Close();
                         if (!reader.HasRows)
                         {
                             transaction.Commit();
@@ -717,7 +704,6 @@ namespace DataAccess
 
                         SqlDataReader reader = command.ExecuteReader();
 
-                        connection.Close();
                         if (!reader.HasRows)
                         {
                             transaction.Commit();
@@ -900,8 +886,6 @@ namespace DataAccess
                         { /* Write the update part here */ }
 
                         SqlDataReader reader = command.ExecuteReader();
-
-                        connection.Close();
                         if (!reader.HasRows)
                         {
                             transaction.Commit();
@@ -967,8 +951,6 @@ namespace DataAccess
                         { /* Write the update part here */ }
 
                         SqlDataReader reader = command.ExecuteReader();
-
-                        connection.Close();
                         if (!reader.HasRows)
                         {
                             transaction.Commit();
@@ -1049,8 +1031,6 @@ namespace DataAccess
                         command.ExecuteNonQuery();
 
                         SqlDataReader reader = command.ExecuteReader();
-
-                        connection.Close();
                         if (reader.HasRows)
                         {
                             transaction.Commit();
@@ -1117,8 +1097,6 @@ namespace DataAccess
                         command.ExecuteNonQuery();
 
                         SqlDataReader reader = command.ExecuteReader();
-
-                        connection.Close();
                         if (reader.HasRows)
                         {
                             transaction.Commit();
@@ -1178,8 +1156,6 @@ namespace DataAccess
                         command.ExecuteNonQuery();
 
                         SqlDataReader reader = command.ExecuteReader();
-
-                        connection.Close();
                         if (!reader.HasRows)
                         {
                             transaction.Commit();
@@ -1247,8 +1223,6 @@ namespace DataAccess
                         command.ExecuteNonQuery();
 
                         SqlDataReader reader = command.ExecuteReader();
-
-                        connection.Close();
                         if (reader.HasRows)
                         {
                             transaction.Commit();
@@ -1331,8 +1305,6 @@ namespace DataAccess
                         command.ExecuteNonQuery();
 
                         SqlDataReader reader = command.ExecuteReader();
-
-                        connection.Close();
                         if (reader.HasRows)
                         {
                             transaction.Commit();
@@ -1511,8 +1483,6 @@ namespace DataAccess
                         command.ExecuteNonQuery();
 
                         SqlDataReader reader = command.ExecuteReader();
-
-                        connection.Close();
                         if (reader.HasRows)
                         {
                             transaction.Commit();
@@ -1577,8 +1547,6 @@ namespace DataAccess
                         command.ExecuteNonQuery();
 
                         SqlDataReader reader = command.ExecuteReader();
-
-                        connection.Close();
                         if (reader.HasRows)
                         {
                             transaction.Commit();
@@ -1645,8 +1613,6 @@ namespace DataAccess
                         command.ExecuteNonQuery();
 
                         SqlDataReader reader = command.ExecuteReader();
-
-                        connection.Close();
                         if (reader.HasRows)
                         {
                             transaction.Commit();
@@ -1705,8 +1671,6 @@ namespace DataAccess
                         command.ExecuteNonQuery();
 
                         SqlDataReader reader = command.ExecuteReader();
-
-                        connection.Close();
                         if (reader.HasRows)
                         {
                             transaction.Commit();
@@ -1765,8 +1729,6 @@ namespace DataAccess
                         command.ExecuteNonQuery();
 
                         SqlDataReader reader = command.ExecuteReader();
-
-                        connection.Close();
                         if (reader.HasRows)
                         {
                             transaction.Commit();
@@ -1825,8 +1787,6 @@ namespace DataAccess
                         command.ExecuteNonQuery();
 
                         SqlDataReader reader = command.ExecuteReader();
-
-                        connection.Close();
                         if (reader.HasRows)
                         {
                             transaction.Commit();
@@ -1886,8 +1846,6 @@ namespace DataAccess
                         command.ExecuteNonQuery();
 
                         SqlDataReader reader = command.ExecuteReader();
-
-                        connection.Close();
                         if (reader.HasRows)
                         {
                             transaction.Commit();
@@ -1952,8 +1910,6 @@ namespace DataAccess
                         command.ExecuteNonQuery();
 
                         SqlDataReader reader = command.ExecuteReader();
-
-                        connection.Close();
                         if (reader.HasRows)
                         {
                             transaction.Commit();
@@ -2127,8 +2083,6 @@ namespace DataAccess
                         command.ExecuteNonQuery();
 
                         SqlDataReader reader = command.ExecuteReader();
-
-                        connection.Close();
                         if (reader.HasRows)
                         {
                             transaction.Commit();
@@ -2188,8 +2142,6 @@ namespace DataAccess
                         command.ExecuteNonQuery();
 
                         SqlDataReader reader = command.ExecuteReader();
-
-                        connection.Close();
                         if (reader.HasRows)
                         {
                             transaction.Commit();
