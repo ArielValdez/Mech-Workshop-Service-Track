@@ -35,11 +35,14 @@ The purpose of this program is to give users a layer of security when said user 
 * Unit Testing
 
 **Programming Languages and Database**
-* `C#` (Back-end)
+* `C#` (Back End)
   * `.net core`
   * `.net core API v3.1`
-* `JS` React Native` (Front-end)
+  * `ASP.Net`
+* `JS React Native` (Front End)
   * `Expo v5.5.1`
+* `JS` (Back Office)
+  * `NPM v8.5.5`
 * `SQL Server` lates version (2019 RTM 15.0.2000.5)
 
 **Platform**
