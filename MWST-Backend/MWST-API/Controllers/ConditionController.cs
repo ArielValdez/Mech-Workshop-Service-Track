@@ -18,14 +18,12 @@ namespace MWST_API.Controllers
     [ApiController]
     public class ConditionController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _env;
         private readonly Connection con = new Connection();
         private UserModel models = new UserModel();
 
-        public ConditionController(IConfiguration configuration, IWebHostEnvironment env)
+        public ConditionController(IWebHostEnvironment env)
         {
-            _configuration = configuration;
             _env = env;
         }
         [Route("getCondition")]
@@ -37,7 +35,7 @@ namespace MWST_API.Controllers
 
             DataTable table = new DataTable();
             // New the connection string
-            string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
+            string sqlDataSource = con.ReturnConnection().ConnectionString;
             SqlDataReader reader;
             try
             {
@@ -79,7 +77,7 @@ namespace MWST_API.Controllers
 
             DataTable table = new DataTable();
             // New the connection string
-            string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
+            string sqlDataSource = con.ReturnConnection().ConnectionString;
             SqlDataReader reader;
 
             if (query)
@@ -111,7 +109,6 @@ namespace MWST_API.Controllers
         {
             try
             {
-
                 var httpRequest = Request.Form;
                 var postedFile = httpRequest.Files[0];
                 file.FileName = postedFile.FileName;
@@ -145,7 +142,7 @@ namespace MWST_API.Controllers
 
             DataTable table = new DataTable();
             // New the connection string
-            string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
+            string sqlDataSource = con.ReturnConnection().ConnectionString;
             SqlDataReader reader;
 
             // Use the domain instead

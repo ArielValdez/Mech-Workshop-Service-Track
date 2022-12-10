@@ -15,13 +15,12 @@ namespace MWST_API.Controllers
     [ApiController]
     public class WorkshopController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
         private readonly Connection con = new Connection();
         private UserModel models = new UserModel();
 
-        public WorkshopController(IConfiguration configuration)
+        public WorkshopController()
         {
-            _configuration = configuration;
+            
         }
 
         [Route("getWorkshop")]
@@ -33,7 +32,7 @@ namespace MWST_API.Controllers
 
             DataTable table = new DataTable();
             // New the connection string
-            string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
+            string sqlDataSource = (con.ReturnConnection().ConnectionString);
             SqlDataReader reader;
 
             try
@@ -125,7 +124,7 @@ namespace MWST_API.Controllers
 
             DataTable table = new DataTable();
             // New the connection string
-            string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
+            string sqlDataSource = (con.ReturnConnection().ConnectionString);
             SqlDataReader reader;
 
             // Use the domain instead

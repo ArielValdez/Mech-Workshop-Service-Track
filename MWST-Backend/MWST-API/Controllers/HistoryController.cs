@@ -16,13 +16,11 @@ namespace MWST_API.Controllers
     public class HistoryController : ControllerBase
     {
         //Users history
-        private readonly IConfiguration _configuration;
         private readonly Connection con = new Connection();
         private UserModel models = new UserModel();
 
-        public HistoryController(IConfiguration configuration)
+        public HistoryController()
         {
-            _configuration = configuration;
         }
 
         // Gets the information of the users history
@@ -34,7 +32,7 @@ namespace MWST_API.Controllers
 
             DataTable table = new DataTable();
             // New the connection string
-            string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
+            string sqlDataSource = (con.ReturnConnection().ConnectionString);
             SqlDataReader reader;
 
             try
@@ -77,7 +75,7 @@ namespace MWST_API.Controllers
 
             DataTable table = new DataTable();
             // New the connection string
-            string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
+            string sqlDataSource = (con.ReturnConnection().ConnectionString);
             SqlDataReader reader;
 
             try
@@ -124,7 +122,7 @@ namespace MWST_API.Controllers
 
             DataTable table = new DataTable();
             // New the connection string
-            string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
+            string sqlDataSource = (con.ReturnConnection().ConnectionString);
             SqlDataReader reader;
 
             // Use the domain instead

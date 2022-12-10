@@ -15,13 +15,12 @@ namespace MWST_API.Controllers
     [ApiController]
     public class VehicleController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
         private readonly Connection con = new Connection();
         private UserModel models = new UserModel();
 
-        public VehicleController(IConfiguration configuration)
+        public VehicleController()
         {
-            _configuration = configuration;
+
         }
 
         [Route("getVehicle")]
@@ -33,7 +32,7 @@ namespace MWST_API.Controllers
 
             DataTable table = new DataTable();
             // Check if does not return connection string
-            string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
+            string sqlDataSource = con.ReturnConnection().ConnectionString;
             SqlDataReader reader;
             try
             {
@@ -67,7 +66,7 @@ namespace MWST_API.Controllers
 
             DataTable table = new DataTable();
             // New the connection string
-            string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
+            string sqlDataSource = con.ReturnConnection().ConnectionString;
             SqlDataReader reader;
 
             try
@@ -111,7 +110,7 @@ namespace MWST_API.Controllers
 
             DataTable table = new DataTable();
             // Check if does not return connection string
-            string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
+            string sqlDataSource = con.ReturnConnection().ConnectionString;
             SqlDataReader reader;
 
             try

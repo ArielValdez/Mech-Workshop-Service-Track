@@ -15,13 +15,12 @@ namespace MWST_API.Controllers
     [ApiController]
     public class ProvinciaController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
         private readonly Connection con = new Connection();
         private UserModel models = new UserModel();
 
-        public ProvinciaController(IConfiguration configuration)
+        public ProvinciaController()
         {
-            _configuration = configuration;
+            
         }
 
         [Route("getProvincia")]
