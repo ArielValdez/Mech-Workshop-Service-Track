@@ -30,11 +30,11 @@ namespace MWST_API.Controllers
         public JsonResult Get()
         {
             // Query to select the data needed. Change to stored procedures
-            string query = @"select Nombre, Apellido, Cedula, Rol from Usuario";
+            string query = @"select Nombre, Apellido, Rol from Usuario";
 
             DataTable table = new DataTable();
             // New the connection string
-            string sqlDataSource = _configuration.GetConnectionString("WorkshopAppCon");
+            string sqlDataSource = con.ReturnConnection().ConnectionString;
             SqlDataReader reader;
 
             // Use the domain instead
