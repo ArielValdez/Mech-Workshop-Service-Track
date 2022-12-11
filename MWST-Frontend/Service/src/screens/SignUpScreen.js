@@ -36,7 +36,8 @@ const SignUpScreen = () => {
 		    id_card: '402-3041120-0',
 		    role: 'Client',
 		    //Should be limited to thirteen digits in the following order: (809)000-0000
-		    phone_number: phone
+		    phone_number: phone,
+            active: true //change this later to false
 		}
 
 		fetch('http://10.0.0.7:3000/users', {

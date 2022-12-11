@@ -16,11 +16,20 @@ import authProvider from "./AuthProvider";
 const App = () => {
 	return (
 		<Admin dataProvider={restProvider("http://localhost:3000")} authProvider={authProvider}>
-			<Resource name="users" list={UserList} create={UserCreate} edit={UserEdit} icon={PersonIcon}></Resource>
-			<Resource name="workshops" list={WorkshopList} create={WorkshopCreate} edit={WorkshopEdit} icon={HomeRepairServiceIcon}></Resource>
-			<Resource name="services" list={ServiceList} create={ServiceCreate} edit={ServiceEdit} icon={BuildIcon}></Resource>
-			<Resource name="payments" list={PaymentList} icon={CreditCardIcon}></Resource>
-			<Resource name="vehicles" list={VehicleList} create={VehicleCreate} edit={VehicleEdit} icon={DirectionsCarIcon}></Resource>
+			<Resource name="users" list={UserList} create={UserCreate} 
+				edit={UserEdit} icon={PersonIcon} recordRepresentation="name">
+			</Resource>
+			<Resource name="workshops" list={WorkshopList} create={WorkshopCreate}
+				edit={WorkshopEdit} icon={HomeRepairServiceIcon} recordRepresentation="name">
+			</Resource>
+			<Resource name="services" list={ServiceList} create={ServiceCreate} 
+				edit={ServiceEdit} icon={BuildIcon}>
+			</Resource>
+			<Resource name="payments" list={PaymentList} icon={CreditCardIcon}>
+			</Resource>
+			<Resource name="vehicles" list={VehicleList} create={VehicleCreate} 
+				edit={VehicleEdit} icon={DirectionsCarIcon} recordRepresentation="plate">
+			</Resource>
 		</Admin>
 	)
 }

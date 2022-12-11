@@ -59,6 +59,8 @@
 
         "newAppointment": "New Appointment",
         "schedule": "Schedule",
+        "selectVehiclePlaceholder": "Select a vehicle",
+        "selectServicePlaceholder": "Service type",
 
         "_comment8": "Translation data for AddVehicleScreen",
         "plate": "Plate",
@@ -67,6 +69,8 @@
         "save": "Save",
 
         "_comment9": "Translation data for VehicleListScreen",
-        "addVehicle": "Add Vehicle"
+        "addVehicle": "Add Vehicle",
+
+        "emptyInputsAlert": "You must fill in all the fields",
     }
 }

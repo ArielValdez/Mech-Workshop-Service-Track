@@ -60,6 +60,8 @@
 
         "newAppointment": "Nueva cita",
         "schedule": "Agendar",
+        "selectVehiclePlaceholder": "Vehículo",
+        "selectServicePlaceholder": "Tipo de servicio",
 
         
         "_comment8": "Translation data for AddVehicleScreen",
@@ -69,6 +71,8 @@
         "save": "Guardar",
         
         "_comment9": "Translation data for VehicleListScreen",
-        "addVehicle": "Add Vehicle"
+        "addVehicle": "Add Vehicle",
+
+        "emptyInputsAlert": "Debes llenar todos los campos"
     }
 }

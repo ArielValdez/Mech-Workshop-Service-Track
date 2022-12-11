@@ -9,7 +9,8 @@
       "lastname": "Roque",
       "id_card": "402-3041820-0",
       "role": "Client",
-      "phone_number": "829-341-2424"
+      "phone_number": "829-341-2424",
+      "active": "true"
     },
     {
       "username": "Pedro",
@@ -20,7 +21,8 @@
       "id_card": "402-3041120-0",
       "role": "Client",
       "phone_number": "8096257412",
-      "id": "1s8jE4q"
+      "id": "1s8jE4q",
+      "active": "true"
     }
   ],
   "userProfiles": [
@@ -38,18 +40,29 @@
       "id": "1",
       "serviceType": "Reparation",
       "description": "Morning checkup",
-      "state": "In Process...",
-      "plate": "44922",
+      "state": "In Process",
+      "state_description": "The state of the card is currently being checked",
+      "vehicle_id": "1",
       "startedAt": "10/3/2022",
       "expectedAt": "2022-10-03T18:30:00.000Z",
-      "finishedAt": "2022-10-03T19:00:00.000Z"
+      "finishedAt": "2022-10-03T19:00:00.000Z",
+      "payment_id": "1",
+      "workshop_id": "1",
+	  "user_id": "1"
     },
     {
-      "description": "Default",
-      "plate": "A000000",
-      "startedAt": "2022-12-08T22:54:00.000Z",
-      "expectedAt": "2022-12-16T22:54:00.000Z",
-      "id": "zjuW_wE"
+      "serviceType": "Reparation",
+      "description": "Nuevo servicio",
+      "state": "Not started",
+      "state_description": "The mechanics have not looked at the vehicle",
+      "vehicle_id": "1",
+      "startedAt": "Sun Dec 11 2022 13:53:04 GMT-0400 (AST)",
+      "expectedAt": "Sun Dec 11 2022 13:53:04 GMT-0400 (AST)",
+      "finishedAt": "Sun Dec 11 2022 13:53:04 GMT-0400 (AST)",
+      "payment_id": 1,
+      "workshop_id": 1,
+      "id": "SwUV83x",
+	  "user_id": "1"
     }
   ],
   "workshops": [

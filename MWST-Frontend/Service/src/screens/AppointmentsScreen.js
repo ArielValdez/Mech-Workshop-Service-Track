@@ -7,6 +7,9 @@ import CustomInput from "../components/CustomInput";
 import theme from "../Theme";
 import { FontAwesome5, Entypo, AntDesign } from '@expo/vector-icons'
 import { useTranslation } from "react-i18next";
+import { useIsFocused } from "@react-navigation/native";
+import DropDownPicker from "react-native-dropdown-picker";
+import { useUser } from "../context/UserContext";
 
 const appointmentTitleRegex = /[a-zA-Z]{3,}/
 const appointmentTitleErrorMessage = 'Título de cita debe tener al menos 3 carácteres'
@@ -14,69 +17,132 @@ const appointmentTitleErrorMessage = 'Título de cita debe tener al menos 3 car�
 const AppointmentModal = ({visible, onRequestClose, onReturnPress, onOkPress, timeValue, onTimeChange}) => {
     const [ appointmentTitle, setAppointmentTitle ] = useState('')
     const [ showTimePicker, setShowTimePicker ] = useState(false)
+    // Dropdown for vehicles
+    const [ vehicles, setVehicles ] = useState([])
+    const [ selectedVehicleId, setselectedVehicleId ] = useState(null)
+    const [ openDropdown, setOpenDropdown ] = useState(false)
+    // Dropdown for service type
+    const [ services, setServices ] = useState([
+        { label: 'Reparación', value: 'Reparation' },
+        { label: 'Chequeo', value: 'Checkup' }
+    ])
+    const [ selectedService, setSelectedService ] = useState(null)
+    const [ openServiceDropdown, setOpenServiceDropdown ] = useState(false)
+
+    const isFocused = useIsFocused()
+    const [ user, setUser ] = useUser()
 
     const { height, width } = useWindowDimensions()
     const { t, i18n } = useTranslation()
+
+    useEffect(() => {
+        if (isFocused) {
+            fetch(`http://10.0.0.7:3000/vehicles?user_id=${user.id}`, {
+                method: 'GET',
+            })
+                .then(response => response.json())
+                .then(result => {
+                    var arr = []
+                    result.forEach(vehicle => {
+                        arr.push({ label: vehicle.plate, value: vehicle.id})
+                    })
+                    setVehicles(arr)
+                })
+                .catch(err => console.log(err))
+        }
+    }, [isFocused])
     
     return (
-        <Modal
-            animationType='fade'
-            transparent={true}
-            visible={visible}
-            onRequestClose={() => {
-                setAppointmentTitle('')
-                onRequestClose()
-            }}
-        >
-            <View style={modalStyles.container}>
-                <View style={[ modalStyles.view, { height: height * 0.28 } ]}>
-                    <Text style={modalStyles.title}>{t('newAppointment')}</Text>
-                    <CustomInput value={appointmentTitle} setValue={setAppointmentTitle} placeholder='Título cita'
-                        pattern={appointmentTitleRegex} errorMessage={appointmentTitleErrorMessage} />
+		<Modal
+			animationType="fade"
+			transparent={true}
+			visible={visible}
+			onRequestClose={() => {
+				setAppointmentTitle("");
+				onRequestClose();
+			}}
+		>
+			<View style={modalStyles.container}>
+				<View style={[modalStyles.view, { height: height * 0.48 }]}>
+					<Text style={modalStyles.title}>{t("newAppointment")}</Text>
+					<CustomInput
+						value={appointmentTitle}
+						setValue={setAppointmentTitle}
+						placeholder="Título cita"
+						pattern={appointmentTitleRegex}
+						errorMessage={appointmentTitleErrorMessage}
+					/>
 
-                    <Pressable style={modalStyles.clockIcon} onPress={() => setShowTimePicker(true)}>
-                        <FontAwesome5 name='clock' size={35} />
-                    </Pressable>
+					<Pressable
+						style={modalStyles.clockIcon}
+						onPress={() => setShowTimePicker(true)}
+					>
+						<FontAwesome5 name="clock" size={35} />
+					</Pressable>
 
-                    <View style={modalStyles.buttonRow}>
-                        <CustomButton 
-                            text={t('return')} 
-                            width='45%' 
-                            bgColor={theme.colors.lightSecondary}
-                            fgColor={theme.colors.black}
-                            onPress={() => {
-                                setAppointmentTitle('')
-                                onReturnPress()
-                            }}
-                        />
-                        <CustomButton 
-                            text={t('schedule')} 
-                            width='45%' 
-                            bgColor={theme.colors.darkPrimary} 
-                            onPress={() => {
-                                const regex = new RegExp(appointmentTitleRegex)
-                                if (regex.test(appointmentTitle)) { 
-                                    onOkPress(appointmentTitle)
-                                }
-                            }}
-                        />
-                       
-                    </View>
-                </View>
-            </View>
-            {showTimePicker && (
-                <DateTimePicker
-                    value={timeValue} 
-                    mode='time'
-                    is24Hour={true}
-                    onChange={(event, selectedDate) => {
-                        setShowTimePicker(false)
-                        onTimeChange(event, selectedDate)
-                    }}
-                />
-            )}
-        </Modal>
-    ) 
+					<DropDownPicker
+						placeholder={t("selectVehiclePlaceholder")}
+						open={openDropdown}
+						value={selectedVehicleId}
+						items={vehicles}
+						setOpen={setOpenDropdown}
+						setValue={setselectedVehicleId}
+						setItems={setVehicles}
+						style={{
+							marginBottom: 10,
+						}}
+                        zIndex={1000}
+					/>
+
+					<DropDownPicker
+						placeholder={t("selectServicePlaceholder")}
+						open={openServiceDropdown}
+						value={selectedService}
+						items={services}
+						setOpen={setOpenServiceDropdown}
+						setValue={setSelectedService}
+						setItems={setServices}
+                        zIndex={500}
+					/>
+
+					<View style={modalStyles.buttonRow}>
+						<CustomButton
+							text={t("return")}
+							width="45%"
+							bgColor={theme.colors.lightSecondary}
+							fgColor={theme.colors.black}
+							onPress={() => {
+								setAppointmentTitle("");
+								onReturnPress();
+							}}
+						/>
+						<CustomButton
+							text={t("schedule")}
+							width="45%"
+							bgColor={theme.colors.darkPrimary}
+							onPress={() => {
+								const regex = new RegExp(appointmentTitleRegex);
+								if (regex.test(appointmentTitle)) {
+									onOkPress(appointmentTitle, selectedVehicleId, selectedService);
+								}
+							}}
+						/>
+					</View>
+				</View>
+			</View>
+			{showTimePicker && (
+				<DateTimePicker
+					value={timeValue}
+					mode="time"
+					is24Hour={true}
+					onChange={(event, selectedDate) => {
+						setShowTimePicker(false);
+						onTimeChange(event, selectedDate);
+					}}
+				/>
+			)}
+		</Modal>
+	); 
 }
 
 const modalStyles = StyleSheet.create({
@@ -99,6 +165,7 @@ const modalStyles = StyleSheet.create({
     },
     clockIcon: {
         marginTop: 5,
+        marginBottom: 10,
     },
     buttonRow: {
         marginTop: 20,
@@ -108,14 +175,14 @@ const modalStyles = StyleSheet.create({
     },
 })
 
-const Appointment = ({title, date}) => {
+const Appointment = ({description, date}) => {
     return (
         <View style={appointmentStyles.container}>
             <Text style={appointmentStyles.header}>
-                {title}
+                {description}
             </Text>
             <Text style={appointmentStyles.date}>
-                {date.toLocaleString()}
+                {date}
             </Text>
         </View>
     )
@@ -140,15 +207,11 @@ const appointmentStyles = StyleSheet.create({
 
 const appointmentRenderItem = ({item}) => {
     return (
-        <Appointment title={item.title} date={item.date} />
+        <Appointment description={item.description} date={item.expectedAt} />
     )
 }
 
 const AppointmentsScreen = () => {
-    const exampleValues = [
-        { id: 1, title: 'Chequeo Rutinario', date: new Date()}
-    ]
-
     const d = new Date()
     const defaultCalendarValue = {
         day: d.getDate(),      // day of month (1-31)
@@ -161,10 +224,14 @@ const AppointmentsScreen = () => {
     const [ selected, setSelected ] = useState(defaultCalendarValue)
     const [ selectedTime, setSelectedTime ] = useState(new Date())
     const [ modalVisible, setModalVisible ] = useState(false)
-    const [ appointments, setAppointments ] = useState(exampleValues)
-    const idCounter = useRef(2)
+    const [ appointments, setAppointments ] = useState([])
+    const [ user, setUser] = useUser()
     const { height, width } = useWindowDimensions()
     const { t, i18n } = useTranslation() 
+
+    useEffect(() => {
+        fetchServices()
+    }, [])
 
     const marked = useMemo(() => {
         return {
@@ -188,11 +255,47 @@ const AppointmentsScreen = () => {
         setModalVisible(!modalVisible)
     }
 
-    const onModalOkPress = (title) => {
-        var newArray = [...appointments, {id: idCounter.current, title: title, date: selectedTime}]
-        idCounter.current = idCounter.current + 1
-        setAppointments(newArray)
+    const onModalOkPress = (title, vehicleId, serviceType) => {
+        fetchServices()
         setModalVisible(false)
+        fetch('http://10.0.0.7:3000/services', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                serviceType: serviceType,
+                description: title,
+                state: 'Not started',
+                state_description: 'The mechanics have not looked at the vehicle',
+                vehicle_id: vehicleId,
+                startedAt: selectedTime.toString(),
+                expectedAt: selectedTime.toString(),
+                finishedAt: selectedTime.toString(),
+                payment_id: 1,
+                workshop_id: 1,
+                user_id: user.id
+            })
+        })
+
+        .then(response => {
+            if (response.ok) {
+                console.log('The service has been successfully posted')
+            }
+        })
+        .catch(err => console.log(err))
+    }
+
+    const fetchServices = () => {
+        fetch(`http://10.0.0.7:3000/services?user_id=${user.id}`, {
+            method: 'GET',
+        })
+            .then(response => response.json())
+            .then(result => {
+                console.log(result)
+                setAppointments(result)
+            })
+            .catch(err => console.log(err))
     }
 
     

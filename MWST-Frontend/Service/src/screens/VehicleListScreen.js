@@ -6,6 +6,7 @@ import CustomButton from "../components/CustomButton"
 import LineBreak from "../components/LineBreak"
 import { FontAwesome5, AntDesign } from "@expo/vector-icons"
 import theme from "../Theme"
+import { useUser } from "../context/UserContext"
 
 const VehicleRenderItem = ({ item, onDeleteCallback, refreshCallback }) => {
     const navigation = useNavigation()
@@ -81,6 +82,7 @@ const itemStyles = StyleSheet.create({
 const VehicleListScreen = () => {
     const [ vehicles, setVehicles ] = useState()
 
+    const [ user, setUser ] = useUser()
     const navigation = useNavigation()
     const { t, i18n } = useTranslation()
 
@@ -89,7 +91,7 @@ const VehicleListScreen = () => {
     }, [])
 
     const fetchVehicles = () => {
-        fetch('http://10.0.0.7:3000/vehicles', {
+        fetch(`http://10.0.0.7:3000/vehicles?user_id=${user.id}`, {
             method: 'GET',
             headers: {
                 'Content-type': 'application/json'

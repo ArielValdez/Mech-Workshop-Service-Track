@@ -49,7 +49,7 @@ const SignInScreen = () => {
     const { t, i18n } = useTranslation()
 
     const onSignInPressed = () => {
-        fetch(`http://10.0.0.7:3000/users?email=carlosroque197@gmail.com&password=contra@123`, {
+        fetch(`http://10.0.0.7:3000/users?email=${email}&password=${password}`, {
             method: 'GET'
         })
             .then(response => response.json())

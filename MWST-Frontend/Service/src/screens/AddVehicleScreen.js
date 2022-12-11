@@ -27,6 +27,10 @@ const AddVehicleScreen = ({ route }) => {
     }, [])
 
     const onSavePress = () => {
+        if (plate == '' || model == '' || vin == '') {
+            alert(t('emptyInputsAlert'))
+        } 
+
         if (!route.params.isEditing) {
             fetch('http://10.0.0.7:3000/vehicles', {
                 method: 'POST',

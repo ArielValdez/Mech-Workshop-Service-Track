@@ -28,7 +28,7 @@ const MyCarScreen = () => {
                     <Text style={{flex: 1}}>5 Horas</Text>
                 </View>
             </View>
-            <ProgressBar step={0} steps={10} height={20}/>
+            <ProgressBar step={0} steps={10} height={20} />
             <View style={styles.updatesContainer}>
                 <Text>Actualización en vivo:</Text>
                 <Text> - Chequeo rutinario</Text>
