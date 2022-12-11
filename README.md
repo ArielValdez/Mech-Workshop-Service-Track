@@ -30,7 +30,7 @@ The purpose of this program is to give users a layer of security when said user 
 
 **Tests**
 
-* Postman: Backend
+* Swagger: Backend
 * Jest: Frontend
 * Unit Testing
 
@@ -52,10 +52,19 @@ The purpose of this program is to give users a layer of security when said user 
 * Git / Github
 
 ## Installation
-* git clone https://github.com/ArielValdez/Mech-Workshop-Service-Track.git
-* cd ../path/to/the/file
-* expo install
-* expo start
+* Frontend
+  * git clone https://github.com/ArielValdez/Mech-Workshop-Service-Track.git
+  * cd ../path/to/the/folder/Service
+  * expo install
+  * expo start
+* Backend
+  * Compile: MWST-ApiDao and MWST-Backend
+* Backoffice
+  * cd ../path/to/Backoffice
+  * npm run
+    * Once is finished, ctrl + c
+  * npm install
+  * npm run dev
 
 Side information: To use the application in a special environment use ```lorem ipsum``` to start
 
