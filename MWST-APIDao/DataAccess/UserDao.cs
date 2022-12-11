@@ -61,15 +61,12 @@ namespace DataAccess
                         command.Connection = connection;
 
                         //Selects the users history
-                        command.CommandText = "select Nombre, Apellido, Cedula, Forma_Pago, Pago_Servicio" +
-                                              "from Historial h inner join Usuario u on u.ID_Usuario = h.ID_Usuario" +
-                                              "inner join Pago p on p.ID_Pago = h.ID_Pago)" +
-                                              "where ID_Usuario = @idUsuario and ID_Historial = @idHistory";
+                        command.CommandText = "sp_CheckHistory";                    
 
                         command.Parameters.AddWithValue("@idUsuario", idUser);
                         command.Parameters.AddWithValue("@idHistory", idHistory);
 
-                        command.CommandType = CommandType.Text;
+                        command.CommandType = CommandType.StoredProcedure;
 
                         SqlDataReader reader = command.ExecuteReader();
 
@@ -104,15 +101,11 @@ namespace DataAccess
                         command.Connection = connection;
 
                         //Selects the users vehicle
-                        command.CommandText = "select Matricula, Usuario.Nombre, Usuario.Apellido, Nombre_Marca, Nombre_Modelo, VIN, Color" +
-                                              "from Vehiculo v inner join Usuario u on u.ID_Usuario = v.ID_Usuario" +
-                                              "inner join Marca m on m.ID_Marca = v.ID_Marca" +
-                                              "inner join Modelo mo on mo.ID_Modelo = v.ID_Modelo" +
-                                              "where Matricula = @matricula";
+                        command.CommandText = "sp_CheckVehicle";
 
                         command.Parameters.AddWithValue("@matricula", matricula);
 
-                        command.CommandType = CommandType.Text;
+                        command.CommandType = CommandType.StoredProcedure;
 
                         SqlDataReader reader = command.ExecuteReader();
 
@@ -147,9 +140,9 @@ namespace DataAccess
                         command.Connection = connection;
 
                         //Selects the users history
-                        command.CommandText = "select Tipo_Mantenimiento from Mantenimiento where ID_Mantenimiento = @idMaintenance";
+                        command.CommandText = "sp_CheckMaintenance";
                         command.Parameters.AddWithValue("@idMaintenance", idMaintenance);
-                        command.CommandType = CommandType.Text;
+                        command.CommandType = CommandType.StoredProcedure;
 
                         SqlDataReader reader = command.ExecuteReader();
 
@@ -184,13 +177,10 @@ namespace DataAccess
                         command.Connection = connection;
 
                         //Selects the users history
-                        command.CommandText = "select Tipo_Servicio, Tipo_mantenimiento, Fecha_Promesa" +
-                                              "from Servicio inner join Mantenimiento on Mantenimiento.ID_Mantenimiento = Service.ID_Mantenimiento" +
-                                              "from Servicio inner join Estado on Estado.ID_Estado = Servicio.ID_Estado" +
-                                              "where ID_Servicio = @idServicio";
+                        command.CommandText = "sp_CheckService";
                         
                         command.Parameters.AddWithValue("@idService", idService);
-                        command.CommandType = CommandType.Text;
+                        command.CommandType = CommandType.StoredProcedure;
                         
                         SqlDataReader reader = command.ExecuteReader();
 
@@ -225,13 +215,11 @@ namespace DataAccess
                         command.Connection = connection;
 
                         //Selects the users history
-                        command.CommandText = "select Nombre_Estado, Descripcion_Estado, Imagen_Estado, Tipo_Servicio" +
-                                              "from Estado inner join Servicio on Servicio.ID_Servicio = Estado.ID_Servicio" +
-                                              "ID_Estado = @idCondition";
+                        command.CommandText = "sp_CheckCondition";
                         
                         command.Parameters.AddWithValue("@idCondition", idCondition);
 
-                        command.CommandType = CommandType.Text;
+                        command.CommandType = CommandType.StoredProcedure;
 
                         SqlDataReader reader = command.ExecuteReader();
 
@@ -265,13 +253,11 @@ namespace DataAccess
                         command.Connection = connection;
 
                         //Selects the users history
-                        command.CommandText = "select Forma_Pago, Pago_Servicio, Tipo_Servicio, FechaPromesa" +
-                                              "from Pago inner join Servicio on Servicio.ID_Servicio = Pago.ID_Servicio" +
-                                              "where ID_Pago = @idPayment";
+                        command.CommandText = "sp_CheckPayment";
                         
                         command.Parameters.AddWithValue("@idPayment", idPayment);
 
-                        command.CommandType = CommandType.Text;
+                        command.CommandType = CommandType.StoredProcedure;
 
                         SqlDataReader reader = command.ExecuteReader();
 
@@ -310,13 +296,11 @@ namespace DataAccess
                         command.Connection = connection;
 
                         //Selects the users history
-                        command.CommandText = "select Nombre_Pieza, Descripcion_Pieza, Precio_Pieza, Cantidad, ID_Pago" +
-                                              "from Pieza inner join Pago on Pago.ID_Pago = Pieza.ID_Pago" +
-                                              "where ID_Pieza = @idParts";
+                        command.CommandText = "sp_CheckParts";
                         
                         command.Parameters.AddWithValue("@idParts", idParts);
 
-                        command.CommandType = CommandType.Text;
+                        command.CommandType = CommandType.StoredProcedure;
 
                         SqlDataReader reader = command.ExecuteReader();
 
@@ -350,14 +334,11 @@ namespace DataAccess
                         command.Connection = connection;
 
                         //Selects the users history
-                        command.CommandText = "select Nombre_Taller, Provincia, Encargado" +
-                                              "from Taller_Mecanico t inner join Provincia p on p.ID_Provincia = t.ID_Provincia" +
-                                              "inner join Usuario u on u.ID_Usuario = t.ID_Usuario" +
-                                              "where ID_Taller = @idWorkshop";
+                        command.CommandText = "sp_CheckWorkshop";
                         
                         command.Parameters.AddWithValue("@idWorkshop", idWorkshop);
 
-                        command.CommandType = CommandType.Text;
+                        command.CommandType = CommandType.StoredProcedure;
 
                         SqlDataReader reader = command.ExecuteReader();
 
@@ -404,7 +385,7 @@ namespace DataAccess
                     try
                     {
                         //Inserting values into the database, table PerfilUsuario
-                        command.CommandText = "insert into PerfilUsuario(Username, Password, Telefono, Celular, Email, FechaCreacion)" +
+                        command.CommandText = "insert into tblPerfilUsuario(Username, Password, Telefono, Celular, Email, FechaCreacion)" +
                                                 "values(@username, @password, @telefono, @celular, @email, @fechaCreacion)";
 
                         command.Parameters.Add("@username", SqlDbType.VarChar, 20).Value = username;
@@ -415,7 +396,7 @@ namespace DataAccess
                         command.Parameters.AddWithValue("@fechaCreacion", DateTime.Now);
 
                         //Inserting values into the database, table Usuario
-                        command.CommandText = "insert into Usuario(Nombre, Apellido, Cedula, Rol)" +
+                        command.CommandText = "insert into tblUsuario(Nombre, Apellido, Cedula, Rol)" +
                                                 "values(@nombre, @apellido, @cedula, @rol)";
 
                         command.Parameters.Add("@nombre", SqlDbType.VarChar, 30).Value = nombre;
@@ -481,8 +462,7 @@ namespace DataAccess
 
                     try
                     {
-                        command.CommandText = "insert into Vehiculo(Matricula, ID_Usuario, ID_Marca, ID_Modelo, VIN, Color)" +
-                                          "values(@matricula, @idUsuario, @idMarca, @idModelo, @vin, @color)";
+                        command.CommandText = "sp_RegisterVehicle";
 
                         command.Parameters.Add("@matricula", SqlDbType.Char, 7).Value = matricula;
                         command.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario; // FK of Usuario
@@ -491,7 +471,7 @@ namespace DataAccess
                         command.Parameters.Add("@vin", SqlDbType.Char, 17).Value = vin;
                         command.Parameters.Add("@color", SqlDbType.VarChar, 15).Value = color;
 
-                        command.CommandType = CommandType.Text;
+                        command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
 
                         { /* Write the update part here */ }
@@ -549,11 +529,11 @@ namespace DataAccess
 
                     try
                     {
-                        command.CommandText = "insert into Mantenimiento(Tipo_Mantenimiento) values(@tipoMantenimiento)";
+                        command.CommandText = "sp_RegisterMaintenance";
 
                         command.Parameters.Add("@tipoMantenimiento", SqlDbType.VarChar, 30).Value = TipoMantenimiento;
 
-                        command.CommandType = CommandType.Text;
+                        command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
 
                         SqlDataReader reader = command.ExecuteReader();
@@ -613,13 +593,13 @@ namespace DataAccess
                     try
                     {
                         //Inserting values into the database, table PerfilUsuario
-                        command.CommandText = "insert into Historial(ID_Usuario, ID_Pago, Fecha) values(@idUsuario, @idPago, @fecha)";
+                        command.CommandText = "sp_RegisterHistory";
 
                         command.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;
                         command.Parameters.Add("@idPago", SqlDbType.Int).Value = idPago;
                         command.Parameters.Add("@fecha", SqlDbType.DateTime2).Value = fecha;
 
-                        command.CommandType = CommandType.Text;
+                        command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
 
                         SqlDataReader reader = command.ExecuteReader();
@@ -676,8 +656,7 @@ namespace DataAccess
                     try
                     {
                         //Inserting values into the database, table Detalle
-                        command.CommandText = "insert into Detalle(Pago_Servicio, ID_Vehiculo, ID_Taller, FechaInicio, FechaPromesa, FechaEntrega)" +
-                                          "values(@payService, @idVehicle, @idService, @fechaInicio, @fechaPromesa, @fechaEntrega)";
+                        command.CommandText = "sp_RegisterReceiptDetalle";
 
                         command.Parameters.Add("@payService", SqlDbType.Decimal).Value = payService;
                         command.Parameters.Add("@idVehicle", SqlDbType.Int).Value = idVehicle;
@@ -689,15 +668,14 @@ namespace DataAccess
                         command.Parameters.Add("@fechaEntrega", SqlDbType.DateTime2).Value = fechaEntrega;
 
                         //Inserting data into "Pago"
-                        command.CommandText = "insert into Pago(Forma_Pago, Pago_Servicio, ID_Servicio)" +
-                                            "values(@way2Pay, @payService, @idService)";
+                        command.CommandText = "sp_RegisterReceiptPago";
 
                         // "Forma_Pago" (way2Pay) should store enums (Credito, Debito)
                         command.Parameters.Add("@way2Pay", SqlDbType.VarChar, 25).Value = way2Pay; //Forma_Pago
                         command.Parameters.Add("@payService", SqlDbType.Decimal).Value = payService; //Pago_Servicio
                         command.Parameters.Add("@idService", SqlDbType.Int).Value = idService;
 
-                        command.CommandType = CommandType.Text;
+                        command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
 
                         { /* Write the update part here */ }
@@ -755,11 +733,11 @@ namespace DataAccess
                     try
                     {
                         //Inserting values into the database, table Marca
-                        command.CommandText = "insert into Marca(Nombre) values(@nombreMarca)";
+                        command.CommandText = "sp_RegisterMarca";
 
                         command.Parameters.Add("@nombreMarca", SqlDbType.Char, 18).Value = nombreMarca;
 
-                        command.CommandType = CommandType.Text;
+                        command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
 
                         { /* Write the update part here */ }
@@ -814,12 +792,12 @@ namespace DataAccess
                     try
                     {
                         //Inserting values into the database, table Modelo
-                        command.CommandText = "insert into Modelo(Nombre_Modelo, ID_Marca) values(@nombreModelo, @fkMarca)";
+                        command.CommandText = "sp_RegisterModelo";
 
                         command.Parameters.Add("@nombreModelo", SqlDbType.Char, 18).Value = nombreModelo;
                         command.Parameters.Add("@fkMarca", SqlDbType.Int).Value = idMarca; // FK of Marca
 
-                        command.CommandType = CommandType.Text;
+                        command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
 
                         { /* Write the update part here */ }
@@ -875,7 +853,7 @@ namespace DataAccess
                     try
                     {
                         //Inserting values into the database, table Provincia
-                        command.CommandText = "insert into Provincia(Provincia, Descripcion) values(@provincia, @descripcion)";
+                        command.CommandText = "sp_RegisterProvincia";
 
                         command.Parameters.Add("@provincia", SqlDbType.VarChar, 30).Value = nameProvincia;
                         command.Parameters.Add("@descripcion", SqlDbType.VarChar, 255).Value = description;
@@ -938,14 +916,13 @@ namespace DataAccess
                     try
                     {
                         //Inserting values into the database, table Municipio
-                        command.CommandText = "insert into Provincia(Municipio, Descripcion, ID_Provincia)" +
-                                          "values(@municipio, @descripcion, @idProvincia)";
+                        command.CommandText = "sp_RegisterMunicipio";
 
                         command.Parameters.Add("@municipio", SqlDbType.VarChar, 70).Value = nameMunicipio;
                         command.Parameters.Add("@descripcion", SqlDbType.VarChar, 255).Value = description;
                         command.Parameters.Add("@idProvincia", SqlDbType.Int).Value = idProvincia;
 
-                        command.CommandType = CommandType.Text;
+                        command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
 
                         { /* Write the update part here */ }
@@ -1005,7 +982,7 @@ namespace DataAccess
 
                     try
                     {
-                        command.CommandText = "update PerfilUsuario" +
+                        command.CommandText = "update tblPerfilUsuario" +
                                                 "set Username = @username, Password = @password, Telefono = @telefono, Celular = @celular, Email = @email, FechaCreacion = @fechaCreacion" +
                                                 "where ID_Usuario = idUsuario";
                         
@@ -1017,7 +994,7 @@ namespace DataAccess
                         command.Parameters.Add("@email", SqlDbType.VarChar, 50).Value = email;
                         command.Parameters.AddWithValue("@fechaCreacion", DateTime.Now);
 
-                        command.CommandText = "update Usuario" +
+                        command.CommandText = "update tblUsuario" +
                                                "Nombre = @nombre, Apellido = @apellido, Cedula = @cedula, Rol = @rol" +
                                                 "where ID_Usuario = @idUsuario";
                         
@@ -1081,9 +1058,7 @@ namespace DataAccess
 
                     try
                     {
-                        command.CommandText = "update Vehiculo" +
-                                          "set ID_Usuario = @idUsuario, ID_Marca = @idMarca, ID_Modelo = @idModelo, VIN = @vin, Color = @color" +
-                                          "where Matricula = @matricula or ID_Vehiculo = @idVehiculo";
+                        command.CommandText = "sp_UpdateVehicle";
 
                         command.Parameters.AddWithValue("@idVehiculo", idVehiculo);
                         command.Parameters.Add("@matricula", SqlDbType.Char, 7).Value = matricula;
@@ -1093,7 +1068,7 @@ namespace DataAccess
                         command.Parameters.Add("@vin", SqlDbType.Char, 17).Value = vin;
                         command.Parameters.Add("@color", SqlDbType.VarChar, 15).Value = color;
 
-                        command.CommandType = CommandType.Text;
+                        command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
 
                         SqlDataReader reader = command.ExecuteReader();
@@ -1147,12 +1122,12 @@ namespace DataAccess
 
                     try
                     {
-                        command.CommandText = "update Mantenimiento set Tipo_Mantenimiento = @tipoMantenimiento where ID_Mantenimiento = @idMantenimiento";
+                        command.CommandText = "sp_UpdateMaintenance";
 
                         command.Parameters.AddWithValue("@idMantenimiento", idMantenimiento);
                         command.Parameters.Add("@tipoMantenimiento", SqlDbType.VarChar, 30).Value = TipoMantenimiento;
 
-                        command.CommandType = CommandType.Text;
+                        command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
 
                         SqlDataReader reader = command.ExecuteReader();
@@ -1212,14 +1187,14 @@ namespace DataAccess
                     try
                     {
                         //Inserting values into the database, table PerfilUsuario
-                        command.CommandText = "update Historial set ID_Usuario = @idUsuario, ID_Pago = @idPago, Fecha = @fecha where ID_Historial = @idHistory";
+                        command.CommandText = "sp_UpdateHistory";
 
                         command.Parameters.AddWithValue("@idHistory", idHistory);
                         command.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;
                         command.Parameters.Add("@idPago", SqlDbType.Int).Value = idPago;
                         command.Parameters.Add("@fecha", SqlDbType.DateTime2).Value = fecha;
 
-                        command.CommandType = CommandType.Text;
+                        command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
 
                         SqlDataReader reader = command.ExecuteReader();
@@ -1276,9 +1251,7 @@ namespace DataAccess
                     try
                     {
                         //Inserting values into the database, table Detalle
-                        command.CommandText = "update Detalle" +
-                                              "set Pago_Servicio = @payService, ID_Vehiculo = @idVehicle, ID_Servicio = @idService, FechaInicio = @fechaInicio, FechaPromesa = @fechaPromesa, FechaEntrega = @fechaEntrega" +
-                                              "where ID_Pago = @idReceipt";
+                        command.CommandText = "sp_UpdateReceiptDetalle";
 
                         command.Parameters.AddWithValue("@idReceipt", idReceipt);
                         command.Parameters.Add("@payService", SqlDbType.Decimal).Value = payService;
@@ -1291,9 +1264,7 @@ namespace DataAccess
                         command.Parameters.Add("@fechaEntrega", SqlDbType.DateTime2).Value = fechaEntrega;
 
                         //Inserting data into "Pago"
-                        command.CommandText = "update Pago" +
-                                              "set Forma_Pago = @way2pay, Pago_Servicio = @payService, ID_Servicio = idService)" +
-                                              "where ID_Pago = @idReceipt";
+                        command.CommandText = "sp_UpdateReceiptPago";
 
                         // "Forma_Pago" (way2Pay) should store enums (Credito, Debito)
                         command.Parameters.AddWithValue("@idReceipt", idReceipt);
@@ -1301,7 +1272,7 @@ namespace DataAccess
                         command.Parameters.Add("@payService", SqlDbType.Decimal).Value = payService; //Pago_Servicio
                         command.Parameters.Add("@idService", SqlDbType.Int).Value = idService;
 
-                        command.CommandType = CommandType.Text;
+                        command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
 
                         SqlDataReader reader = command.ExecuteReader();
@@ -1356,12 +1327,12 @@ namespace DataAccess
                     try
                     {
                         //Inserting values into the database, table Marca
-                        command.CommandText = "update Marca set Nombre = @nombreMarca where ID_Marca = @idMarca";
+                        command.CommandText = "sp_UpdateMarca";
 
                         command.Parameters.AddWithValue("@idMarca", idMarca);
                         command.Parameters.Add("@nombreMarca", SqlDbType.Char, 18).Value = nombreMarca;
 
-                        command.CommandType = CommandType.Text;
+                        command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
 
                         SqlDataReader reader = command.ExecuteReader();
@@ -1414,13 +1385,13 @@ namespace DataAccess
                     try
                     {
                         //Inserting values into the database, table Modelo
-                        command.CommandText = "update Modelo set Nombre_Modelo = @nombreModelo, ID_Marca = @fkMarca where ID_Modelo = @idModelo";
+                        command.CommandText = "sp_UpdateModelo";
 
                         command.Parameters.AddWithValue("@idModelo", idModelo);
                         command.Parameters.Add("@nombreModelo", SqlDbType.Char, 18).Value = nombreModelo;
                         command.Parameters.Add("@fkMarca", SqlDbType.Int).Value = idMarca; // FK of Marca
 
-                        command.CommandType = CommandType.Text;
+                        command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
 
                         SqlDataReader reader = command.ExecuteReader();
@@ -1473,13 +1444,13 @@ namespace DataAccess
                     try
                     {
                         //Inserting values into the database, table Provincia
-                        command.CommandText = "update Provincia set Provincia = @provincia, Descripcion = @descripcion where ID_Provincia = @idProvincia";
+                        command.CommandText = "sp_UpdateProvincia";
 
                         command.Parameters.AddWithValue("@idProvincia", idProvincia);
                         command.Parameters.Add("@provincia", SqlDbType.VarChar, 30).Value = nameProvincia;
                         command.Parameters.Add("@descripcion", SqlDbType.VarChar, 255).Value = description;
 
-                        command.CommandType = CommandType.Text;
+                        command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
 
                         SqlDataReader reader = command.ExecuteReader();
@@ -1534,16 +1505,14 @@ namespace DataAccess
                     try
                     {
                         //Inserting values into the database, table Municipio
-                        command.CommandText = "update Municipio" +
-                                          "set Municipio = @municipio, Descripcion = @descripcion, ID_Provincia = @idProvincia" +
-                                          "where ID_Municipio = @idMunicipio";
+                        command.CommandText = "sp_UpdateMunicipio";
 
                         command.Parameters.AddWithValue("@idMunicipio", idMunicipio);
                         command.Parameters.Add("@municipio", SqlDbType.VarChar, 70).Value = nameMunicipio;
                         command.Parameters.Add("@descripcion", SqlDbType.VarChar, 255).Value = description;
                         command.Parameters.Add("@idProvincia", SqlDbType.Int).Value = idProvincia;
 
-                        command.CommandType = CommandType.Text;
+                        command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
 
                         SqlDataReader reader = command.ExecuteReader();
@@ -1601,11 +1570,11 @@ namespace DataAccess
                     try
                     {
                         //Inserting values into the database, table PerfilUsuario
-                        command.CommandText = "delete PerfilUsuario where ID_Usuario = idUsuario";
+                        command.CommandText = "delete tblPerfilUsuario where ID_Usuario = idUsuario";
                         command.Parameters.AddWithValue("@idUsuario", idUsuario);
 
                         //Inserting values into the database, table Usuario
-                        command.CommandText = "delete Usuario where ID_Usuario = idUsuario";
+                        command.CommandText = "delete tblUsuario where ID_Usuario = idUsuario";
 
                         command.Parameters.AddWithValue("@idUsuario", idUsuario);
 
@@ -1663,7 +1632,7 @@ namespace DataAccess
 
                     try
                     {
-                        command.CommandText = "delete Vehiculo where ID_Vehiculo = @idVehiculo";
+                        command.CommandText = "delete tblVehiculo where ID_Vehiculo = @idVehiculo";
 
                         command.Parameters.AddWithValue("@idVehiculo", idVehiculo);
 
@@ -1721,7 +1690,7 @@ namespace DataAccess
 
                     try
                     {
-                        command.CommandText = "delete Mantenimiento where ID_Mantenimiento = @idMantenimiento";
+                        command.CommandText = "delete tblMantenimiento where ID_Mantenimiento = @idMantenimiento";
 
                         command.Parameters.AddWithValue("@idMantenimiento", idMantenimiento);
 
@@ -1779,7 +1748,7 @@ namespace DataAccess
 
                     try
                     {
-                        command.CommandText = "delete Estado where ID_Estado = @idCondition";
+                        command.CommandText = "delete tblEstado where ID_Estado = @idCondition";
 
                         command.Parameters.AddWithValue("@idCondition", idCondition);
 
@@ -1838,7 +1807,7 @@ namespace DataAccess
                     try
                     {
                         //Inserting values into the database, table PerfilUsuario
-                        command.CommandText = "delete Historial where ID_Historial = @idHistory";
+                        command.CommandText = "delete tblHistorial where ID_Historial = @idHistory";
 
                         command.Parameters.AddWithValue("@idHistory", idHistory);
 
@@ -1898,7 +1867,7 @@ namespace DataAccess
 
                     try
                     {
-                        command.CommandText = "delete Detalle where ID_Pago = @idReceipt";
+                        command.CommandText = "delete tblDetalle where ID_Pago = @idReceipt";
 
                         command.Parameters.AddWithValue("@idReceipt", idReceipt);
 
@@ -1961,7 +1930,7 @@ namespace DataAccess
                     try
                     {
                         //Inserting values into the database, table Marca
-                        command.CommandText = "delete Marca where ID_Marca = @idMarca";
+                        command.CommandText = "delete tblMarca where ID_Marca = @idMarca";
 
                         command.Parameters.AddWithValue("@idMarca", idMarca);
 
@@ -2018,7 +1987,7 @@ namespace DataAccess
                     try
                     {
                         //Inserting values into the database, table Modelo
-                        command.CommandText = "delete Modelo where ID_Modelo = @idModelo";
+                        command.CommandText = "delete tblModelo where ID_Modelo = @idModelo";
 
                         command.Parameters.AddWithValue("@idModelo", idModelo);
 
@@ -2075,7 +2044,7 @@ namespace DataAccess
                     try
                     {
                         //Inserting values into the database, table Provincia
-                        command.CommandText = "update Provincia where ID_Provincia = @idProvincia";
+                        command.CommandText = "update tblProvincia where ID_Provincia = @idProvincia";
 
                         command.Parameters.AddWithValue("@idProvincia", idProvincia);
 
@@ -2134,7 +2103,7 @@ namespace DataAccess
                     try
                     {
                         //Inserting values into the database, table Municipio
-                        command.CommandText = "update Municipio where ID_Municipio = @idMunicipio";
+                        command.CommandText = "update tblMunicipio where ID_Municipio = @idMunicipio";
 
                         command.Parameters.AddWithValue("@idMunicipio", idMunicipio);
 
