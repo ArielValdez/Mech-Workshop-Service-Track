@@ -4,8 +4,8 @@ Mech Workshop Service Track is an app for tracking vehicles put in maintenance i
 ## General Information
 The purpose of this program is to give users a layer of security when said user has the capability to see and track from an application what is happening to their vehicles, when they are put into a maintenance service, also being possible to see both, a calendar when their vehicle should be ready to be delivered as well as the capability to see a progress bar of the maaintenance.
 
-### ![LogoOficial](https://user-images.githubusercontent.com/65257215/183744805-a84a8414-4a62-4a4a-9ee1-ab7e7eee1776.png)
- 
+### <p align="center"><img src="https://user-images.githubusercontent.com/65257215/206910389-a10dea48-34f3-488b-9903-ab596779b34c.png"/></p>
+
 ***
 **Authors**
 * Ariel Francesco Valdez Polanco - ID: 1093065
@@ -30,7 +30,7 @@ The purpose of this program is to give users a layer of security when said user 
 
 **Tests**
 
-* Postman: Backend
+* Swagger: Backend
 * Jest: Frontend
 * Unit Testing
 
@@ -52,10 +52,19 @@ The purpose of this program is to give users a layer of security when said user 
 * Git / Github
 
 ## Installation
-* git clone https://github.com/ArielValdez/Mech-Workshop-Service-Track.git
-* cd ../path/to/the/file
-* expo install
-* expo start
+* Frontend
+  * git clone https://github.com/ArielValdez/Mech-Workshop-Service-Track.git
+  * cd ../path/to/the/folder/Service
+  * expo install
+  * expo start
+* Backend
+  * Compile: MWST-ApiDao and MWST-Backend
+* Backoffice
+  * cd ../path/to/Backoffice
+  * npm run
+    * Once is finished, ctrl + c
+  * npm install
+  * npm run dev
 
 Side information: To use the application in a special environment use ```lorem ipsum``` to start
 
