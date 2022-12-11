@@ -5,12 +5,15 @@ import SignUpScreen from './src/screens/SignUpScreen';
 import ConfirmEmailScreen from './src/screens/ConfirmEmailScreen';
 import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
 import NewPasswordScreen from './src/screens/NewPasswordScreen';
+import VehicleListScreen from './src/screens/VehicleListScreen';
+import AddVehicleScreen from './src/screens/AddVehicleScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { LocaleConfig } from 'react-native-calendars'
 import HomeScreen from './src/screens/HomeScreen';
 import './assets/translations/i18n'
 import CalendarConfigSetup from './src/CalendarSetup';
+import { UserProvider } from './src/context/UserContext';
 
 CalendarConfigSetup()
 
@@ -23,15 +26,19 @@ export default function App() {
         barStyle='light-content'
         backgroundColor='rgba(0, 0, 0, 0.9)'
       />
-			<NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false}}>
-          <Stack.Screen name='SignIn' component={SignInScreen}/>
-          <Stack.Screen name='SignUp' component={SignUpScreen}/>
-          <Stack.Screen name='ForgotPassword' component={ForgotPasswordScreen}/>
-          <Stack.Screen name='NewPassword' component={NewPasswordScreen}/>
-          <Stack.Screen name='Home' component={HomeScreen}/>
-        </Stack.Navigator>
-      </NavigationContainer>
+      <UserProvider>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name='SignIn' component={SignInScreen} options={{headerShown: false}} />
+            <Stack.Screen name='SignUp' component={SignUpScreen}options={{headerShown: false}} />
+            <Stack.Screen name='ForgotPassword' component={ForgotPasswordScreen} options={{headerShown: false}} />
+            <Stack.Screen name='NewPassword' component={NewPasswordScreen} options={{headerShown: false}} />
+            <Stack.Screen name='Home' component={HomeScreen} options={{headerShown: false}} />
+            <Stack.Screen name='VehicleList' component={VehicleListScreen} options={{headerShown: true, title: 'Vehicle list'}}/>
+            <Stack.Screen name='AddVehicle' component={AddVehicleScreen} options={{headerShown: true, title: 'Add vehicle'}} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </UserProvider>
 			<StatusBar style="auto" />
 		</SafeAreaView>
 	)

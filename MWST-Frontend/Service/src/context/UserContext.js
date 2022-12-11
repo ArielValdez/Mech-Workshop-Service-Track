@@ -6,7 +6,7 @@ export function useUser() {
     return useContext(UserContext)
 }
 
-export function UserProvider({children}) {
+export function UserProvider({ children }) {
     const [user, setUser] = useState(null)
 
     return (

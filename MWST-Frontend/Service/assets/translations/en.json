@@ -33,6 +33,7 @@
         "switchLanguage": "Switch language",
         "paymentHistory": "Payment History",
         "returnToSignIn": "Return to sign in",
+        "vehicleList": "Vehicle list",
 
         "_comment5": "Home screen translation data",
         "feed": "Feed",
@@ -57,6 +58,15 @@
         "messageInputPlaceholder": "Message",
 
         "newAppointment": "New Appointment",
-        "schedule": "Schedule"
+        "schedule": "Schedule",
+
+        "_comment8": "Translation data for AddVehicleScreen",
+        "plate": "Plate",
+        "model": "Model",
+        "vin": "VIN",
+        "save": "Save",
+
+        "_comment9": "Translation data for VehicleListScreen",
+        "addVehicle": "Add Vehicle"
     }
 }

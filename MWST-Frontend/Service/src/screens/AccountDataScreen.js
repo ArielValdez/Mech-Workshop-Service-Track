@@ -1,6 +1,6 @@
 import { React, useState } from 'react'
 import { ScrollView, View, StyleSheet, FlatList, Text, Pressable } from "react-native"
-import { useNavigation } from "@react-navigation/native";
+import { StackActions, useNavigation } from "@react-navigation/native";
 import { useTranslation } from 'react-i18next';
 import { Ionicons, MaterialIcons, MaterialCommunityIcons, FontAwesome, Octicons, Entypo, AntDesign, FontAwesome5 } from '@expo/vector-icons'
 import LineBreak from '../components/LineBreak'
@@ -76,6 +76,10 @@ const AccountDataScreen = () => {
         console.log('payment history pressed')
     }
 
+    const onCarListPress = () => {
+        navigation.navigate('VehicleList')
+    }
+
     const onReturnToSignInPress = () => {
         navigation.navigate('SignIn')
     }
@@ -115,6 +119,12 @@ const AccountDataScreen = () => {
                     text={t('paymentHistory')}
                     RightIcon={() => <Ionicons />}
                     onPress={onPaymentHistoryPress}
+                />
+                <AccountDataButton 
+                    LeftIcon={() => <FontAwesome5 name='car' size={40} color={theme.colors.darkPrimary} />}
+                    text={t('vehicleList')}
+                    RightIcon={() => <Ionicons />}
+                    onPress={onCarListPress}
                 />
 
                 <Pressable onPress={onReturnToSignInPress}>

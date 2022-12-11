@@ -9,6 +9,7 @@ import { EmailRegex, InvalidEmailMessage, PasswordRegex, InvalidPasswordMessage 
 import theme from '../Theme'
 import '../../assets/translations/i18n'
 import { useTranslation } from "react-i18next";
+import { useUser } from "../context/UserContext";
 
 const SignInScreen = () => {
     {/* Example: https://programmingwithmosh.com/react-native/make-api-calls-in-react-native-using-fetch/
@@ -38,6 +39,7 @@ const SignInScreen = () => {
 
     */}
 
+    const [ user, setUser ] = useUser()
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
     const [ rememberMe, setRememberMe ] = useState(false)
@@ -47,13 +49,17 @@ const SignInScreen = () => {
     const { t, i18n } = useTranslation()
 
     const onSignInPressed = () => {
-        fetch(`http://10.0.0.7:3000/users?email=${email}&password=${password}`, {
-            method: 'GET',
+        fetch(`http://10.0.0.7:3000/users?email=carlosroque197@gmail.com&password=contra@123`, {
+            method: 'GET'
         })
             .then(response => response.json())
-            .then(result => console.log(result))
+            .then(result => {
+                if (result.length > 0) {
+                    setUser(result[0])
+                    navigation.navigate('Home')
+                }
+            })
             .catch(error => console.log(error))
-            .finally(() => navigation.navigate('Home'))
     }
 
     const onForgotPasswordPressed = () => {
