@@ -39,7 +39,7 @@ public class User
         this.Surname = surname;
         this.Active = true;
         this.Fecha_Creacion = DateTime.Now;
-        this.User_Role = Role.User;
+        this.User_Role = Role.Customer;
     }
     #endregion
 
@@ -52,22 +52,28 @@ public class User
     public string GetUserRol()
     {
         int intRol = (int)User_Role;
+        string rol = "N"; // No role
         if (intRol == 0)
         {
-            return "Usuario";
+            rol = "C"; // Customer
         }
         else if (intRol == 1)
         {
-            return "Personal";
+            rol = "M"; // Mechanic
         }
         else if (intRol == 2)
         {
-            return "Admin";
+            rol = "A"; // Adviser
+        }
+        else if (intRol == 3)
+        {
+            rol = "O"; // Owner / Adming
         }
         else
         {
-            return "Not a Rol";
+            rol = "P"; // Pending role
         }
+        return rol;
     }
 
     //Profile

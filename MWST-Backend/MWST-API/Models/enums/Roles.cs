@@ -4,8 +4,9 @@ using System.Collections;
 namespace enums
 {
         public enum Role{
-        User,
-        Personal,
+        Customer,
+        Mechanic,
+        Adviser,
         Admin
     }
 }
