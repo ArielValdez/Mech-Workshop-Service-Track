@@ -21,9 +21,11 @@ const AddVehicleScreen = ({ route }) => {
     const { t, i18n } = useTranslation()
 
     useEffect(() => {
-        setPlate(route.params.vehicle.plate)
-        setModel(route.params.vehicle.model)
-        setVin(route.params.vehicle.vin)
+        if (route.params.vehicle !== undefined) {
+            setPlate(route.params.vehicle.plate)
+            setModel(route.params.vehicle.model)
+            setVin(route.params.vehicle.vin)
+        }
     }, [])
 
     const onSavePress = () => {

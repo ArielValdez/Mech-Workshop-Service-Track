@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Image, useWindowDimensions, ScrollView } from 'react-native'
-import { useNavigation } from "@react-navigation/native";
+import { PrivateValueStore, useNavigation } from "@react-navigation/native";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import Logo from '../../assets/LogoOficial.png'
@@ -10,35 +10,10 @@ import theme from '../Theme'
 import '../../assets/translations/i18n'
 import { useTranslation } from "react-i18next";
 import { useUser } from "../context/UserContext";
+import { getUser } from "../services/UserService";
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 const SignInScreen = () => {
-    {/* Example: https://programmingwithmosh.com/react-native/make-api-calls-in-react-native-using-fetch/
-        Example: https://www.youtube.com/watch?v=ON-Z1iD6Y-c Minute: 38:00
-    
-    useEffect(() => {
-        fetch('http://localhost:44890/api/Login')
-        .then((response) => response.json())
-        .then((json) => setData(json))
-        .catch((error) => console.error(error))
-        .finally(() => setLoading(false));
-    }, []);
-
-    componentMounted() {
-        this.useEffect();
-    }
-
-    render() {
-        const {
-            userLogin
-        } = this.state;
-
-        return(
-            // Here goes HTML constructor
-        )
-    }
-
-    */}
-
     const [ user, setUser ] = useUser()
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
@@ -48,18 +23,31 @@ const SignInScreen = () => {
     const navigation = useNavigation()
     const { t, i18n } = useTranslation()
 
-    const onSignInPressed = () => {
-        fetch(`http://10.0.0.7:3000/users?email=${email}&password=${password}`, {
-            method: 'GET'
-        })
-            .then(response => response.json())
-            .then(result => {
-                if (result.length > 0) {
-                    setUser(result[0])
-                    navigation.navigate('Home')
+    useEffect(() => {
+        // Check if rememberMe is true, and if it is login automatically
+        AsyncStorage.getItem("@rememberMe").then((value) => {
+			value = JSON.parse(value)
+			if (value !== null && value === true) {
+				setRememberMe(true)
+                // Instead of this use UserService to get the user yourself and navigate to Home
+				AsyncStorage.getItem("@email").then(value => setEmail(value))
+				AsyncStorage.getItem("@password").then(value => setPassword(value))
+			}
+		})
+    }, [])
+
+    const onSignInPressed = () => {            
+        getUser(email, password).then(user => {
+            if (user !== null) {
+                AsyncStorage.setItem('@rememberMe', JSON.stringify(rememberMe))
+                if (rememberMe) {
+                    AsyncStorage.setItem('@email', email)
+                    AsyncStorage.setItem('@password', password)
                 }
-            })
-            .catch(error => console.log(error))
+                setUser(user)
+                navigation.navigate('Home')
+            }
+        })
     }
 
     const onForgotPasswordPressed = () => {

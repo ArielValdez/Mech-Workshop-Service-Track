@@ -9,6 +9,7 @@ import theme from '../Theme';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { LocaleConfig } from 'react-native-calendars';
 import { LinearGradient } from 'expo-linear-gradient'
+import { useUser } from '../context/UserContext';
 
 const AccountDataButton = ({text, greyedText, onPress, LeftIcon, RightIcon}) => {
     return (
@@ -59,6 +60,7 @@ const accountDataStyles = StyleSheet.create({
 const AccountDataScreen = () => {
     const { t, i18n } = useTranslation()
     const navigation = useNavigation()
+    const [ user, setUser ] = useUser()
 
     const onLanguageSwitchPress = () => {
         if (i18n.language == 'es') {
@@ -98,13 +100,13 @@ const AccountDataScreen = () => {
             <View style={styles.accountDataContainer}>
                 <AccountDataButton 
                     LeftIcon={() => <MaterialCommunityIcons name='face-man' size={40} color={theme.colors.darkPrimary} />} 
-                    text='Carlos Roque'  
+                    text={user.name + ' ' + user.lastname}  
                     greyedText={true}
                     RightIcon={() => <Ionicons />}
                 />
                 <AccountDataButton 
                     LeftIcon={() => <FontAwesome name='phone' size={40} color={theme.colors.darkPrimary} />}
-                    text='(829) 341-2424'
+                    text={user.phone_number}
                     greyedText={true}
                     RightIcon={() => <Ionicons />}
                 />

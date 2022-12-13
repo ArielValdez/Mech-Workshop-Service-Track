@@ -23,6 +23,30 @@
       "phone_number": "8096257412",
       "id": "1s8jE4q",
       "active": "true"
+    },
+    {
+      "username": "Pedro345",
+      "password": "contra@123",
+      "email": "carlosroque197@gmail.com",
+      "name": "Pedro",
+      "lastname": "Alonzo",
+      "id_card": "402-3041120-0",
+      "role": "Client",
+      "phone_number": "8095622091",
+      "active": true,
+      "id": "Joxes0h"
+    },
+    {
+      "username": "EdwinLopez",
+      "password": "contra@123",
+      "email": "Lopezefe@gmail.com",
+      "name": "Edwin",
+      "lastname": "Lopez",
+      "id_card": "402-3041120-0",
+      "role": "Client",
+      "phone_number": "8095622091",
+      "active": true,
+      "id": "lzqgbOv"
     }
   ],
   "userProfiles": [
@@ -48,7 +72,7 @@
       "finishedAt": "2022-10-03T19:00:00.000Z",
       "payment_id": "1",
       "workshop_id": "1",
-	  "user_id": "1"
+      "user_id": "1"
     },
     {
       "serviceType": "Reparation",
@@ -62,7 +86,21 @@
       "payment_id": 1,
       "workshop_id": 1,
       "id": "SwUV83x",
-	  "user_id": "1"
+      "user_id": "1"
+    },
+    {
+      "serviceType": "Checkup",
+      "description": "Chequeo rutinario",
+      "state": "Not started",
+      "state_description": "The mechanics have not looked at the vehicle",
+      "vehicle_id": 1,
+      "startedAt": "Thu Jan 13 2022 16:30:20 GMT-0400 (AST)",
+      "expectedAt": "Thu Jan 13 2022 16:30:20 GMT-0400 (AST)",
+      "finishedAt": "Thu Jan 13 2022 16:30:20 GMT-0400 (AST)",
+      "payment_id": 1,
+      "workshop_id": 1,
+      "user_id": "lzqgbOv",
+      "id": "PfAsAwq"
     }
   ],
   "workshops": [
@@ -93,24 +131,11 @@
   ],
   "vehicles": [
     {
-      "id": "1",
-      "user_id": "1",
-      "plate": "A759686",
-      "model": "Ford F-Series",
-      "vin": "4Y1SL65848Z411439"
-    },
-    {
-      "user_id": "1",
-      "plate": "B729365",
-      "model": "Ford S-Series",
-      "vin": "Sjwjsks77722",
-      "id": "zZQbSz1"
-    },
-    {
-      "plate": "SjD9283",
-      "model": "Wuwuw8wsjjs",
-      "vin": "Ddffdhhhy",
-      "id": "SnZH3Y4"
+      "user_id": "lzqgbOv",
+      "plate": "A161900",
+      "model": "Dodge Gran Caravan",
+      "vin": "A87765J5432GF9876",
+      "id": 1
     }
   ]
 }
