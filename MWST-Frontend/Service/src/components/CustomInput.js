@@ -59,6 +59,8 @@ const styles = StyleSheet.create({
         marginVertical: 5
     },
     textInput: {
+        fontFamily: 'UbuntuRegular',
+        fontWeight: 'normal',
     },
     errorMessage: {
         color: 'red',

@@ -12,12 +12,15 @@ import { useTranslation } from "react-i18next";
 import { useUser } from "../context/UserContext";
 import { getUser } from "../services/UserService";
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import ErrorModal from "../components/Modals/ErrorModal"
+import CustomText from "../components/CustomText";
 
 const SignInScreen = () => {
     const [ user, setUser ] = useUser()
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
     const [ rememberMe, setRememberMe ] = useState(false)
+    const [ errorModalVisible, setErrorModalVisible ] = useState(true)
 
     const { height, width } = useWindowDimensions()
     const navigation = useNavigation()
@@ -47,7 +50,7 @@ const SignInScreen = () => {
                 navigation.navigate('Home') 
             })
             // TODO: Instead of logging show a modal with information useful for the user
-            .catch(error => console.log(error))
+            .catch(error => setErrorModalVisible(true))
     }
 
     const onForgotPasswordPressed = () => {
@@ -61,6 +64,13 @@ const SignInScreen = () => {
     return (
         <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollContainer}>
             <View style={styles.container}>
+                <ErrorModal 
+                    visible={errorModalVisible}
+                    errorText={t('loginFailedErrorMessage')}
+                    onRequestClose={() => setErrorModalVisible(!errorModalVisible)}
+                    buttonText={t('tryAgain')}
+                />
+
                 <Image 
                     source={Logo} 
                     style={[styles.logo, {height: height * 0.3, width: width * 0.75}]} 
@@ -77,7 +87,7 @@ const SignInScreen = () => {
                 <View style={{flexDirection: 'row', marginBottom: 10}}>
                     <View style={{flex: 1, flexDirection: 'row'}}>
                         <CheckBox value={rememberMe} onValueChange={setRememberMe}/>
-                        <Text style={{marginLeft: 5}}>{t('rememberMe')}</Text>
+                        <CustomText style={{marginLeft: 5}}>{t('rememberMe')}</CustomText>
                     </View>
                     <View style={{flex: 0.5}}></View>
                     <View style={{flex: 1.3, marginBottom: 10}}>
@@ -93,7 +103,7 @@ const SignInScreen = () => {
                 <CustomButton onPress={onSignInGoogle} text='Entrar con Google' bgColor='#FAE9EA' fgColor='#DD4D44'/>
                 <CustomButton onPress={onSignInApple} text='Entrar con Apple' bgColor='#e3e3e3' fgColor='#363636'/>
                 */}
-                <CustomButton testID='SignUpButton' onPress={onSignUpPressed} text={t('signUpButtonText')} type='Secondary'/>
+                <CustomButton testID='SignUpButton' onPress={onSignUpPressed} text={t('signUpButtonText')} type='Secondary' />
             </View>
         </ScrollView>
     )

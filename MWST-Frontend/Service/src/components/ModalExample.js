@@ -13,7 +13,7 @@ const AlertModal = ({visible, title, text, onClosePress}) => {
             visible={visible}
             transparent={true}
         >
-            <View style={styles.container}>
+            <View style={styles.background}>
                 <View style={styles.modalView}>
                     <View style={styles.header}>
                         <Text style={styles.headerText}>{title}</Text>
@@ -37,7 +37,7 @@ const AlertModal = ({visible, title, text, onClosePress}) => {
 }
 
 const styles = StyleSheet.create({
-    container: {
+    background: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',

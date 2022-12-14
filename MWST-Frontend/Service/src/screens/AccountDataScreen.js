@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Ionicons, MaterialIcons, MaterialCommunityIcons, FontAwesome, Octicons, Entypo, AntDesign, FontAwesome5 } from '@expo/vector-icons'
 import LineBreak from '../components/LineBreak'
 import CustomButton from '../components/CustomButton'
+import CustomText from '../components/CustomText';
 import theme from '../Theme';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { LocaleConfig } from 'react-native-calendars';
@@ -18,7 +19,9 @@ const AccountDataButton = ({text, greyedText, onPress, LeftIcon, RightIcon}) => 
                 <View style={accountDataStyles.leftIcon}>
                     <LeftIcon />
                 </View>
-                <Text style={greyedText ? accountDataStyles.greyedText : accountDataStyles.text}>{text}</Text>
+                <CustomText style={greyedText ? accountDataStyles.greyedText : accountDataStyles.text}>
+                    {text}
+                </CustomText>
                 <View style={accountDataStyles.rightIcon}>
                     <RightIcon />
                 </View>
@@ -135,7 +138,7 @@ const AccountDataScreen = () => {
                         colors={[theme.colors.darkPrimary, theme.colors.lightPrimary]}
                         end={{x: 0.9, y: 0.5}}
                     >
-                        <Text style={styles.returnButtonText}>{t('returnToSignIn')}</Text>
+                        <CustomText style={styles.returnButtonText}>{t('returnToSignIn')}</CustomText>
                     </LinearGradient>
                 </Pressable> 
             </View>
@@ -180,7 +183,7 @@ const styles = StyleSheet.create({
         textAlign: 'left'
     },
     returnButton: {
-        width: '70%', height: 40,
+        width: '60%', height: 40,
         marginTop: 30,
         borderRadius: 15,
         alignSelf: 'center',
@@ -189,7 +192,8 @@ const styles = StyleSheet.create({
     },
     returnButtonText: {
         color: theme.colors.white,
-        fontWeight: 'bold',
+        fontFamily: 'UbuntuBold',
+        fontWeight: 'normal',
         fontSize: 16,
     }
 })

@@ -3,7 +3,8 @@ import { View, Text, StyleSheet, Image, useWindowDimensions, ScrollView } from '
 import { useNavigation } from "@react-navigation/native"
 import CustomButton from '../components/CustomButton'
 import CustomInput from '../components/CustomInput'
-import AlertModal from "../components/AlertModal"
+import CustomText from "../components/CustomText"
+import SuccessModal from "../components/Modals/SuccessModal"
 import Logo from '../../assets/LogoOficial.png'
 import { UsernameRegex, InvalidUsernameMessage, EmailRegex,
      InvalidEmailMessage, PasswordRegex, InvalidPasswordMessage } from '../Constants'
@@ -20,7 +21,7 @@ const SignUpScreen = () => {
     const [ idCard, setIdCard ] = useState('')
     const [ password, setPassword ] = useState('')
     const [ confirmPassword, setConfirmPassword ] = useState('')
-    const [ modalVisible, setModalVisible ] = useState(false)
+    const [ successModalVisible, setSuccessModalVisible ] = useState(true)
 
     const { height, width } = useWindowDimensions()
     const navigation = useNavigation()
@@ -28,7 +29,7 @@ const SignUpScreen = () => {
 
     const onRegisterPressed = () => {
         createUser(firstname, lastname, email, phone, username, idCard, password)
-            .then(result => setModalVisible(true))
+            .then(result => setSuccessModalVisible(true))
 	}
 
     const onReturnPressed = () => {
@@ -46,11 +47,11 @@ const SignUpScreen = () => {
     return (
         <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollContainer}>
             <View style={styles.container}>
-                <AlertModal 
-                    title='Información' 
-                    text='Su registro ha sido completado de manera satisfactoria.'
-                    onClosePress={() => setModalVisible(false)}
-                    visible={modalVisible}
+                <SuccessModal
+                    visible={successModalVisible} 
+                    successText={t('successfullRegisterMessage')}
+                    onRequestClose={() => setSuccessModalVisible(false)}
+                    buttonText={t('understood')}
                 />
 
                 <Image 
@@ -74,11 +75,11 @@ const SignUpScreen = () => {
                 <CustomInput placeholder={t('confirmPasswordInputPlaceholder')} value={confirmPassword} setValue={setConfirmPassword} 
                     secureTextEntry errorMessage={InvalidPasswordMessage} pattern={PasswordRegex} />
                 
-                <Text style={styles.politicsText}>
+                <CustomText style={styles.politicsText}>
                     {t('politicsText1')}{' '}
-                    <Text style={styles.link} onPress={onTermsOfUsePressed}>{t('politicsText2')}</Text> y{' '}
-                    <Text style={styles.link} onPress={onPrivacyPoliticsPressed}>{t('politicsText3')}</Text>.
-                </Text>
+                    <CustomText style={styles.link} onPress={onTermsOfUsePressed}>{t('politicsText2')}</CustomText> y{' '}
+                    <CustomText style={styles.link} onPress={onPrivacyPoliticsPressed}>{t('politicsText3')}</CustomText>.
+                </CustomText>
 
                 <CustomButton onPress={onRegisterPressed} text={t('registerButtonText')} bgColor={theme.colors.darkPrimary}/>
                 <CustomButton testID='ReturnButton' onPress={onReturnPressed} text={t('returnButtonText')} type="Secondary"/>

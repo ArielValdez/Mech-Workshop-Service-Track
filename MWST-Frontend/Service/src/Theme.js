@@ -17,6 +17,8 @@ const theme = {
         white: '#fefefe',
         gray: '#c0c2c4',
         black: '#000000',
+        warningRed: '#ed184d',
+        successGreen: '#34cc2f',
         entriesBackground: '#000000',
     },
     fontSizes: {

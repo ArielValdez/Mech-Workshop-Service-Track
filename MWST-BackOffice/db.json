@@ -101,6 +101,34 @@
       "workshop_id": 1,
       "user_id": "lzqgbOv",
       "id": "PfAsAwq"
+    },
+    {
+      "serviceType": "Reparation",
+      "description": "Nuevo chequeo",
+      "state": "Not started",
+      "state_description": "The mechanics have not looked at the vehicle",
+      "vehicle_id": 2,
+      "startedAt": "13/111/2022 22:55:57",
+      "expectedAt": "13/111/2022 22:55:57",
+      "finishedAt": "13/111/2022 22:55:57",
+      "payment_id": 1,
+      "workshop_id": 1,
+      "user_id": "1",
+      "id": "q6MHt2X"
+    },
+    {
+      "serviceType": "Reparation",
+      "description": "Nuevo chequeo",
+      "state": "Not started",
+      "state_description": "The mechanics have not looked at the vehicle",
+      "vehicle_id": 2,
+      "startedAt": "13/12/2022 22:55:57",
+      "expectedAt": "13/12/2022 22:55:57",
+      "finishedAt": "13/12/2022 22:55:57",
+      "payment_id": 1,
+      "workshop_id": 1,
+      "user_id": "1",
+      "id": "kEJfXK6"
     }
   ],
   "workshops": [
@@ -136,6 +164,13 @@
       "model": "Dodge Gran Caravan",
       "vin": "A87765J5432GF9876",
       "id": 1
+    },
+    {
+      "user_id": "1",
+      "plate": "Sjsjsjj",
+      "model": "Jnsjss",
+      "vin": "Snsnsns",
+      "id": 2
     }
   ]
 }

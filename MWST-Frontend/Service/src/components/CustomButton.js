@@ -51,7 +51,8 @@ const styles = StyleSheet.create({
     },
 
     text: {
-        fontWeight: 'bold',
+        fontFamily: 'UbuntuBold',
+        fontWeight: 'normal',
         color: 'white',
     },
     textSecondary: {

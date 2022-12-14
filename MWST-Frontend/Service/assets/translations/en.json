@@ -8,6 +8,7 @@
         "forgotPasswordButtonText": "Forgot my password",
         "signInButtonText": "Sign in",
         "signUpButtonText": "Don't have an account? Create one" ,
+        "loginFailedErrorMessage": "No user was found that matches your credentials.",
 
         "_comment2": "Sign up page translation data",
         
@@ -21,6 +22,7 @@
         "politicsText3": "Privacy policty",
         "registerButtonText": "Create account",
         "returnButtonText": "Return",
+        "successfullRegisterMessage": "Your account has been successfully created.",
 
         "_comment3": "Forgot password screen translation data",
         
@@ -72,5 +74,9 @@
         "addVehicle": "Add Vehicle",
 
         "emptyInputsAlert": "You must fill in all the fields",
+
+        "_commentExtra": "Extra stuff",
+        "tryAgain": "Try Again",
+        "understood": "Understood"
     }
 }

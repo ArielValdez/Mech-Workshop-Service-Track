@@ -8,6 +8,7 @@
         "forgotPasswordButtonText": "Olvide mi contraseña",
         "signInButtonText": "Iniciar sesión",
         "signUpButtonText": "¿No tienes una cuenta? Crea una",
+        "loginFailedErrorMessage": "No se encontró ningun usuario que coincida con tus credenciales.",
         
         
         "_comment2": "Sign up page translation data",
@@ -22,6 +23,7 @@
         "politicsText3": "política de privacidad",
         "registerButtonText": "Crear cuenta",
         "returnButtonText": "Regresar",
+        "successfullRegisterMessage": "Su registro ha sido completado de manera satisfactoria.",
 
         "_comment3": "Forgot password screen translation data",
         
@@ -73,6 +75,10 @@
         "_comment9": "Translation data for VehicleListScreen",
         "addVehicle": "Add Vehicle",
 
-        "emptyInputsAlert": "Debes llenar todos los campos"
+        "emptyInputsAlert": "Debes llenar todos los campos",
+
+        "_commentExtra": "Extra stuff",
+        "tryAgain": "Intentar de nuevo",
+        "understood": "Entendido"
     }
 }
