@@ -7,6 +7,7 @@ import LineBreak from "../components/LineBreak"
 import { FontAwesome5, AntDesign } from "@expo/vector-icons"
 import theme from "../Theme"
 import { useUser } from "../context/UserContext"
+import { getAllVehicles, deleteVehicle } from "../services/VehicleService"
 
 const VehicleRenderItem = ({ item, onDeleteCallback, refreshCallback }) => {
     const navigation = useNavigation()
@@ -16,16 +17,9 @@ const VehicleRenderItem = ({ item, onDeleteCallback, refreshCallback }) => {
     }
 
     const onDeletePress = () => {
-        fetch(`http://10.0.0.7:3000/vehicles/${item.id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-type': 'application/json'
-            }
-        })
-            .then(response => response.json())
+        deleteVehicle(item.id)
             .then(result => onDeleteCallback())
             .catch(err => console.log(err))
-        console.log('on delete press ran')
     }
 
     return (
@@ -87,23 +81,17 @@ const VehicleListScreen = () => {
     const { t, i18n } = useTranslation()
 
     useEffect(() => {
-        fetchVehicles()
+        loadVehicleList()
     }, [])
 
-    const fetchVehicles = () => {
-        fetch(`http://10.0.0.7:3000/vehicles?user_id=${user.id}`, {
-            method: 'GET',
-            headers: {
-                'Content-type': 'application/json'
-            }
-        })
-            .then(response => response.json())
-            .then(result => setVehicles(result))
+    const loadVehicleList = () => {
+        getAllVehicles(user.id)
+            .then(vehicles => setVehicles(result))
             .catch(err => console.log(err))
     }
 
     const onAddVehiclePress = () => {
-        navigation.navigate('AddVehicle', { refreshCallback: fetchVehicles, isEditing: false })
+        navigation.navigate('AddVehicle', { refreshCallback: loadVehicleList, isEditing: false })
     }
 
     return (
@@ -114,8 +102,8 @@ const VehicleListScreen = () => {
                 renderItem={({ item }) => 
                     <VehicleRenderItem 
                         item={item} 
-                        onDeleteCallback={fetchVehicles}
-                        refreshCallback={fetchVehicles}
+                        onDeleteCallback={loadVehicleList}
+                        refreshCallback={loadVehicleList}
                     />}
                 keyExtractor={item => item.id}
             />

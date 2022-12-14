@@ -9,6 +9,7 @@ import { UsernameRegex, InvalidUsernameMessage, EmailRegex,
      InvalidEmailMessage, PasswordRegex, InvalidPasswordMessage } from '../Constants'
 import theme from "../Theme"
 import { useTranslation } from "react-i18next"
+import { createUser } from "../services/UserService"
 
 const SignUpScreen = () => {
     const [ firstname, setFirstname ] = useState('')
@@ -26,30 +27,8 @@ const SignUpScreen = () => {
     const { t, i18n } = useTranslation()
 
     const onRegisterPressed = () => {
-		const user = {
-		    username: username,
-		    password: password,
-		    email: email,
-		    name: firstname,
-		    lastname: lastname,
-		    //Should be limited to thirteen digits in the following manner: 0-1234567-891
-		    id_card: '402-3041120-0',
-		    role: 'Client',
-		    //Should be limited to thirteen digits in the following order: (809)000-0000
-		    phone_number: phone,
-            active: true //change this later to false
-		}
-
-		fetch('http://10.0.0.7:3000/users', {
-		    method: 'POST',
-		    headers: {
-		        'Content-type': 'application/json'
-		    },
-		    body: JSON.stringify(user)
-		})
-		    .then(response => response.json())
-		    .then(result => setModalVisible(true))
-		    .catch(error => console.log('Error: ', error))
+        createUser(firstname, lastname, email, phone, username, idCard, password)
+            .then(result => setModalVisible(true))
 	}
 
     const onReturnPressed = () => {

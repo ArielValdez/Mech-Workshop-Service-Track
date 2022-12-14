@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next"
 import { useNavigation } from "@react-navigation/native"
 import { useUser } from "../context/UserContext"
 import Logo from "../../assets/LogoOficial.png"
+import { createVehicle, editVehicle } from "../services/VehicleService"
 
 
 const AddVehicleScreen = ({ route }) => {
@@ -21,7 +22,7 @@ const AddVehicleScreen = ({ route }) => {
     const { t, i18n } = useTranslation()
 
     useEffect(() => {
-        if (route.params.vehicle !== undefined) {
+        if (route.params.isEditing) {
             setPlate(route.params.vehicle.plate)
             setModel(route.params.vehicle.model)
             setVin(route.params.vehicle.vin)
@@ -29,48 +30,24 @@ const AddVehicleScreen = ({ route }) => {
     }, [])
 
     const onSavePress = () => {
+        // TODO: Handle empty or incorrect inputs
         if (plate == '' || model == '' || vin == '') {
             alert(t('emptyInputsAlert'))
         } 
 
         if (!route.params.isEditing) {
-            fetch('http://10.0.0.7:3000/vehicles', {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify({
-                    user_id: user.id,
-                    plate: plate,
-                    model: model,
-                    vin: vin
-                })
-            })
-                .then(response => {
-                    if (response.ok) {
-                        route.params.refreshCallback()
-                        navigation.goBack()
-                    }
+            createVehicle(user.id, plate, model, vin)
+                .then(result => {
+                    route.params.refreshCallback()
+                    navigation.goBack()
                 })
                 .catch(err => console.log(err))
         }
         else {
-            fetch(`http://10.0.0.7:3000/vehicles/${route.params.vehicle.id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify({
-                    plate: plate,
-                    model: model,
-                    vin: vin
-                })
-            })
-                .then(response => {
-                    if (response.ok) {
-                        route.params.refreshCallback()
-                        navigation.goBack()
-                    }
+            editVehicle(route.params.vehicle.id, plate, model, vin)
+                .then(result => {
+                    route.params.refreshCallback()
+                    navigation.goBack()
                 })
                 .catch(err => console.log(err))
         }

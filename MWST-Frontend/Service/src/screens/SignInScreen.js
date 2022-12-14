@@ -29,7 +29,6 @@ const SignInScreen = () => {
 			value = JSON.parse(value)
 			if (value !== null && value === true) {
 				setRememberMe(true)
-                // Instead of this use UserService to get the user yourself and navigate to Home
 				AsyncStorage.getItem("@email").then(value => setEmail(value))
 				AsyncStorage.getItem("@password").then(value => setPassword(value))
 			}
@@ -37,17 +36,18 @@ const SignInScreen = () => {
     }, [])
 
     const onSignInPressed = () => {            
-        getUser(email, password).then(user => {
-            if (user !== null) {
+        getUser(email, password)
+            .then(user => {
                 AsyncStorage.setItem('@rememberMe', JSON.stringify(rememberMe))
                 if (rememberMe) {
                     AsyncStorage.setItem('@email', email)
                     AsyncStorage.setItem('@password', password)
                 }
                 setUser(user)
-                navigation.navigate('Home')
-            }
-        })
+                navigation.navigate('Home') 
+            })
+            // TODO: Instead of logging show a modal with information useful for the user
+            .catch(error => console.log(error))
     }
 
     const onForgotPasswordPressed = () => {

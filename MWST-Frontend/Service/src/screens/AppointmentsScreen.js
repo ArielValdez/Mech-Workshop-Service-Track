@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import { useIsFocused } from "@react-navigation/native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { useUser } from "../context/UserContext";
+import { format } from "../utils/DateFormatting";
 
 const appointmentTitleRegex = /[a-zA-Z]{3,}/
 const appointmentTitleErrorMessage = 'Título de cita debe tener al menos 3 carácteres'
@@ -195,6 +196,8 @@ const appointmentStyles = StyleSheet.create({
         marginHorizontal: 15,
         marginTop: 10,
         borderRadius: 5,
+        borderWidth: 1.5,
+        borderColor: theme.colors.black,
     },
     header: {
         fontWeight: 'bold',
@@ -269,9 +272,9 @@ const AppointmentsScreen = () => {
                 state: 'Not started',
                 state_description: 'The mechanics have not looked at the vehicle',
                 vehicle_id: vehicleId,
-                startedAt: selectedTime.toString(),
-                expectedAt: selectedTime.toString(),
-                finishedAt: selectedTime.toString(),
+                startedAt:  format(selectedTime),
+                expectedAt: format(selectedTime),
+                finishedAt: format(selectedTime),
                 payment_id: 1,
                 workshop_id: 1,
                 user_id: user.id
