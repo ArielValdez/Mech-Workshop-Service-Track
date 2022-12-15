@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { View, Text, StyleSheet } from 'react-native'
 import CustomButton from '../components/CustomButton'
 import CustomInput from '../components/CustomInput'
+import CustomText from '../components/CustomText'
 
 const NewPasswordScreen = () => {
     const [ newPassword, setNewPassword ] = useState('')
@@ -22,7 +23,7 @@ const NewPasswordScreen = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>{t('restartPassword')}</Text>
+            <CustomText style={styles.title}>{t('restartPassword')}</CustomText>
 
             <CustomInput value={newPassword} setValue={setNewPassword} placeholder={t('newPassword')}/>
             <CustomInput value={confirmNewPassword} setValue={setConfirmNewPassword} placeholder={t('confirmNewPassword')}/>

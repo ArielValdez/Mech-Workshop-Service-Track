@@ -6,6 +6,7 @@ import { Ionicons, MaterialIcons, MaterialCommunityIcons, FontAwesome, Octicons,
 import LineBreak from '../components/LineBreak'
 import CustomButton from '../components/CustomButton'
 import CustomText from '../components/CustomText';
+import PressableOpacity from '../components/PressableOpacity.js'
 import theme from '../Theme';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { LocaleConfig } from 'react-native-calendars';
@@ -15,7 +16,7 @@ import { useUser } from '../context/UserContext';
 const AccountDataButton = ({text, greyedText, onPress, LeftIcon, RightIcon}) => {
     return (
         <View>
-            <Pressable style={accountDataStyles.container} onPress={onPress}>
+            <PressableOpacity animatedViewStyle={accountDataStyles.container} onPress={onPress}>
                 <View style={accountDataStyles.leftIcon}>
                     <LeftIcon />
                 </View>
@@ -25,7 +26,7 @@ const AccountDataButton = ({text, greyedText, onPress, LeftIcon, RightIcon}) => 
                 <View style={accountDataStyles.rightIcon}>
                     <RightIcon />
                 </View>
-            </Pressable>
+            </PressableOpacity>
             <LineBreak />
         </View>
     )
@@ -132,7 +133,7 @@ const AccountDataScreen = () => {
                     onPress={onCarListPress}
                 />
 
-                <Pressable onPress={onReturnToSignInPress}>
+                <PressableOpacity onPress={onReturnToSignInPress}>
                     <LinearGradient 
                         style={styles.returnButton} 
                         colors={[theme.colors.darkPrimary, theme.colors.lightPrimary]}
@@ -140,7 +141,7 @@ const AccountDataScreen = () => {
                     >
                         <CustomText style={styles.returnButtonText}>{t('returnToSignIn')}</CustomText>
                     </LinearGradient>
-                </Pressable> 
+                </PressableOpacity> 
             </View>
         </View>
     )
@@ -185,7 +186,7 @@ const styles = StyleSheet.create({
     returnButton: {
         width: '60%', height: 40,
         marginTop: 30,
-        borderRadius: 15,
+        borderRadius: 5,
         alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',

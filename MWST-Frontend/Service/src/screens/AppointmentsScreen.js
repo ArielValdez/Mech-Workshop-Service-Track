@@ -4,13 +4,16 @@ import { Calendar, CalendarUtils, LocaleConfig } from 'react-native-calendars'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
+import CustomText from "../components/CustomText";
 import theme from "../Theme";
 import { FontAwesome5, Entypo, AntDesign } from '@expo/vector-icons'
 import { useTranslation } from "react-i18next";
-import { useIsFocused } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { useUser } from "../context/UserContext";
-import { format } from "../utils/DateFormatting";
+import { getAllAppointments, createAppointment } from "../services/AppointmentsService";
+import { getAllVehicles } from "../services/VehicleService";
+import PressableOpacity from "../components/PressableOpacity.js"
 
 const appointmentTitleRegex = /[a-zA-Z]{3,}/
 const appointmentTitleErrorMessage = 'Título de cita debe tener al menos 3 carácteres'
@@ -38,16 +41,13 @@ const AppointmentModal = ({visible, onRequestClose, onReturnPress, onOkPress, ti
 
     useEffect(() => {
         if (isFocused) {
-            fetch(`http://10.0.0.7:3000/vehicles?user_id=${user.id}`, {
-                method: 'GET',
-            })
-                .then(response => response.json())
-                .then(result => {
-                    var arr = []
-                    result.forEach(vehicle => {
-                        arr.push({ label: vehicle.plate, value: vehicle.id})
-                    })
-                    setVehicles(arr)
+            getAllVehicles(user.id)
+                .then(vehicles => {
+                    //var arr = []
+                    //vehicles.forEach(vehicle => {
+                       // arr.push({ label: vehicle.plate, value: vehicle.id})
+                    //})
+                    setVehicles(vehicles)
                 })
                 .catch(err => console.log(err))
         }
@@ -65,7 +65,7 @@ const AppointmentModal = ({visible, onRequestClose, onReturnPress, onOkPress, ti
 		>
 			<View style={modalStyles.container}>
 				<View style={[modalStyles.view, { height: height * 0.48 }]}>
-					<Text style={modalStyles.title}>{t("newAppointment")}</Text>
+					<CustomText style={modalStyles.title}>{t("newAppointment")}</CustomText>
 					<CustomInput
 						value={appointmentTitle}
 						setValue={setAppointmentTitle}
@@ -82,6 +82,10 @@ const AppointmentModal = ({visible, onRequestClose, onReturnPress, onOkPress, ti
 					</Pressable>
 
 					<DropDownPicker
+                        schema={{
+                            label: 'plate',
+                            value: 'id' 
+                        }}
 						placeholder={t("selectVehiclePlaceholder")}
 						open={openDropdown}
 						value={selectedVehicleId}
@@ -120,7 +124,6 @@ const AppointmentModal = ({visible, onRequestClose, onReturnPress, onOkPress, ti
 						<CustomButton
 							text={t("schedule")}
 							width="45%"
-							bgColor={theme.colors.darkPrimary}
 							onPress={() => {
 								const regex = new RegExp(appointmentTitleRegex);
 								if (regex.test(appointmentTitle)) {
@@ -161,8 +164,6 @@ const modalStyles = StyleSheet.create({
         padding: 20
     },
     title: {
-        fontWeight: 'bold',
-
     },
     clockIcon: {
         marginTop: 5,
@@ -176,16 +177,25 @@ const modalStyles = StyleSheet.create({
     },
 })
 
-const Appointment = ({description, date}) => {
+const Appointment = ({ service }) => {
+    const navigation = useNavigation()
+
+    const onPress = () => {
+        navigation.navigate('AppointmentDetail', { service: service })
+    }
+
     return (
-        <View style={appointmentStyles.container}>
-            <Text style={appointmentStyles.header}>
-                {description}
-            </Text>
-            <Text style={appointmentStyles.date}>
-                {date}
-            </Text>
-        </View>
+        <PressableOpacity 
+            animatedViewStyle={appointmentStyles.container}
+            onPress={onPress}
+        >
+            <CustomText style={appointmentStyles.header}>
+                {service.description}
+            </CustomText>
+            <CustomText style={appointmentStyles.date}>
+                {service.expectedAt}
+            </CustomText>
+        </PressableOpacity>
     )
 }
 
@@ -200,7 +210,6 @@ const appointmentStyles = StyleSheet.create({
         borderColor: theme.colors.black,
     },
     header: {
-        fontWeight: 'bold',
         marginBottom: 10,
     },
     date: {
@@ -208,9 +217,9 @@ const appointmentStyles = StyleSheet.create({
     }
 })
 
-const appointmentRenderItem = ({item}) => {
+const appointmentRenderItem = ({ item }) => {
     return (
-        <Appointment description={item.description} date={item.expectedAt} />
+        <Appointment service={item} />
     )
 }
 
@@ -261,43 +270,14 @@ const AppointmentsScreen = () => {
     const onModalOkPress = (title, vehicleId, serviceType) => {
         fetchServices()
         setModalVisible(false)
-        fetch('http://10.0.0.7:3000/services', {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify({
-                serviceType: serviceType,
-                description: title,
-                state: 'Not started',
-                state_description: 'The mechanics have not looked at the vehicle',
-                vehicle_id: vehicleId,
-                startedAt:  format(selectedTime),
-                expectedAt: format(selectedTime),
-                finishedAt: format(selectedTime),
-                payment_id: 1,
-                workshop_id: 1,
-                user_id: user.id
-            })
-        })
-
-        .then(response => {
-            if (response.ok) {
-                console.log('The service has been successfully posted')
-            }
-        })
-        .catch(err => console.log(err))
+        createAppointment(serviceType, title, vehicleId, selectedTime, user.id)
+            .then(result => console.log('The service has been successfully posted'))
+            .catch(err => console.log(err))
     }
 
     const fetchServices = () => {
-        fetch(`http://10.0.0.7:3000/services?user_id=${user.id}`, {
-            method: 'GET',
-        })
-            .then(response => response.json())
-            .then(result => {
-                console.log(result)
-                setAppointments(result)
-            })
+        getAllAppointments(user.id)
+            .then(appointments => setAppointments(appointments))
             .catch(err => console.log(err))
     }
 
@@ -326,8 +306,12 @@ const AppointmentsScreen = () => {
                 }}    
             />
 
-            <Pressable style={styles.addAppointmentButton} onPressIn={onAddAppointmentPress}>
-                <Entypo name="plus" size={50}/>
+            <Pressable style={({ pressed }) => [
+                styles.addAppointmentButton,
+                { opacity: pressed ? 0.2 : 1}
+            ]} 
+            onPress={onAddAppointmentPress}>
+                <Entypo name="plus" size={50} />
             </Pressable>
         </View>
     )

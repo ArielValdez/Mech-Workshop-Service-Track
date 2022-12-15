@@ -5,8 +5,9 @@ import SignUpScreen from './src/screens/SignUpScreen';
 import ConfirmEmailScreen from './src/screens/ConfirmEmailScreen';
 import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
 import NewPasswordScreen from './src/screens/NewPasswordScreen';
-import VehicleListScreen from './src/screens/VehicleListScreen';
+import VehicleListScreen from './src/screens/VehicleListScreen/VehicleListScreen.js';
 import AddVehicleScreen from './src/screens/AddVehicleScreen';
+import AppointmentDetailScreen from './src/screens/AppointmentDetailScreen.js'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { LocaleConfig } from 'react-native-calendars'
@@ -25,7 +26,7 @@ export default function App() {
 		UbuntuRegular: require("./assets/fonts/Ubuntu/Ubuntu-Regular.ttf"),
 		UbuntuMedium: require("./assets/fonts/Ubuntu/Ubuntu-Medium.ttf"),
 		UbuntuBold: require("./assets/fonts/Ubuntu/Ubuntu-Bold.ttf"),
-	});
+	})
 
 	if (!fontsLoaded) 
 		return <></>
@@ -75,6 +76,14 @@ export default function App() {
 								options={{
 									headerShown: true,
 									title: "Add vehicle",
+								}}
+							/>
+							<Stack.Screen
+								name="AppointmentDetail"
+								component={AppointmentDetailScreen}
+								options={{
+									headerShown: true,
+									title: 'Details'
 								}}
 							/>
 						</Stack.Navigator>

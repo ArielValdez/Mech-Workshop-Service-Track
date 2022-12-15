@@ -24,6 +24,10 @@
         "registerButtonText": "Crear cuenta",
         "returnButtonText": "Regresar",
         "successfullRegisterMessage": "Su registro ha sido completado de manera satisfactoria.",
+        "invalidRegisterMessage": "Registro fallido.",
+        "invalidNameMessage": "El nombre debe de estar entre 3 y 25 carácteres",
+        "invalidPhoneMessage": "Debe proveer 10 números",
+        "invalidIdCardMessage": "Debe proveer 11 números",
 
         "_comment3": "Forgot password screen translation data",
         
@@ -79,6 +83,9 @@
 
         "_commentExtra": "Extra stuff",
         "tryAgain": "Intentar de nuevo",
-        "understood": "Entendido"
+        "understood": "Entendido",
+        "invalidUsernameMessage": "Nombre de usuario debe estar entre 4 y 16 carácteres",
+        "invalidEmailMessage": "El correo no es válido",
+        "invalidPasswordMessage": "La contraseña debe tener al menos 8 carácteres"
     }
 }

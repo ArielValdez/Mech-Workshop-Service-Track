@@ -4,7 +4,7 @@ import FeedScreen from "./FeedScreen";
 import MyCarScreen from "./MyCarScreen";
 import ChatScreen from "./ChatScreen";
 import AppointmentsScreen from "./AppointmentsScreen"
-import AccountDataScreen from "./AccountDataScreen"
+import AccountDataScreen from "./AccountDataScreen.js"
 import { Ionicons, AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 import { useTranslation } from "react-i18next";
 
@@ -12,7 +12,6 @@ const Tab = createBottomTabNavigator()
 
 const HomeScreen = () => {
     const { t, i18n } = useTranslation()
-    
 
     return (
         <Tab.Navigator>

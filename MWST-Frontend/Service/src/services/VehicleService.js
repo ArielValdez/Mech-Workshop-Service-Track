@@ -34,8 +34,8 @@ export const createVehicle = async (userId, plate, model, vin) => {
         return Promise.reject(response)
 }
 
-export const editVehicle = async (id, plate, model, vin) => {
-    const response = await fetch(`${API_URL}/vehicles/${id}`, {
+export const editVehicle = async (vehicleId, userId, plate, model, vin) => {
+    const response = await fetch(`${API_URL}/vehicles/${vehicleId}`, {
         method: 'PUT',
         headers: {
             'Content-type': 'application/json'

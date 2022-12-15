@@ -5,12 +5,24 @@ import CustomButton from '../components/CustomButton'
 import CustomInput from '../components/CustomInput'
 import CustomText from "../components/CustomText"
 import SuccessModal from "../components/Modals/SuccessModal"
+import ErrorModal from "../components/Modals/ErrorModal"
 import Logo from '../../assets/LogoOficial.png'
 import { UsernameRegex, InvalidUsernameMessage, EmailRegex,
      InvalidEmailMessage, PasswordRegex, InvalidPasswordMessage } from '../Constants'
 import theme from "../Theme"
 import { useTranslation } from "react-i18next"
 import { createUser } from "../services/UserService"
+
+//  TODO: Regex pattern for name input, last name input, phone number input and idCard input
+//  TODO: Make error messages available in english and spanish
+//  TODO: Handle the registration of user failing
+
+const nameRegex = /^[a-zA-Z]{3,25}$/
+const emailRegex = EmailRegex
+const usernameRegex = new RegExp(UsernameRegex)
+const phoneRegex = /^[\d]{10}$/
+const idCardRegex = /^[\d]{11}$/
+const passwordRegex = new RegExp(PasswordRegex)
 
 const SignUpScreen = () => {
     const [ firstname, setFirstname ] = useState('')
@@ -21,15 +33,24 @@ const SignUpScreen = () => {
     const [ idCard, setIdCard ] = useState('')
     const [ password, setPassword ] = useState('')
     const [ confirmPassword, setConfirmPassword ] = useState('')
-    const [ successModalVisible, setSuccessModalVisible ] = useState(true)
+    const [ successModalVisible, setSuccessModalVisible ] = useState(false)
+    const [ errorModalVisible, setErrorModalVisible ] = useState(false)
 
     const { height, width } = useWindowDimensions()
     const navigation = useNavigation()
     const { t, i18n } = useTranslation()
 
     const onRegisterPressed = () => {
-        createUser(firstname, lastname, email, phone, username, idCard, password)
-            .then(result => setSuccessModalVisible(true))
+        if (nameRegex.test(firstname) && nameRegex.test(lastname) && usernameRegex.test(username) &&
+                emailRegex.test(email) && phoneRegex.test(phone) && idCardRegex.test(idCard) && 
+                passwordRegex.test(password) && password == confirmPassword) {
+            
+            createUser(firstname, lastname, email, phone, username, idCard, password)
+                .then(result => setSuccessModalVisible(true))
+        }
+        else {
+            setErrorModalVisible(true)
+        }
 	}
 
     const onReturnPressed = () => {
@@ -53,6 +74,12 @@ const SignUpScreen = () => {
                     onRequestClose={() => setSuccessModalVisible(false)}
                     buttonText={t('understood')}
                 />
+                <ErrorModal
+                    visible={errorModalVisible}
+                    errorText={t('invalidRegisterMessage')}
+                    onRequestClose={() => setErrorModalVisible(false)}
+                    buttonText='Ok'
+                />
 
                 <Image 
                     source={Logo} 
@@ -60,20 +87,30 @@ const SignUpScreen = () => {
                     resizeMode='contain'
                 />
 
-                <CustomInput placeholder={t('nameInputPlaceholder')} value={firstname} setValue={setFirstname} />
-                <CustomInput placeholder={t('lastNameInputPlaceholder')} value={lastname} setValue={setLastname} />
+                <CustomInput placeholder={t('nameInputPlaceholder')} value={firstname} setValue={setFirstname} 
+                    pattern={nameRegex} errorMessage={t('invalidNameMessage')}
+                />
+                <CustomInput placeholder={t('lastNameInputPlaceholder')} value={lastname} setValue={setLastname}
+                    pattern={nameRegex} errorMessage={t('invalidNameMessage')}
+                />
                 <CustomInput placeholder={t('emailInputPlaceholder')} value={email} setValue={setEmail} 
-                    keyboardType='email-address' errorMessage={InvalidEmailMessage} pattern={EmailRegex} />
+                    keyboardType='email-address' errorMessage={t('invalidEmailMessage')} pattern={EmailRegex}
+                />
                 <CustomInput placeholder={t('phoneNumberInputPlaceholder')} value={phone} setValue={setPhone} 
-                    keyboardType='number-pad' />
+                    keyboardType='number-pad' pattern={phoneRegex} errorMessage={t('invalidPhoneMessage')}
+                />
                 <CustomInput placeholder={t('usernameInputPlaceholder')} value={username} setValue={setUsername} 
-                    errorMessage={InvalidUsernameMessage} pattern={UsernameRegex} />
+                    pattern={UsernameRegex} errorMessage={t('invalidUsernameMessage')} 
+                />
                 <CustomInput placeholder='001-0000000-1' value={idCard} setValue={setIdCard} 
-                    keyboardType='number-pad' />
+                    keyboardType='number-pad' pattern={idCardRegex} errorMessage={t('invalidIdCardMessage')} 
+                />
                 <CustomInput placeholder={t('passwordInputPlaceholder')} value={password} setValue={setPassword} secureTextEntry
-                    errorMessage={InvalidPasswordMessage} pattern={PasswordRegex} />
+                    pattern={PasswordRegex} errorMessage={t('invalidPasswordMessage')}
+                />
                 <CustomInput placeholder={t('confirmPasswordInputPlaceholder')} value={confirmPassword} setValue={setConfirmPassword} 
-                    secureTextEntry errorMessage={InvalidPasswordMessage} pattern={PasswordRegex} />
+                    secureTextEntry errorMessage={t('invalidPasswordMessage')} pattern={PasswordRegex}
+                />
                 
                 <CustomText style={styles.politicsText}>
                     {t('politicsText1')}{' '}
@@ -99,12 +136,6 @@ const styles = StyleSheet.create({
     },
     logo: {
         flex: 1,
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: theme.colors.darkSecondary,
-        margin: 10,
     },
     politicsText: {
         marginVertical: 10,

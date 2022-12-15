@@ -20,7 +20,7 @@ const SignInScreen = () => {
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
     const [ rememberMe, setRememberMe ] = useState(false)
-    const [ errorModalVisible, setErrorModalVisible ] = useState(true)
+    const [ errorModalVisible, setErrorModalVisible ] = useState(false)
 
     const { height, width } = useWindowDimensions()
     const navigation = useNavigation()
@@ -78,10 +78,10 @@ const SignInScreen = () => {
                 />
                 
                 <CustomInput placeholder={t('emailInputPlaceholder')} value={email} setValue={setEmail} keyboardType='email-address'
-                    errorMessage={InvalidEmailMessage} pattern={EmailRegex} marginVertical={10}
+                    errorMessage={t('invalidEmailMessage')} pattern={EmailRegex} marginVertical={10}
                 />
                 <CustomInput placeholder={t('passwordInputPlaceholder')} value={password} setValue={setPassword} secureTextEntry
-                    errorMessage={InvalidPasswordMessage} pattern={PasswordRegex} marginVertical={10}
+                    errorMessage={t('invalidPasswordMessage')} pattern={PasswordRegex} marginVertical={10}
                 />
                 
                 <View style={{flexDirection: 'row', marginBottom: 10}}>
@@ -96,14 +96,9 @@ const SignInScreen = () => {
                     </View>
                 </View>
 
-                <CustomButton testID='SignInButton' onPress={onSignInPressed} text={t('signInButtonText')} 
-                    bgColor={theme.colors.darkPrimary} />
-
-                {/*<CustomButton onPress={onSignInFacebook} text='Entrar con Facebook' bgColor='#E7EAF4' fgColor='#4765A9'/>
-                <CustomButton onPress={onSignInGoogle} text='Entrar con Google' bgColor='#FAE9EA' fgColor='#DD4D44'/>
-                <CustomButton onPress={onSignInApple} text='Entrar con Apple' bgColor='#e3e3e3' fgColor='#363636'/>
-                */}
-                <CustomButton testID='SignUpButton' onPress={onSignUpPressed} text={t('signUpButtonText')} type='Secondary' />
+                <CustomButton testID='SignInButton' onPress={onSignInPressed} text={t('signInButtonText')} />
+                <CustomButton testID='SignUpButton' onPress={onSignUpPressed} text={t('signUpButtonText')} 
+                    type='Secondary' />
             </View>
         </ScrollView>
     )

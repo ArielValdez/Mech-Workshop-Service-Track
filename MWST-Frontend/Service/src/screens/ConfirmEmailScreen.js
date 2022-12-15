@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next"
 import { View, Text, StyleSheet, useWindowDimensions, ScrollView } from 'react-native'
 import CustomButton from '../components/CustomButton'
 import CustomInput from '../components/CustomInput'
+import CustomText from "../components/CustomText"
 
 const ConfirmEmailScreen = () => {
     const [ code, setCode ] = useState('')
@@ -24,7 +25,7 @@ const ConfirmEmailScreen = () => {
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.container}>
-                <Text style={styles.title}>{t('emailConfirmation')}</Text>
+                <CustomText style={styles.title}>{t('emailConfirmation')}</CustomText>
 
                 <CustomInput placeholder={t('confirmationCode')} value={code} setValue={setCode} keyboardType='numeric'/>
 

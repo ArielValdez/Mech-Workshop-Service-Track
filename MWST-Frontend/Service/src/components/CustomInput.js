@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { View, TextInput, StyleSheet, Text } from 'react-native'
 import theme from '../Theme'
+import CustomText from "./CustomText";
 
 const CustomInput = ({value, setValue, placeholder, secureTextEntry, keyboardType, errorMessage, pattern, padding, bgColor}) => {
     const [ showErrorText, setShowErrorText ] = useState(false)
@@ -32,11 +33,9 @@ const CustomInput = ({value, setValue, placeholder, secureTextEntry, keyboardTyp
                 />
             </View>
             { showErrorText &&
-                <Text
-                    style={styles.errorMessage}
-                >
+                <CustomText style={styles.errorMessage} >
                     {errorMessage}
-                </Text>
+                </CustomText>
             }
         </View>
     )

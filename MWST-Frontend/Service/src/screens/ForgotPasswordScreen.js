@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { View, Text, StyleSheet } from 'react-native'
 import CustomButton from '../components/CustomButton'
 import CustomInput from '../components/CustomInput'
+import CustomText from '../components/CustomText'
 
 const ForgotPasswordScreen = () => {
     const [ username, setUsername ] = useState('')
@@ -21,9 +22,9 @@ const ForgotPasswordScreen = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>{t('restartPassword')}</Text>
+            <CustomText style={styles.title}>{t('restartPassword')}</CustomText>
 
-            <Text>Usuario *</Text>
+            <CustomText>Usuario *</CustomText>
             <CustomInput value={username} setValue={setUsername} placeholder={t('usernameInputPlaceholder')}/>
             <CustomButton onPress={onNextPressed} text={t('nextButtonText')}/>
             <CustomButton onPress={onReturnPressed} text={t('returnToSignInButtonText')} type='Tertiary'/>

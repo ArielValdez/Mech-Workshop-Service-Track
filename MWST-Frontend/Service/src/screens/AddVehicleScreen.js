@@ -44,7 +44,7 @@ const AddVehicleScreen = ({ route }) => {
                 .catch(err => console.log(err))
         }
         else {
-            editVehicle(route.params.vehicle.id, plate, model, vin)
+            editVehicle(route.params.vehicle.id, user.id, plate, model, vin)
                 .then(result => {
                     route.params.refreshCallback()
                     navigation.goBack()

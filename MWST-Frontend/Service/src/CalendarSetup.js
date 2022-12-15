@@ -57,8 +57,6 @@ const CalendarConfigSetup = () => {
     }
       
     LocaleConfig.defaultLocale = 'es'
-
-    console.log('Locale setup')
 }
 
 export default CalendarConfigSetup

@@ -47,6 +47,30 @@
       "phone_number": "8095622091",
       "active": true,
       "id": "lzqgbOv"
+    },
+    {
+      "username": "",
+      "password": "",
+      "email": "",
+      "name": "",
+      "lastname": "",
+      "id_card": "",
+      "role": "Client",
+      "phone_number": "",
+      "active": true,
+      "id": "aiOxvX5"
+    },
+    {
+      "username": "JoseR",
+      "password": "contra@123",
+      "email": "carlosroque197@gmail.com",
+      "name": "Jose",
+      "lastname": "Roque",
+      "id_card": "42096587685",
+      "role": "Client",
+      "phone_number": "8095622091",
+      "active": true,
+      "id": "zEH_jhu"
     }
   ],
   "userProfiles": [
@@ -108,9 +132,9 @@
       "state": "Not started",
       "state_description": "The mechanics have not looked at the vehicle",
       "vehicle_id": 2,
-      "startedAt": "13/111/2022 22:55:57",
-      "expectedAt": "13/111/2022 22:55:57",
-      "finishedAt": "13/111/2022 22:55:57",
+      "startedAt": "13/11/2022 22:55:57",
+      "expectedAt": "13/11/2022 22:55:57",
+      "finishedAt": "13/11/2022 22:55:57",
       "payment_id": 1,
       "workshop_id": 1,
       "user_id": "1",
@@ -136,14 +160,14 @@
       "id": "1",
       "name": "Mech Workshop Santo Domingo",
       "managerId": "2",
-      "locationId": "1",
+      "address": "Av. de los Próceres 49, Santo Domingo 10602",
       "openAt": "12/3/2022 9:00",
       "closedAt": "12/3/2022 22:00"
     },
     {
       "name": "Nuevo Taller",
       "managerId": "1",
-      "locationId": "Santo Domingo",
+      "address": "Av. de los Próceres 49, Santo Domingo 10602",
       "openAt": "2022-12-08T13:00:43.869Z",
       "closedAt": "2022-12-08T22:00:52.948Z",
       "id": "dwbmVbz"
@@ -166,11 +190,29 @@
       "id": 1
     },
     {
-      "user_id": "1",
-      "plate": "Sjsjsjj",
+      "plate": "Sjsjsjj33",
       "model": "Jnsjss",
       "vin": "Snsnsns",
       "id": 2
+    },
+    {
+      "plate": "A7665",
+      "model": "Ford F-Series",
+      "vin": "Ququs8zbajai11",
+      "id": 3
+    },
+    {
+      "plate": "Uuus",
+      "model": "Sjssj",
+      "vin": "Skskks",
+      "id": 4
+    },
+    {
+      "user_id": "1",
+      "plate": "AB7725",
+      "model": "Ford F-Series",
+      "vin": "Iaiqid87qbn",
+      "id": 5
     }
   ]
 }

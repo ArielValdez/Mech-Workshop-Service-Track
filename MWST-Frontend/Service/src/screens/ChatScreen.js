@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Text, View, ScrollView, StyleSheet, FlatList } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import CustomInput from '../components/CustomInput';
+import CustomText from '../components/CustomText';
 import theme from '../Theme';
 import { Ionicons } from '@expo/vector-icons'
 import { useTranslation } from 'react-i18next';
@@ -17,12 +18,12 @@ const Message = ({senderName, content, isSenderMe}) => {
 				messageStyles.messageTextContainer,
 			    isSenderMe ? { backgroundColor: 'gray' } : {},
 			]}>
-				<Text style={messageStyles.senderName}>
+				<CustomText style={messageStyles.senderName}>
 					{senderName}
-				</Text>
-				<Text>
+				</CustomText>
+				<CustomText>
 					{content}
-				</Text>
+				</CustomText>
 			</View>
 		</View>
 	)

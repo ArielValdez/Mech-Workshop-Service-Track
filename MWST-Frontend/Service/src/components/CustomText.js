@@ -3,7 +3,7 @@ import { Text, StyleSheet } from "react-native";
 // type: can be Regular, Medium or Bold.
 const CustomText = ({ style, type = 'Regular', children }) => {
     return (
-        <Text style={[styles.text, `font${type}`,style]}>
+        <Text style={[styles.text, styles[`font${type}`], style]}>
             {children}
         </Text>
     )
