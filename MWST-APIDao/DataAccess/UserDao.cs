@@ -385,7 +385,7 @@ namespace DataAccess
                     try
                     {
                         //Inserting values into the database, table PerfilUsuario
-                        command.CommandText = "insert into tblPerfilUsuario(Username, Password, Telefono, Celular, Email, FechaCreacion)" +
+                        command.CommandText = "insert into tblPerfilUsuario(Username, uPassword, Telefono, Celular, Email, FechaCreacion)" +
                                                 "values(@username, @password, @telefono, @celular, @email, @fechaCreacion)";
 
                         command.Parameters.Add("@username", SqlDbType.VarChar, 20).Value = username;

@@ -24,7 +24,7 @@ public class User
     public DateTime Fecha_Creacion;
     private bool Active;
     // Role of the user, to check the permissions of said user
-    public Role User_Role { get; set; }
+    private Role User_Role { get; set; }
 
     public User()
     {
