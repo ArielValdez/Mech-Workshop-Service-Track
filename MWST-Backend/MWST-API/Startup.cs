@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Serialization;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Identity;
 
 namespace MWST_API
 {
@@ -32,6 +33,18 @@ namespace MWST_API
             {
                 c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             });
+
+            // Email Verification
+            services.AddIdentity<IdentityUser, IdentityRole>(c =>
+            {
+                //c.Password.RequiredLength = 4;
+                //c.Password.RequireDigit = false;
+                //c.Password.RequireNonAlphanumeric = false;
+                //c.Password.RequireUppercase = false;
+                c.SignIn.RequireConfirmedEmail = true;
+            })
+                .AddDefaultTokenProviders();
+                
 
             // JSON Serializer
             services.AddControllersWithViews().AddNewtonsoftJson(options => 
