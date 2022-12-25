@@ -17,7 +17,7 @@ namespace MWST_API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        //private readonly UserManager<IdentityUser> _userManager;
         private readonly Connection con = new Connection();
         private UserModel models = new UserModel();
         private ErrorManager error = new ErrorManager();

@@ -35,15 +35,15 @@ namespace MWST_API
             });
 
             // Email Verification
-            services.AddIdentity<IdentityUser, IdentityRole>(c =>
-            {
-                //c.Password.RequiredLength = 4;
-                //c.Password.RequireDigit = false;
-                //c.Password.RequireNonAlphanumeric = false;
-                //c.Password.RequireUppercase = false;
-                c.SignIn.RequireConfirmedEmail = true;
-            })
-                .AddDefaultTokenProviders();
+            //services.AddIdentity<IdentityUser, IdentityRole>(c =>
+            //{
+            //    //c.Password.RequiredLength = 4;
+            //    //c.Password.RequireDigit = false;
+            //    //c.Password.RequireNonAlphanumeric = false;
+            //    //c.Password.RequireUppercase = false;
+            //    c.SignIn.RequireConfirmedEmail = true;
+            //})
+            //    .AddDefaultTokenProviders();
                 
 
             // JSON Serializer
