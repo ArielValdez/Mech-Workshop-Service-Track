@@ -107,37 +107,22 @@ namespace MWST_API.Controllers
             // Query to update the information of the user
 
             // This only updates the table PerfilUsuario
-            string query = @"update PerfilUsuario
-                             set Username = @username, Password = @password, Telefono = @phoneNumber, Celular = @cellphone,
-                             where ID_Usuario = @idUsuario";
+            string role = user.GetUserRol();
 
-            DataTable table = new DataTable();
-            // New the connection string
-            string sqlDataSource = (con.ReturnConnection().ConnectionString);
-            SqlDataReader reader;
+            bool query = models.UpdateUser(user.ID_User, user.Username, user.Password, user.Email, user.Name, user.Surname, user.Cedula, role, user.PhoneNumber, user.Cellphone);
 
             // Use the domain instead
             try
             {
-                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                if (query)
                 {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@idUsuario", user.ID_User);
-                        command.Parameters.AddWithValue("@username", user.Username);
-                        command.Parameters.AddWithValue("@password", user.Password);
-                        command.Parameters.AddWithValue("@phoneNumber", user.PhoneNumber);
-                        command.Parameters.AddWithValue("@cellphone", user.Cellphone);
-
-                        reader = command.ExecuteReader();
-                        table.Load(reader);
-                        reader.Close();
-                        connection.Close();
-                    }
+                    error.Success();
+                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "User has been updated!");
                 }
-                // Check for security
-                return new JsonResult("{0}: Successful Update", user.ID_User);
+                else
+                {
+                    return new JsonResult("Not all fields have been filled");
+                }
             }
             catch (Exception e)
             {

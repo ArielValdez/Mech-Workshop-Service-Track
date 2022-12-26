@@ -8,6 +8,7 @@ using Domain;
 using Microsoft.Extensions.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using MWST_API.Models;
 
 namespace MWST_API.Controllers
 {
@@ -17,6 +18,7 @@ namespace MWST_API.Controllers
     {
         private readonly Connection con = new Connection();
         private UserModel models = new UserModel();
+        private ErrorManager error = new ErrorManager();
 
         public ServiceController()
         {
@@ -30,38 +32,24 @@ namespace MWST_API.Controllers
             // Query to select the data needed. Change to stored procedures
             bool query = models.CheckService(service.ID_Service);
 
-            DataTable table = new DataTable();
-            // New the connection string
-            string sqlDataSource = (con.ReturnConnection().ConnectionString);
-            SqlDataReader reader;
-
             try
             {
                 if (query)
                 {
-                    using (SqlConnection connection = new SqlConnection(sqlDataSource))
-                    {
-                        connection.Open();
-                        using (SqlCommand command = new SqlCommand())
-                        {
-                            reader = command.ExecuteReader();
-                            table.Load(reader); // Check the use of this table later
-                            reader.Close();
-                            connection.Close();
-                        }
-                    }
-                    return new JsonResult(table);
+                    error.Success();
+                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Service get!");
                 }
                 else
                 {
-                    return new JsonResult("Incorrect username or password");
+                    return new JsonResult("Not all fields have been filled");
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine("Get Exception Type: {0}", e.GetType());
-                Console.WriteLine("  Message: {0}", e.Message);
-                return new JsonResult("An error has occurred during Get Request.");
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
             }
         }
 
@@ -139,13 +127,15 @@ namespace MWST_API.Controllers
                     }
                 }
                 // Check for security
-                return new JsonResult("{0}: Successful Update", service.ID_Service);
+                error.Success();
+                return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Service get!");
             }
             catch (Exception e)
             {
-                Console.WriteLine("Get Exception Type: {0}", e.GetType());
-                Console.WriteLine("  Message: {0}", e.Message);
-                return new JsonResult("An error has occurred during Put Request.");
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
             }
         }
 

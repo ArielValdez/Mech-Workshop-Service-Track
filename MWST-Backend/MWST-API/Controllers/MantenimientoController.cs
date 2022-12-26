@@ -8,6 +8,7 @@ using Domain;
 using Microsoft.Extensions.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using MWST_API.Models;
 
 namespace MWST_API.Controllers
 {
@@ -17,6 +18,7 @@ namespace MWST_API.Controllers
     {
         private readonly Connection con = new Connection();
         private UserModel models = new UserModel();
+        private ErrorManager error = new ErrorManager();
 
         public MantenimientoController()
         {
@@ -26,7 +28,7 @@ namespace MWST_API.Controllers
         [HttpGet]
         public JsonResult Get()
         {
-            string query = @"Tipo_Mantenimiento from Mantenimiento";
+            string query = @"Tipo_Mantenimiento from tblMantenimiento";
 
             DataTable table = new DataTable();
             // New the connection string
@@ -61,41 +63,27 @@ namespace MWST_API.Controllers
         public JsonResult Get(Mantenimiento maintenance)
         {
             // Query to select the data needed
-            string query = @"Tipo_Mantenimiento from Mantenimiento"; //Delete later, as this creates 2 queries
-            bool validation = models.CheckMaintenance(maintenance.ID_Mantenimiento);
+            bool query = models.CheckMaintenance(maintenance.ID_Mantenimiento);
 
-            DataTable table = new DataTable();
-            // New the connection string
-            string sqlDataSource = (con.ReturnConnection().ConnectionString);
-            SqlDataReader reader;
 
             try
             {
-                if (validation)
+                if (query)
                 {
-                    using (SqlConnection connection = new SqlConnection(sqlDataSource))
-                    {
-                        connection.Open();
-                        using (SqlCommand command = new SqlCommand(query, connection))
-                        {
-                            reader = command.ExecuteReader();
-                            table.Load(reader);
-                            reader.Close();
-                            connection.Close();
-                        }
-                    }
-                    return new JsonResult(table);
+                    error.Success();
+                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Maintenance get!");
                 }
                 else
                 {
-                    return new JsonResult("Nothing to see");
+                    return new JsonResult("Not all fields have been filled");
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine("Get Exception Type: {0}", e.GetType());
-                Console.WriteLine("  Message: {0}", e.Message);
-                return new JsonResult("An error has occurred during Get Request.");
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
             }
         }
 
@@ -107,38 +95,24 @@ namespace MWST_API.Controllers
             // Query to insert the data needed
             bool query = models.RegisterMaintenance(maintenance.Tipo_Mantenimiento);
 
-            DataTable table = new DataTable();
-            // New the connection string
-            string sqlDataSource = (con.ReturnConnection().ConnectionString);
-            SqlDataReader reader;
-
             try
             {
                 if (query)
                 {
-                    using (SqlConnection connection = new SqlConnection(sqlDataSource))
-                    {
-                        connection.Open();
-                        using (SqlCommand command = new SqlCommand())
-                        {
-                            reader = command.ExecuteReader();
-                            table.Load(reader);
-                            reader.Close();
-                            connection.Close();
-                        }
-                    }
-                    return new JsonResult(table);
+                    error.Success();
+                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Maintenance has been registed!");
                 }
                 else
                 {
-                    return new JsonResult("Not all parameters have been filled.");
+                    return new JsonResult("Not all fields have been filled");
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine("Get Exception Type: {0}", e.GetType());
-                Console.WriteLine("  Message: {0}", e.Message);
-                return new JsonResult("An error has occurred during Post Request.");
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
             }
         }
 
@@ -150,40 +124,27 @@ namespace MWST_API.Controllers
             // Create, later, a data access for and to update
             // Query to update the information of the user
 
-            string query = @"update Mantenimiento
-                             set Tipo_Mantenimiento = @tipoMantenimiento
-                             where ID_Mantenimiento = @idMantenimiento";
-
-            DataTable table = new DataTable();
-            // New the connection string
-            string sqlDataSource = (con.ReturnConnection().ConnectionString);
-            SqlDataReader reader;
+            bool query = models.UpdateMaintenance(maintenance.ID_Mantenimiento, maintenance.Tipo_Mantenimiento);
 
             // Use the domain instead
             try
             {
-                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                if (query)
                 {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@idMantenimiento", maintenance.ID_Mantenimiento);
-                        command.Parameters.AddWithValue("@tipoMantenimiento", maintenance.Tipo_Mantenimiento);
-
-                        reader = command.ExecuteReader();
-                        table.Load(reader);
-                        reader.Close();
-                        connection.Close();
-                    }
+                    error.Success();
+                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Maintenance has been updated!");
                 }
-                // Check for security
-                return new JsonResult("{0}: Successful Update", maintenance.ID_Mantenimiento);
+                else
+                {
+                    return new JsonResult("Not all fields have been filled");
+                }
             }
             catch (Exception e)
             {
-                Console.WriteLine("Get Exception Type: {0}", e.GetType());
-                Console.WriteLine("  Message: {0}", e.Message);
-                return new JsonResult("An error has occurred during Put Request.");
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
             }
         }
 
@@ -191,15 +152,26 @@ namespace MWST_API.Controllers
         [HttpDelete]
         public JsonResult Delete(Mantenimiento maintenance)
         {
+            bool query = models.DeleteMaintenance(maintenance.ID_Mantenimiento);
+
             try
             {
-                return new JsonResult("Not implemented yet.");
+                if (query)
+                {
+                    error.Success();
+                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Maintenance has been deleted!");
+                }
+                else
+                {
+                    return new JsonResult("Not all fields have been filled");
+                }
             }
             catch (Exception e)
             {
-                Console.WriteLine("Get Exception Type: {0}", e.GetType());
-                Console.WriteLine("  Message: {0}", e.Message);
-                return new JsonResult("An error has occurred during Delete Request.");
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
             }
         }
     }

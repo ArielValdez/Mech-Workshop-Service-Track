@@ -19,8 +19,8 @@ namespace MWST_API.Controllers
     public class ConditionController : ControllerBase
     {
         private readonly IWebHostEnvironment _env;
-        private readonly Connection con = new Connection();
         private UserModel models = new UserModel();
+        private ErrorManager error = new ErrorManager();
 
         public ConditionController(IWebHostEnvironment env)
         {
@@ -33,26 +33,12 @@ namespace MWST_API.Controllers
             // Query to select the data needed. Change to stored procedures
             bool query = models.CheckCondition(condition.ID_Estado);
 
-            DataTable table = new DataTable();
-            // New the connection string
-            string sqlDataSource = con.ReturnConnection().ConnectionString;
-            SqlDataReader reader;
             try
             {
                 if (query)
                 {
-                    using (SqlConnection connection = new SqlConnection(sqlDataSource))
-                    {
-                        connection.Open();
-                        using (SqlCommand command = new SqlCommand())
-                        {
-                            reader = command.ExecuteReader();
-                            table.Load(reader); // Check the use of this table later
-                            reader.Close();
-                            connection.Close();
-                        }
-                    }
-                    return new JsonResult(table);
+                    error.Success();
+                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Condition get!");
                 }
                 else
                 {
@@ -61,9 +47,10 @@ namespace MWST_API.Controllers
             }
             catch (Exception e)
             {
-                Console.WriteLine("Get Exception Type: {0}", e.GetType());
-                Console.WriteLine("  Message: {0}", e.Message);
-                return new JsonResult("An error has occurred during Get Request.");
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
             }
         }
 
@@ -75,29 +62,24 @@ namespace MWST_API.Controllers
             // Query to insert the data needed
             bool query = models.RegisterCondition();
 
-            DataTable table = new DataTable();
-            // New the connection string
-            string sqlDataSource = con.ReturnConnection().ConnectionString;
-            SqlDataReader reader;
-
-            if (query)
+            try
             {
-                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                if (query)
                 {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand())
-                    {
-                        reader = command.ExecuteReader();
-                        table.Load(reader);
-                        reader.Close();
-                        connection.Close();
-                    }
+                    error.Success();
+                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Condition get!");
                 }
-                return new JsonResult(table);
+                else
+                {
+                    return new JsonResult("");
+                }
             }
-            else
+            catch (Exception e)
             {
-                return new JsonResult("Not implemented yet.");
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
             }
         }
 
@@ -132,55 +114,54 @@ namespace MWST_API.Controllers
         [HttpPut]
         public JsonResult Put(Condition condition)
         {
-            // Create, later, a data access for and to update
-            // Query to update the information of the user
+            bool query = models.UpdateCondition();
 
-            // This only updates the table PerfilUsuario
-            string query = @"update Estado
-                             set Nombre_Estado = @nombreEstado, Descripcion_Estado = @descripcion, Imagen = @imagen
-                             where ID_Estado = @idEstado and ID_Servicio = @idServicio";
-
-            DataTable table = new DataTable();
-            // New the connection string
-            string sqlDataSource = con.ReturnConnection().ConnectionString;
-            SqlDataReader reader;
-
-            // Use the domain instead
             try
             {
-                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                if (query)
                 {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@idEstado", condition.ID_Estado);
-                        command.Parameters.AddWithValue("@idServicio", condition.ID_Service);
-                        command.Parameters.AddWithValue("@nombreEstado", condition.Nombre_Estado);
-                        command.Parameters.AddWithValue("@descripcion", condition.Descripcion);
-                        command.Parameters.AddWithValue("@imagen", condition.Imagen);
-
-                        reader = command.ExecuteReader();
-                        table.Load(reader);
-                        reader.Close();
-                        connection.Close();
-                    }
+                    error.Success();
+                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Condition updated!");
                 }
-                // Check for security
-                return new JsonResult("{0}: Successful Update", condition.ID_Estado);
+                else
+                {
+                    return new JsonResult("Nothing to see");
+                }
             }
             catch (Exception e)
             {
-                Console.WriteLine("Get Exception Type: {0}", e.GetType());
-                Console.WriteLine("  Message: {0}", e.Message);
-                return new JsonResult("An error has occurred during Put Request.");
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
             }
         }
 
         [Route("deleteCondition")]
         [HttpDelete]
-        public JsonResult deleteCondition()
+        public JsonResult deleteCondition(Condition condition)
         {
-            return new JsonResult("Not implemented yet.");
+            bool query = models.DeleteCondition(condition.ID_Estado);
+
+            try
+            {
+                if (query)
+                {
+                    error.Success();
+                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Condition deleted!");
+                }
+                else
+                {
+                    return new JsonResult("");
+                }
+            }
+            catch (Exception e)
+            {
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
+            }
         }
     }
 }

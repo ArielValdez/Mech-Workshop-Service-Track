@@ -8,6 +8,7 @@ using Domain;
 using Microsoft.Extensions.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using MWST_API.Models;
 
 namespace MWST_API.Controllers
 {
@@ -18,6 +19,7 @@ namespace MWST_API.Controllers
         //Users history
         private readonly Connection con = new Connection();
         private UserModel models = new UserModel();
+        private ErrorManager error = new ErrorManager();
 
         public HistoryController()
         {
@@ -30,39 +32,25 @@ namespace MWST_API.Controllers
         {
             bool query = models.CheckHistory(history.ID_User, history.ID_History);
 
-            DataTable table = new DataTable();
-            // New the connection string
-            string sqlDataSource = (con.ReturnConnection().ConnectionString);
-            SqlDataReader reader;
-
             try
             {
                 if (query)
                 {
-                    using (SqlConnection connection = new SqlConnection(sqlDataSource))
-                    {
-                        connection.Open();
-                        using (SqlCommand command = new SqlCommand())
-                        {
-                            reader = command.ExecuteReader();
-                            table.Load(reader); // Check the use of this table later
-                            reader.Close();
-                            connection.Close();
-                        }
-                    }
-                    return new JsonResult(table);
+                    error.Success();
+                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "History get!");
                 }
                 else
                 {
-                    return new JsonResult("Incorrect username or password");
+                    return new JsonResult("Not all fields have been filled");
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine("Get Exception Type: {0}", e.GetType());
-                Console.WriteLine("  Message: {0}", e.Message);
-                return new JsonResult("An error has occurred during Get Request.");
-            }        
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
+            }
         }
 
         // Adds information into the database
@@ -73,38 +61,24 @@ namespace MWST_API.Controllers
             // Query to insert the data needed
             bool query = models.RegisterHistory(history.ID_User, history.ID_Pago, history.Fecha);
 
-            DataTable table = new DataTable();
-            // New the connection string
-            string sqlDataSource = (con.ReturnConnection().ConnectionString);
-            SqlDataReader reader;
-
             try
             {
                 if (query)
                 {
-                    using (SqlConnection connection = new SqlConnection(sqlDataSource))
-                    {
-                        connection.Open();
-                        using (SqlCommand command = new SqlCommand())
-                        {
-                            reader = command.ExecuteReader();
-                            table.Load(reader); // Check later
-                            reader.Close();
-                            connection.Close();
-                        }
-                    }
-                    return new JsonResult(table);
+                    error.Success();
+                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "History registered!");
                 }
                 else
                 {
-                    return new JsonResult("Not all parameters have been filled.");
+                    return new JsonResult("Not all fields have been filled");
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine("Get Exception Type: {0}", e.GetType());
-                Console.WriteLine("  Message: {0}", e.Message);
-                return new JsonResult("An error has occurred during Post Request.");
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
             }
         }
 
@@ -155,17 +129,27 @@ namespace MWST_API.Controllers
 
         [Route("deleteHistory")]
         [HttpDelete]
-        public JsonResult Delete()
+        public JsonResult Delete(History history)
         {
+            bool query = models.DeleteHistory(history.ID_History);
             try
             {
-                return new JsonResult("Not implemented yet");
+                if (query)
+                {
+                    error.Success();
+                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "History deleted!");
+                }
+                else
+                {
+                    return new JsonResult("Not all fields have been filled");
+                }
             }
             catch (Exception e)
             {
-                Console.WriteLine("Get Exception Type: {0}", e.GetType());
-                Console.WriteLine("  Message: {0}", e.Message);
-                return new JsonResult("An error has occurred during Delete Request.");
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
             }
         }
     }

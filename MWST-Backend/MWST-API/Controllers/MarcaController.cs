@@ -8,6 +8,7 @@ using Domain;
 using Microsoft.Extensions.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using MWST_API.Models;
 
 namespace MWST_API.Controllers
 {
@@ -17,6 +18,7 @@ namespace MWST_API.Controllers
     {
         private readonly Connection con = new Connection();
         private UserModel models = new UserModel();
+        private ErrorManager error = new ErrorManager();
 
         public MarcaController()
         {
@@ -27,7 +29,7 @@ namespace MWST_API.Controllers
         public JsonResult Get()
         {
             // Query to select the data needed. Change to stored procedures
-            string query = @"select Nombre_Marca from Marca";
+            string query = @"select Nombre_Marca from tblMarca";
 
             DataTable table = new DataTable();
             // New the connection string
@@ -98,49 +100,55 @@ namespace MWST_API.Controllers
         public JsonResult Put(Marca marca)
         {
             // This only updates the table PerfilUsuario
-            string query = @"update Marca
-                             set Name_Marca = @nombre
-                             where ID_Marca = @idMarca";
-
-            DataTable table = new DataTable();
-            // New the connection string
-            string sqlDataSource = (con.ReturnConnection().ConnectionString);
-            SqlDataReader reader;
+            bool query = models.UpdateMarca(marca.ID_Marca, marca.Name_Marca);
 
             // Use the domain instead
             try
             {
-                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                if (query)
                 {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@idMarca", marca.ID_Marca);
-                        command.Parameters.AddWithValue("@nombre", marca.Name_Marca);
-
-                        reader = command.ExecuteReader();
-                        table.Load(reader);
-                        reader.Close();
-                        connection.Close();
-                    }
+                    error.Success();
+                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Marca has been updated!");
                 }
-                // Check for security
-                return new JsonResult("{0}: Successful Update", marca.ID_Marca);
+                else
+                {
+                    return new JsonResult("Not all fields have been filled");
+                }
             }
             catch (Exception e)
             {
-                Console.WriteLine("Get Exception Type: {0}", e.GetType());
-                Console.WriteLine("  Message: {0}", e.Message);
-                return new JsonResult("An error has occurred during Put Request.");
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
             }
         }
 
         [Route("deleteMarca")]
         [HttpDelete]
-        public JsonResult Delete()
+        public JsonResult Delete(Marca marca)
         {
-            // Implemente Delete Request
-            return new JsonResult("Not implemented yet.");
+            bool query = models.DeleteMarca(marca.ID_Marca);
+
+            try
+            {
+                if (query)
+                {
+                    error.Success();
+                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Marca has been deleted!");
+                }
+                else
+                {
+                    return new JsonResult("Not all fields have been filled");
+                }
+            }
+            catch (Exception e)
+            {
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
+            }
         }
     }
 }

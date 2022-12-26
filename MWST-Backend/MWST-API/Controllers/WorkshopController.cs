@@ -8,6 +8,7 @@ using Domain;
 using Microsoft.Extensions.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using MWST_API.Models;
 
 namespace MWST_API.Controllers
 {
@@ -17,6 +18,7 @@ namespace MWST_API.Controllers
     {
         private readonly Connection con = new Connection();
         private UserModel models = new UserModel();
+        private ErrorManager error = new ErrorManager();
 
         public WorkshopController()
         {
@@ -30,38 +32,24 @@ namespace MWST_API.Controllers
             // Query to select the data needed. Change to stored procedures
             bool query = models.CheckWorkshop(workShop.ID_WorkShop);
 
-            DataTable table = new DataTable();
-            // New the connection string
-            string sqlDataSource = (con.ReturnConnection().ConnectionString);
-            SqlDataReader reader;
-
             try
             {
                 if (query)
                 {
-                    using (SqlConnection connection = new SqlConnection(sqlDataSource))
-                    {
-                        connection.Open();
-                        using (SqlCommand command = new SqlCommand())
-                        {
-                            reader = command.ExecuteReader();
-                            table.Load(reader); // Check the use of this table later
-                            reader.Close();
-                            connection.Close();
-                        }
-                    }
-                    return new JsonResult(table);
+                    error.Success();
+                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Workshop get!");
                 }
                 else
                 {
-                    return new JsonResult("Incorrect username or password");
+                    return new JsonResult("Not all fields have been filled");
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine("Get Exception Type: {0}", e.GetType());
-                Console.WriteLine("  Message: {0}", e.Message);
-                return new JsonResult("An error has occurred during Get Request.");
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
             }
         }
 
@@ -118,7 +106,7 @@ namespace MWST_API.Controllers
             // Create, later, a data access for and to update
             // Query to update the information of the user
 
-            string query = @"update Taller_Mecanico
+            string query = @"update tblTaller_Mecanico
                              set Nombre_Taller = @taller, Encargado = @encarcago
                              where ID_Taller = @idTaller";
 
@@ -146,13 +134,15 @@ namespace MWST_API.Controllers
                     }
                 }
                 // Check for security
-                return new JsonResult("{0}: Successful Update", workShop.ID_WorkShop);
+                error.Success();
+                return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Workshop get!");
             }
             catch (Exception e)
             {
-                Console.WriteLine("Get Exception Type: {0}", e.GetType());
-                Console.WriteLine("  Message: {0}", e.Message);
-                return new JsonResult("An error has occurred during Put Request.");
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
             }
         }
 

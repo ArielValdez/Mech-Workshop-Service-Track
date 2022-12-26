@@ -8,6 +8,7 @@ using Domain;
 using Microsoft.Extensions.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using MWST_API.Models;
 
 namespace MWST_API.Controllers
 {
@@ -17,6 +18,7 @@ namespace MWST_API.Controllers
     {
         private readonly Connection con = new Connection();
         private UserModel models = new UserModel();
+        private ErrorManager error = new ErrorManager();
 
         public ModelController()
         {
@@ -27,7 +29,7 @@ namespace MWST_API.Controllers
         public JsonResult Get()
         {
             // Query to select the data needed. Change to stored procedures
-            string query = @"select Nombre_Modelo from Modelo";
+            string query = @"select Nombre_Modelo from tblModelo";
 
             DataTable table = new DataTable();
             // New the connection string
@@ -60,49 +62,82 @@ namespace MWST_API.Controllers
 
         [Route("postModel")]
         [HttpPost]
-        public JsonResult Post()
+        public JsonResult Post(Model model)
         {
+            bool query = models.RegisterModelo(model.Name_Model, model.ID_Marca);
+
             try
             {
-                return new JsonResult("Not implemented yet.");
+                if (query)
+                {
+                    error.Success();
+                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Modelo has been registered!");
+                }
+                else
+                {
+                    return new JsonResult("Not all fields have been filled");
+                }
             }
             catch (Exception e)
             {
-                Console.WriteLine("Get Exception Type: {0}", e.GetType());
-                Console.WriteLine("  Message: {0}", e.Message);
-                return new JsonResult("An error has occurred during Post Request.");
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
             }
         }
 
         [Route("putModel")]
         [HttpPut]
-        public JsonResult Put()
+        public JsonResult Put(Model model)
         {
+            bool query = models.UpdateModelo(model.ID_Model, model.Name_Model, model.ID_Marca);
+
             try
             {
-                return new JsonResult("Not implemented yet.");
+                if (query)
+                {
+                    error.Success();
+                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Model has been updated!");
+                }
+                else
+                {
+                    return new JsonResult("Not all fields have been filled");
+                }
             }
             catch (Exception e)
             {
-                Console.WriteLine("Get Exception Type: {0}", e.GetType());
-                Console.WriteLine("  Message: {0}", e.Message);
-                return new JsonResult("An error has occurred during Put Request.");
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
             }
         }
 
         [Route("deleteModel")]
         [HttpDelete]
-        public JsonResult Delete()
+        public JsonResult Delete(Model model)
         {
+            bool query = models.DeleteModelo(model.ID_Model);
+
             try
             {
-                return new JsonResult("Not implemented yet.");
+                if (query)
+                {
+                    error.Success();
+                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Model has been deleted!");
+                }
+                else
+                {
+                    return new JsonResult("Not all fields have been filled");
+                }
             }
             catch (Exception e)
             {
-                Console.WriteLine("Get Exception Type: {0}", e.GetType());
-                Console.WriteLine("  Message: {0}", e.Message);
-                return new JsonResult("An error has occurred during Post Request.");
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
             }
         }
     }

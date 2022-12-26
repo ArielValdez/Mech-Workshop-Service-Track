@@ -8,6 +8,7 @@ using Domain;
 using Microsoft.Extensions.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using MWST_API.Models;
 
 namespace MWST_API.Controllers
 {
@@ -17,6 +18,7 @@ namespace MWST_API.Controllers
     {
         private readonly Connection con = new Connection();
         private UserModel models = new UserModel();
+        private ErrorManager error = new ErrorManager();
 
         public VehicleController()
         {
@@ -28,7 +30,7 @@ namespace MWST_API.Controllers
         public JsonResult Get()
         {
             // Query to select the data needed. Change to stored procedures
-            string query = @"select Matricula, VIN, Color from Vehiculo";
+            string query = @"select Matricula, VIN, Color from tblVehiculo";
 
             DataTable table = new DataTable();
             // Check if does not return connection string
@@ -48,13 +50,15 @@ namespace MWST_API.Controllers
                         connection.Close();
                     }
                 }
-                return new JsonResult(table);
+                error.Success();
+                return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Vehicle get!");
             }
             catch (Exception e)
             {
-                Console.WriteLine("Get Exception Type: {0}", e.GetType());
-                Console.WriteLine("  Message: {0}", e.Message);
-                return new JsonResult("An error has occurred during Get Request.");
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
             }
         }
 
@@ -64,38 +68,24 @@ namespace MWST_API.Controllers
         {
             bool query = models.RegisterUsersVehicle(car.Matricula, car.ID_User, car.ID_Marca, car.ID_Model, car.VIN, car.Color);
 
-            DataTable table = new DataTable();
-            // New the connection string
-            string sqlDataSource = con.ReturnConnection().ConnectionString;
-            SqlDataReader reader;
-
             try
             {
                 if (query)
                 {
-                    using (SqlConnection connection = new SqlConnection(sqlDataSource))
-                    {
-                        connection.Open();
-                        using (SqlCommand command = new SqlCommand())
-                        {
-                            reader = command.ExecuteReader();
-                            table.Load(reader);
-                            reader.Close();
-                            connection.Close();
-                        }
-                    }
-                    return new JsonResult(table);
+                    error.Success();
+                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Vehicle has been registered!");
                 }
                 else
                 {
-                    return new JsonResult("Not all parameters have been filled.");
+                    return new JsonResult("Not all fields have been filled");
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine("Get Exception Type: {0}", e.GetType());
-                Console.WriteLine("  Message: {0}", e.Message);
-                return new JsonResult("An error has occurred during Post Request.");
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
             }
         }
 
@@ -103,58 +93,52 @@ namespace MWST_API.Controllers
         [HttpPut]
         public JsonResult Put(Vehicle car)
         {
-            // Updating query. Change to stored procedure
-            string query = @"Update Matricula, VIN, Color from Vehiculo 
-                            set Matricula = @matricula, VIN = @vin, Color = @color
-                            where ID_Vehicle = @idVehicle";
-
-            DataTable table = new DataTable();
-            // Check if does not return connection string
-            string sqlDataSource = con.ReturnConnection().ConnectionString;
-            SqlDataReader reader;
-
+            bool query = models.UpdateVehicle(car.ID_Vehicle, car.Matricula, car.ID_User, car.ID_Marca, car.ID_Model, car.VIN, car.Color);
             try
             {
-                // Use the domain instead
-                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                if (query)
                 {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@idVehicle", car.ID_Vehicle);
-                        command.Parameters.AddWithValue("@matricula", car.Matricula);
-                        command.Parameters.AddWithValue("@vin", car.VIN);
-                        command.Parameters.AddWithValue("@color", car.Color);
-
-                        reader = command.ExecuteReader();
-                        table.Load(reader);
-                        reader.Close();
-                        connection.Close();
-                    }
+                    error.Success();
+                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Vehicle has been updated!");
                 }
-                return new JsonResult(table);
+                else
+                {
+                    return new JsonResult("Not all fields have been filled");
+                }
             }
             catch (Exception e)
             {
-                Console.WriteLine("Get Exception Type: {0}", e.GetType());
-                Console.WriteLine("  Message: {0}", e.Message);
-                return new JsonResult("An error has occurred during Put Request.");
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
             }
         }
 
         [Route("deleteVehicle")]
         [HttpDelete]
-        public JsonResult Delete()
+        public JsonResult Delete(Vehicle car)
         {
+            bool query = models.DeleteVehicle(car.ID_Vehicle);
+
             try
             {
-                return new JsonResult("Not implemented yet");
+                if (query)
+                {
+                    error.Success();
+                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Vehicle has been deleted!");
+                }
+                else
+                {
+                    return new JsonResult("Not all fields have been filled");
+                }
             }
             catch (Exception e)
             {
-                Console.WriteLine("Get Exception Type: {0}", e.GetType());
-                Console.WriteLine("  Message: {0}", e.Message);
-                return new JsonResult("An error has occurred during Delete Request.");
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
             }
         }
     }
