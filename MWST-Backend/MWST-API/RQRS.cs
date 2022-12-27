@@ -7,5 +7,9 @@ namespace MWST_API
 {
     public class RQRS
     {
+        public string Request { get; set; }
+        public string Respone { get; set; }
+
+
     }
 }
