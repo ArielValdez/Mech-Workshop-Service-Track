@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using DataAccess;
 
 namespace Domain
@@ -6,6 +7,13 @@ namespace Domain
     public class UserModel
     {
         private readonly UserDao userDao = new UserDao();
+
+        // Method for test purposes
+        public DataTable Test()
+        {
+            return userDao.GetUsers();
+        }
+
         #region Access: Get
         public bool LoginUser(string username, string password)
         {

@@ -10,6 +10,6 @@ namespace MWST_API
         public string Request { get; set; }
         public string Respone { get; set; }
 
-
+        // Probably not needed
     }
 }

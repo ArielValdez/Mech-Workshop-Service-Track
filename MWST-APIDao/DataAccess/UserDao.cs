@@ -8,6 +8,44 @@ namespace DataAccess
 {
     public class UserDao : ConnectionToSql
     {
+        // Method for test purposes
+        public DataTable GetUsers()
+        {
+            try
+            {
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+                    DataTable table = new DataTable();
+                    using (var command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+
+                        command.CommandText = "select * from tblUsuario";
+
+                        command.CommandType = CommandType.Text;
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        if (reader.HasRows)
+                        {
+                            table.Load(reader);
+
+                            return table;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Commit Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return null;
+            }
+        }
         #region Access
         // This method is called when the user enters their data for authentication
         public bool Login(string username, string password)

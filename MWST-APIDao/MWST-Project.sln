@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DomainTests", "DomainTests\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessTests", "DataAccessTests\DataAccessTests.csproj", "{D4EAF94E-BB47-4A33-98C3-C2AFE5D2275E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessTester", "AccessTester\AccessTester.csproj", "{2B8D29E6-C3FC-4D22-83C4-AEC384F2E860}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{D4EAF94E-BB47-4A33-98C3-C2AFE5D2275E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4EAF94E-BB47-4A33-98C3-C2AFE5D2275E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4EAF94E-BB47-4A33-98C3-C2AFE5D2275E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B8D29E6-C3FC-4D22-83C4-AEC384F2E860}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B8D29E6-C3FC-4D22-83C4-AEC384F2E860}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B8D29E6-C3FC-4D22-83C4-AEC384F2E860}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B8D29E6-C3FC-4D22-83C4-AEC384F2E860}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
