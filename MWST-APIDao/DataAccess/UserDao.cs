@@ -407,6 +407,11 @@ namespace DataAccess
                                  string apellido, string cedula, string rol,
                                  string telefono, string celular)
         {
+            #region Phone Number
+            if (string.IsNullOrEmpty(telefono)) telefono = celular;
+            if (string.IsNullOrEmpty(celular)) celular = telefono;
+            if (string.IsNullOrEmpty(telefono) && string.IsNullOrEmpty(celular)) telefono = "None"; celular = telefono;
+            #endregion
             using (var connection = GetConnection())
             {
                 connection.Open();
@@ -422,25 +427,29 @@ namespace DataAccess
 
                     try
                     {
+                        //Inserting values into the database, table Usuario
+                        command.CommandText = "insert into tblUsuario(ID_Usuario, Nombre, Apellido, Rol, Activo)" +
+                                                $"values({3}, @nombre, @apellido, @rol, {1})";
+
+                        command.Parameters.Add("@nombre", SqlDbType.VarChar, 30).Value = nombre;
+                        command.Parameters.Add("@apellido", SqlDbType.VarChar, 30).Value = apellido;
+                        command.Parameters.Add("@rol", SqlDbType.Char, 1).Value = rol;
+
+                        command.CommandType = CommandType.Text;
+                        command.ExecuteNonQuery();
+
                         //Inserting values into the database, table PerfilUsuario
-                        command.CommandText = "insert into tblPerfilUsuario(Username, uPassword, Telefono, Celular, Email, FechaCreacion)" +
-                                                "values(@username, @password, @telefono, @celular, @email, @fechaCreacion)";
+                        command.CommandText = "insert into tblPerfilUsuario(ID_Usuario, Cedula, Username, uPassword, TelefonoFijo, Celular, Email, Fecha_Creacion)" +
+                                                "values((select ID_Usuario from tblUsuario where Nombre = @nombre and Apellido = @apellido)," +
+                                                "@cedula, @username, @password, @telefono, @celular, @email, @fechaCreacion)";
 
                         command.Parameters.Add("@username", SqlDbType.VarChar, 20).Value = username;
                         command.Parameters.Add("@password", SqlDbType.VarChar, 20).Value = password;
+                        command.Parameters.Add("@cedula", SqlDbType.Char, 11).Value = cedula;
                         command.Parameters.Add("@telefono", SqlDbType.Char, 13).Value = telefono;
                         command.Parameters.Add("@celular", SqlDbType.Char, 13).Value = celular;
                         command.Parameters.Add("@email", SqlDbType.VarChar, 50).Value = email;
                         command.Parameters.AddWithValue("@fechaCreacion", DateTime.Now);
-
-                        //Inserting values into the database, table Usuario
-                        command.CommandText = "insert into tblUsuario(Nombre, Apellido, Cedula, Rol)" +
-                                                "values(@nombre, @apellido, @cedula, @rol)";
-
-                        command.Parameters.Add("@nombre", SqlDbType.VarChar, 30).Value = nombre;
-                        command.Parameters.Add("@apellido", SqlDbType.VarChar, 30).Value = apellido;
-                        command.Parameters.Add("@cedula", SqlDbType.Char, 11).Value = cedula;
-                        command.Parameters.Add("@celular", SqlDbType.VarChar, 13).Value = rol; // Replace this with an enum value
 
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
