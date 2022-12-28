@@ -31,29 +31,10 @@ namespace MWST_API.Controllers
         [HttpGet]
         public JsonResult Get()
         {
-            // Query to select the data needed. Change to stored procedures
-            string query = @"select Nombre, Apellido, Rol from tblUsuario";
-            DataTable table = new DataTable();
-            // New the connection string
-            string sqlDataSource = con.ReturnConnection().ConnectionString;
-            SqlDataReader reader;
-
-            // Use the domain instead
             try
             {
                 error.Success();
-
-                using (SqlConnection connection = new SqlConnection(sqlDataSource))
-                {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        reader = command.ExecuteReader();
-                        table.Load(reader);
-                        reader.Close();
-                        connection.Close();
-                    }
-                }
+                DataTable table = models.Test();
 
                 return new JsonResult($"{error.ErrorCode}: {error.ErrorMessage} \n\r" + table);
             }

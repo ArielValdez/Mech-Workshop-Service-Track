@@ -34,14 +34,21 @@ namespace MWST_API.Controllers
             
             try
             {
-                if (query)
+                if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
                 {
-                    error.Success();
-                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Login Successful!");
+                    if (query)
+                    {
+                        error.Success();
+                        return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Login Successful!");
+                    }
+                    else
+                    {
+                        return new JsonResult("User does not exists.");
+                    }
                 }
                 else
                 {
-                    return new JsonResult("Not all fields have been filled");
+                    return new JsonResult("Username or password not filled.");
                 }
             }
             catch (Exception e)
