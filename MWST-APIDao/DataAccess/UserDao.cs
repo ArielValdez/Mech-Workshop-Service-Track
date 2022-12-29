@@ -47,7 +47,6 @@ namespace DataAccess
             }
         }
         #region Access
-        // This method is called when the user enters their data for authentication
         public bool Login(string username, string password)
         {
             try
@@ -86,7 +85,6 @@ namespace DataAccess
             }
         }
 
-        // This should show a user history
         public bool UserHistory(int idUser, int idHistory)
         {
             try
@@ -428,7 +426,7 @@ namespace DataAccess
                     try
                     {
                         //Inserting values into the database, table Usuario
-                        command.CommandText = "insert into tblUsuario(ID_Usuario, Nombre, Apellido, Rol, Activo)" +
+                        command.CommandText = "insert into tblUsuario(ID_Usuario, Nombre, Apellido, Rol, Activo) " +
                                                 $"values({3}, @nombre, @apellido, @rol, {1})";
 
                         command.Parameters.Add("@nombre", SqlDbType.VarChar, 30).Value = nombre;
@@ -439,8 +437,8 @@ namespace DataAccess
                         command.ExecuteNonQuery();
 
                         //Inserting values into the database, table PerfilUsuario
-                        command.CommandText = "insert into tblPerfilUsuario(ID_Usuario, Cedula, Username, uPassword, TelefonoFijo, Celular, Email, Fecha_Creacion)" +
-                                                "values((select ID_Usuario from tblUsuario where Nombre = @nombre and Apellido = @apellido)," +
+                        command.CommandText = "insert into tblPerfilUsuario(ID_Usuario, Cedula, Username, uPassword, TelefonoFijo, Celular, Email, Fecha_Creacion) " +
+                                                $"values({3}, " +
                                                 "@cedula, @username, @password, @telefono, @celular, @email, @fechaCreacion)";
 
                         command.Parameters.Add("@username", SqlDbType.VarChar, 20).Value = username;
@@ -454,22 +452,8 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
 
-                        { /* Write the update part here */ }
-
-                        SqlDataReader reader = command.ExecuteReader();
-
-                        if (!reader.HasRows)
-                        {
-                            transaction.Commit();
-                            reader.Close();
-                            return true;
-                        }
-                        else
-                        {
-                            transaction.Rollback();
-                            reader.Close();
-                            return false;
-                        }
+                        transaction.Commit();
+                        return true;
                     }
                     catch (Exception e)
                     {
@@ -491,7 +475,6 @@ namespace DataAccess
             }
         }
 
-        // This method is used to register the vehicle of an user, after they register as an user
         public bool RegisterVehicle(string matricula, int idUsuario, int idMarca, int idModelo, string vin, string color)
         {
             using (var connection = GetConnection())
@@ -521,22 +504,10 @@ namespace DataAccess
                         command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
 
-                        { /* Write the update part here */ }
-
                         SqlDataReader reader = command.ExecuteReader();
 
-                        if (!reader.HasRows)
-                        {
-                            transaction.Commit();
-                            reader.Close();
-                            return true;
-                        }
-                        else
-                        {
-                            transaction.Rollback();
-                            reader.Close();
-                            return false;
-                        }
+                        transaction.Commit();
+                        return true;
                     }
                     catch (Exception e)
                     {
@@ -558,7 +529,6 @@ namespace DataAccess
             }
         }
 
-        //This should be hidden from the common user. This adds maintenances
         public bool RegisterMaintenance(string TipoMantenimiento)
         {
             using (var connection = GetConnection())
@@ -583,20 +553,8 @@ namespace DataAccess
                         command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
 
-                        SqlDataReader reader = command.ExecuteReader();
-
-                        if (!reader.HasRows)
-                        {
-                            transaction.Commit();
-                            reader.Close();
-                            return true;
-                        }
-                        else
-                        {
-                            transaction.Rollback();
-                            reader.Close();
-                            return false;
-                        }
+                        transaction.Commit();
+                        return true;
                     }
                     catch (Exception e)
                     {
@@ -622,7 +580,6 @@ namespace DataAccess
             return false;
         }
 
-        // The users history should be registered automatically
         public bool RegisterHistory(int idUsuario, int idPago, DateTime fecha) {
             using (var connection = GetConnection())
             {
@@ -651,18 +608,8 @@ namespace DataAccess
 
                         SqlDataReader reader = command.ExecuteReader();
 
-                        if (!reader.HasRows)
-                        {
-                            transaction.Commit();
-                            reader.Close();
-                            return true;
-                        }
-                        else
-                        {
-                            transaction.Rollback();
-                            reader.Close();
-                            return false;
-                        }
+                        transaction.Commit();
+                        return true;
                     }
                     catch (Exception e)
                     {
@@ -725,22 +672,8 @@ namespace DataAccess
                         command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
 
-                        { /* Write the update part here */ }
-
-                        SqlDataReader reader = command.ExecuteReader();
-
-                        if (!reader.HasRows)
-                        {
-                            transaction.Commit();
-                            reader.Close();
-                            return true;
-                        }
-                        else
-                        {
-                            transaction.Rollback();
-                            reader.Close();
-                            return false;
-                        }
+                        transaction.Commit();
+                        return true;
                     }
                     catch (Exception e)
                     {
@@ -787,19 +720,8 @@ namespace DataAccess
                         command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
 
-                        { /* Write the update part here */ }
-
-                        SqlDataReader reader = command.ExecuteReader();
-                        if (!reader.HasRows)
-                        {
-                            transaction.Commit();
-                            return true;
-                        }
-                        else
-                        {
-                            transaction.Rollback();
-                            return false;
-                        }
+                        transaction.Commit();
+                        return true;
                     }
                     catch (Exception e)
                     {
@@ -847,19 +769,8 @@ namespace DataAccess
                         command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
 
-                        { /* Write the update part here */ }
-
-                        SqlDataReader reader = command.ExecuteReader();
-                        if (!reader.HasRows)
-                        {
-                            transaction.Commit();
-                            return true;
-                        }
-                        else
-                        {
-                            transaction.Rollback();
-                            return false;
-                        }
+                        transaction.Commit();
+                        return true;
                     }
                     catch (Exception e)
                     {
@@ -881,7 +792,6 @@ namespace DataAccess
             }
         }
 
-        // Stores provincia of the workshop
         public bool RegisterProvincia(string nameProvincia, string description)
         {
             using (var connection = GetConnection())
@@ -908,21 +818,8 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
 
-                        { /* Write the update part here */ }
-
-                        SqlDataReader reader = command.ExecuteReader();
-                        if (!reader.HasRows)
-                        {
-                            transaction.Commit();
-                            reader.Close();
-                            return true;
-                        }
-                        else
-                        {
-                            transaction.Rollback();
-                            reader.Close();
-                            return false;
-                        }
+                        transaction.Commit();
+                        return true;
                     }
                     catch (Exception e)
                     {
@@ -944,7 +841,6 @@ namespace DataAccess
             }
         }
 
-        // Stores municipio of the workshop
         public bool RegisterMunicipio(string nameMunicipio, string description, int idProvincia)
         {
             using (var connection = GetConnection())
@@ -972,21 +868,8 @@ namespace DataAccess
                         command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
 
-                        { /* Write the update part here */ }
-
-                        SqlDataReader reader = command.ExecuteReader();
-                        if (!reader.HasRows)
-                        {
-                            transaction.Commit();
-                            reader.Close();
-                            return true;
-                        }
-                        else
-                        {
-                            transaction.Rollback();
-                            reader.Close();
-                            return false;
-                        }
+                        transaction.Commit();
+                        return true;
                     }
                     catch (Exception e)
                     {
@@ -1029,11 +912,22 @@ namespace DataAccess
 
                     try
                     {
-                        command.CommandText = "update tblPerfilUsuario" +
-                                                "set Username = @username, Password = @password, Telefono = @telefono, Celular = @celular, Email = @email, FechaCreacion = @fechaCreacion" +
-                                                "where ID_Usuario = idUsuario";
-                        
+                        command.CommandText = "update tblUsuario " +
+                        "set Nombre = @nombre, Apellido = @apellido, Rol = @rol " +
+                        "where ID_Usuario = @idUsuario";
+
                         command.Parameters.AddWithValue("@idUsuario", idUsuario);
+                        command.Parameters.Add("@nombre", SqlDbType.VarChar, 30).Value = nombre;
+                        command.Parameters.Add("@apellido", SqlDbType.VarChar, 30).Value = apellido;
+                        command.Parameters.Add("@cedula", SqlDbType.Char, 11).Value = cedula;
+                        command.Parameters.Add("@rol", SqlDbType.VarChar, 13).Value = rol; // Replace this with an enum value
+
+                        command.CommandType = CommandType.Text;
+
+                        command.CommandText = "update tblPerfilUsuario " +
+                                                "set Username = @username, uPassword = @password, Cedula = @cedula, TelefonoFijo = @telefono, Celular = @celular, Email = @email, Fecha_Creacion = @fechaCreacion " +
+                                                "where ID_Usuario = @idUsuario";
+                        
                         command.Parameters.Add("@username", SqlDbType.VarChar, 20).Value = username;
                         command.Parameters.Add("@password", SqlDbType.VarChar, 20).Value = password;
                         command.Parameters.Add("@telefono", SqlDbType.Char, 13).Value = telefono;
@@ -1041,32 +935,9 @@ namespace DataAccess
                         command.Parameters.Add("@email", SqlDbType.VarChar, 50).Value = email;
                         command.Parameters.AddWithValue("@fechaCreacion", DateTime.Now);
 
-                        command.CommandText = "update tblUsuario" +
-                                               "Nombre = @nombre, Apellido = @apellido, Cedula = @cedula, Rol = @rol" +
-                                                "where ID_Usuario = @idUsuario";
-                        
-                        command.Parameters.AddWithValue("@idUsuario", idUsuario);
-                        command.Parameters.Add("@nombre", SqlDbType.VarChar, 30).Value = nombre;
-                        command.Parameters.Add("@apellido", SqlDbType.VarChar, 30).Value = apellido;
-                        command.Parameters.Add("@cedula", SqlDbType.Char, 11).Value = cedula;
-                        command.Parameters.Add("@celular", SqlDbType.VarChar, 13).Value = rol; // Replace this with an enum value
-
                         command.CommandType = CommandType.Text;
-                        command.ExecuteNonQuery();
-
-                        SqlDataReader reader = command.ExecuteReader();
-                        if (reader.HasRows)
-                        {
-                            transaction.Commit();
-                            reader.Close();
-                            return true;
-                        }
-                        else
-                        {
-                            transaction.Rollback();
-                            reader.Close();
-                            return false;
-                        }
+                        transaction.Commit();
+                        return true;
                     }
                     catch (Exception e)
                     {
@@ -1116,21 +987,10 @@ namespace DataAccess
                         command.Parameters.Add("@color", SqlDbType.VarChar, 15).Value = color;
 
                         command.CommandType = CommandType.StoredProcedure;
-                        command.ExecuteNonQuery();
+                        int reader = command.ExecuteNonQuery();
 
-                        SqlDataReader reader = command.ExecuteReader();
-                        if (reader.HasRows)
-                        {
-                            transaction.Commit();
-                            reader.Close();
-                            return true;
-                        }
-                        else
-                        {
-                            transaction.Rollback();
-                            reader.Close();
-                            return false;
-                        }
+                        transaction.Commit();
+                        return true;
                     }
                     catch (Exception e)
                     {
@@ -1175,21 +1035,10 @@ namespace DataAccess
                         command.Parameters.Add("@tipoMantenimiento", SqlDbType.VarChar, 30).Value = TipoMantenimiento;
 
                         command.CommandType = CommandType.StoredProcedure;
-                        command.ExecuteNonQuery();
+                        int reader = command.ExecuteNonQuery();
 
-                        SqlDataReader reader = command.ExecuteReader();
-                        if (!reader.HasRows)
-                        {
-                            transaction.Commit();
-                            reader.Close();
-                            return true;
-                        }
-                        else
-                        {
-                            transaction.Rollback();
-                            reader.Close();
-                            return false;
-                        }
+                        transaction.Commit();
+                        return true;
                     }
                     catch (Exception e)
                     {
@@ -1244,19 +1093,8 @@ namespace DataAccess
                         command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
 
-                        SqlDataReader reader = command.ExecuteReader();
-                        if (reader.HasRows)
-                        {
-                            transaction.Commit();
-                            reader.Close();
-                            return true;
-                        }
-                        else
-                        {
-                            transaction.Rollback();
-                            reader.Close();
-                            return false;
-                        }
+                        transaction.Commit();
+                        return true;
                     }
                     catch (Exception e)
                     {
@@ -1322,19 +1160,8 @@ namespace DataAccess
                         command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
 
-                        SqlDataReader reader = command.ExecuteReader();
-                        if (reader.HasRows)
-                        {
-                            transaction.Commit();
-                            reader.Close();
-                            return true;
-                        }
-                        else
-                        {
-                            transaction.Rollback();
-                            reader.Close();
-                            return false;
-                        }
+                        transaction.Commit();
+                        return true;
                     }
                     catch (Exception e)
                     {
@@ -1382,17 +1209,8 @@ namespace DataAccess
                         command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
 
-                        SqlDataReader reader = command.ExecuteReader();
-                        if (reader.HasRows)
-                        {
-                            transaction.Commit();
-                            return true;
-                        }
-                        else
-                        {
-                            transaction.Rollback();
-                            return false;
-                        }
+                        transaction.Commit();
+                        return true;
                     }
                     catch (Exception e)
                     {
@@ -1441,17 +1259,8 @@ namespace DataAccess
                         command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
 
-                        SqlDataReader reader = command.ExecuteReader();
-                        if (reader.HasRows)
-                        {
-                            transaction.Commit();
-                            return true;
-                        }
-                        else
-                        {
-                            transaction.Rollback();
-                            return false;
-                        }
+                        transaction.Commit();
+                        return true;
                     }
                     catch (Exception e)
                     {
@@ -1500,19 +1309,8 @@ namespace DataAccess
                         command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
 
-                        SqlDataReader reader = command.ExecuteReader();
-                        if (reader.HasRows)
-                        {
-                            transaction.Commit();
-                            reader.Close();
-                            return true;
-                        }
-                        else
-                        {
-                            transaction.Rollback();
-                            reader.Close();
-                            return false;
-                        }
+                        transaction.Commit();
+                        return true;
                     }
                     catch (Exception e)
                     {
@@ -1562,19 +1360,8 @@ namespace DataAccess
                         command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
 
-                        SqlDataReader reader = command.ExecuteReader();
-                        if (reader.HasRows)
-                        {
-                            transaction.Commit();
-                            reader.Close();
-                            return true;
-                        }
-                        else
-                        {
-                            transaction.Rollback();
-                            reader.Close();
-                            return false;
-                        }
+                        transaction.Commit();
+                        return true;
                     }
                     catch (Exception e)
                     {
@@ -1597,7 +1384,6 @@ namespace DataAccess
         }
         #endregion
 
-        // For the Back Office BO
         #region Delete
         public bool DeleteUser(int idUsuario)
         {
@@ -1616,31 +1402,15 @@ namespace DataAccess
 
                     try
                     {
-                        //Inserting values into the database, table PerfilUsuario
-                        command.CommandText = "delete tblPerfilUsuario where ID_Usuario = idUsuario";
-                        command.Parameters.AddWithValue("@idUsuario", idUsuario);
-
-                        //Inserting values into the database, table Usuario
-                        command.CommandText = "delete tblUsuario where ID_Usuario = idUsuario";
-
+                        command.CommandText = "delete tblUsuario where ID_Usuario = @idUsuario";
+                        command.CommandText = "delete tblPerfilUsuario where ID_Usuario = @idUsuario";
                         command.Parameters.AddWithValue("@idUsuario", idUsuario);
 
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
 
-                        SqlDataReader reader = command.ExecuteReader();
-                        if (reader.HasRows)
-                        {
-                            transaction.Commit();
-                            reader.Close();
-                            return true;
-                        }
-                        else
-                        {
-                            transaction.Rollback();
-                            reader.Close();
-                            return false;
-                        }
+                        transaction.Commit();
+                        return true;
                     }
                     catch (Exception e)
                     {
@@ -1686,19 +1456,8 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
 
-                        SqlDataReader reader = command.ExecuteReader();
-                        if (reader.HasRows)
-                        {
-                            transaction.Commit();
-                            reader.Close();
-                            return true;
-                        }
-                        else
-                        {
-                            transaction.Rollback();
-                            reader.Close();
-                            return false;
-                        }
+                        transaction.Commit();
+                        return true;
                     }
                     catch (Exception e)
                     {
@@ -1744,19 +1503,8 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
 
-                        SqlDataReader reader = command.ExecuteReader();
-                        if (reader.HasRows)
-                        {
-                            transaction.Commit();
-                            reader.Close();
-                            return true;
-                        }
-                        else
-                        {
-                            transaction.Rollback();
-                            reader.Close();
-                            return false;
-                        }
+                        transaction.Commit();
+                        return true;
                     }
                     catch (Exception e)
                     {
@@ -1802,19 +1550,8 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
 
-                        SqlDataReader reader = command.ExecuteReader();
-                        if (reader.HasRows)
-                        {
-                            transaction.Commit();
-                            reader.Close();
-                            return true;
-                        }
-                        else
-                        {
-                            transaction.Rollback();
-                            reader.Close();
-                            return false;
-                        }
+                        transaction.Commit();
+                        return true;
                     }
                     catch (Exception e)
                     {
@@ -1861,19 +1598,8 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
 
-                        SqlDataReader reader = command.ExecuteReader();
-                        if (reader.HasRows)
-                        {
-                            transaction.Commit();
-                            reader.Close();
-                            return true;
-                        }
-                        else
-                        {
-                            transaction.Rollback();
-                            reader.Close();
-                            return false;
-                        }
+                        transaction.Commit();
+                        return true;
                     }
                     catch (Exception e)
                     {
@@ -1925,19 +1651,8 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
 
-                        SqlDataReader reader = command.ExecuteReader();
-                        if (reader.HasRows)
-                        {
-                            transaction.Commit();
-                            reader.Close();
-                            return true;
-                        }
-                        else
-                        {
-                            transaction.Rollback();
-                            reader.Close();
-                            return false;
-                        }
+                        transaction.Commit();
+                        return true;
                     }
                     catch (Exception e)
                     {
@@ -1984,17 +1699,8 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
 
-                        SqlDataReader reader = command.ExecuteReader();
-                        if (reader.HasRows)
-                        {
-                            transaction.Commit();
-                            return true;
-                        }
-                        else
-                        {
-                            transaction.Rollback();
-                            return false;
-                        }
+                        transaction.Commit();
+                        return true;
                     }
                     catch (Exception e)
                     {
@@ -2041,17 +1747,8 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
 
-                        SqlDataReader reader = command.ExecuteReader();
-                        if (reader.HasRows)
-                        {
-                            transaction.Commit();
-                            return true;
-                        }
-                        else
-                        {
-                            transaction.Rollback();
-                            return false;
-                        }
+                        transaction.Commit();
+                        return true;
                     }
                     catch (Exception e)
                     {
@@ -2098,19 +1795,8 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
 
-                        SqlDataReader reader = command.ExecuteReader();
-                        if (reader.HasRows)
-                        {
-                            transaction.Commit();
-                            reader.Close();
-                            return true;
-                        }
-                        else
-                        {
-                            transaction.Rollback();
-                            reader.Close();
-                            return false;
-                        }
+                        transaction.Commit();
+                        return true;
                     }
                     catch (Exception e)
                     {
@@ -2157,19 +1843,8 @@ namespace DataAccess
                         command.CommandType = CommandType.Text;
                         command.ExecuteNonQuery();
 
-                        SqlDataReader reader = command.ExecuteReader();
-                        if (reader.HasRows)
-                        {
-                            transaction.Commit();
-                            reader.Close();
-                            return true;
-                        }
-                        else
-                        {
-                            transaction.Rollback();
-                            reader.Close();
-                            return false;
-                        }
+                        transaction.Commit();
+                        return true;
                     }
                     catch (Exception e)
                     {

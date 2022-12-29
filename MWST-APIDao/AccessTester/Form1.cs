@@ -43,7 +43,7 @@ namespace AccessTester
 
         private void button4_Click(object sender, EventArgs e)
         {
-            user.UpdateUser(3, "Ariel", "1234", "0", "Ariel", "Valdez", "0", "C", "", "");
+            user.UpdateUser(2, "Ariel", "1234", "0", "Ariel", "Valdez", "0", "C", "", "");
             dataGridView1.DataSource = user.Test();
         }
     }
