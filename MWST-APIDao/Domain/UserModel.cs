@@ -70,11 +70,11 @@ namespace Domain
         #endregion
 
         #region Register: Post
-        public bool RegisterAUser(string username, string password, string email, string nombre,
+        public bool RegisterAUser(int id, string username, string password, string email, string nombre,
                                   string apellido, string cedula, string rol,
                                   string telefono, string celular)
         {
-            bool registering = userDao.RegisterUser(username, password, email, nombre, apellido, cedula, rol, telefono, celular);
+            bool registering = userDao.RegisterUser(id, username, password, email, nombre, apellido, cedula, rol, telefono, celular);
             return registering;
         }
 

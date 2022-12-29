@@ -401,7 +401,7 @@ namespace DataAccess
         #region Register
         // This method is used when the user registers into the database
         // Rol should be stored as an enum
-        public bool RegisterUser(string username, string password, string email, string nombre,
+        public bool RegisterUser(int idUser, string username, string password, string email, string nombre,
                                  string apellido, string cedula, string rol,
                                  string telefono, string celular)
         {
@@ -427,7 +427,7 @@ namespace DataAccess
                     {
                         //Inserting values into the database, table Usuario
                         command.CommandText = "insert into tblUsuario(ID_Usuario, Nombre, Apellido, Rol, Activo) " +
-                                                $"values({3}, @nombre, @apellido, @rol, {1})";
+                                                $"values({idUser}, @nombre, @apellido, @rol, {1})";
 
                         command.Parameters.Add("@nombre", SqlDbType.VarChar, 30).Value = nombre;
                         command.Parameters.Add("@apellido", SqlDbType.VarChar, 30).Value = apellido;
@@ -438,7 +438,7 @@ namespace DataAccess
 
                         //Inserting values into the database, table PerfilUsuario
                         command.CommandText = "insert into tblPerfilUsuario(ID_Usuario, Cedula, Username, uPassword, TelefonoFijo, Celular, Email, Fecha_Creacion) " +
-                                                $"values({3}, " +
+                                                $"values({idUser}, " +
                                                 "@cedula, @username, @password, @telefono, @celular, @email, @fechaCreacion)";
 
                         command.Parameters.Add("@username", SqlDbType.VarChar, 20).Value = username;

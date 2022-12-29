@@ -31,7 +31,7 @@ namespace AccessTester
 
         private void button2_Click(object sender, EventArgs e)
         {
-            user.RegisterAUser("0", "0", "0", "0", "0", "00000000000", "C", "0", "0");
+            user.RegisterAUser(4,"0", "0", "0", "0", "0", "00000000000", "C", "0", "0");
             dataGridView1.DataSource = user.Test();
         }
 
