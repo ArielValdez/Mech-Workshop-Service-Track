@@ -1,5 +1,6 @@
 import React from "react";
-import { Admin, Resource } from "react-admin";
+import { Admin, CustomRoutes, Resource } from "react-admin";
+import { Route } from "react-router-dom"
 import restProvider from "ra-data-simple-rest";
 import { UserList, UserCreate, UserEdit } from "./components/Users";
 import { WorkshopList, WorkshopCreate, WorkshopEdit } from "./components/Workshops";
@@ -12,10 +13,11 @@ import CreditCardIcon from '@mui/icons-material/CreditCard';
 import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar'
 import authProvider from "./AuthProvider";
+import Dashboard from "./pages/Dashboard";
 
 const App = () => {
 	return (
-		<Admin dataProvider={restProvider("http://localhost:3000")} authProvider={authProvider}>
+		<Admin dashboard={Dashboard} dataProvider={restProvider("http://localhost:3000")} authProvider={authProvider}>
 			<Resource name="users" list={UserList} create={UserCreate} 
 				edit={UserEdit} icon={PersonIcon} recordRepresentation="name">
 			</Resource>

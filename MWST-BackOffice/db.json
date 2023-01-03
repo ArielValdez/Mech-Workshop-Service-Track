@@ -161,8 +161,8 @@
       "name": "Mech Workshop Santo Domingo",
       "managerId": "2",
       "address": "Av. de los Próceres 49, Santo Domingo 10602",
-      "openAt": "12/3/2022 9:00",
-      "closedAt": "12/3/2022 22:00"
+      "openAt": "9:00",
+      "closedAt": "22:00"
     },
     {
       "name": "Nuevo Taller",
@@ -213,6 +213,30 @@
       "model": "Ford F-Series",
       "vin": "Iaiqid87qbn",
       "id": 5
+    },
+    {
+      "user_id": "1",
+      "plate": "JKNKUUO",
+      "model": "Mujk",
+      "vin": "K",
+      "id": 6
+    },
+    {
+      "user_id": "1",
+      "plate": "HPPHM",
+      "model": "I",
+      "vin": "T",
+      "id": 7
+    }
+  ],
+  "credit_cards": [
+    {
+      "id": "1",
+      "user_id": "1",
+      "numbers": "4256987145893265",
+      "expiration_date": "07/25",
+      "cvv": "333",
+      "name": "CARLOS ROQUE"
     }
   ]
 }

@@ -64,7 +64,7 @@ export const ServiceEdit = (props) => {
     return (
         <Edit title='Edit service' {...props}>
             <SimpleForm>
-            <SelectInput source='serviceType' choices={[
+                <SelectInput source='serviceType' choices={[
                     { id: 'Reparation', name: 'Reparation' },
                     { id: 'Checkup', name: 'Checkup' },
                 ]} />
