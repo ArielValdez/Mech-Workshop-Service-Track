@@ -55,7 +55,7 @@ namespace MWST_API.Controllers
             string userRol = user.GetUserRol();
 
             // Query to insert the data needed
-            bool query = models.RegisterAUser(user.Username, user.Password, user.Email, user.Name, user.Surname, user.Cedula, userRol, user.PhoneNumber, user.Cellphone);
+            bool query = models.RegisterAUser(user.ID_User, user.Username, user.Password, user.Email, user.Name, user.Surname, user.Cedula, userRol, user.PhoneNumber, user.Cellphone);
 
             // New the connection string
             try
