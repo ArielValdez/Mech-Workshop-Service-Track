@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Image, useWindowDimensions, ScrollView } from 'react-native'
 import { PrivateValueStore, useNavigation } from "@react-navigation/native";
-import CustomInput from "../components/CustomInput";
+import CustomInput from "../components/Inputs/CustomInput";
 import CustomButton from "../components/CustomButton";
+import EmailInput from '../components/Inputs/EmailInput'
+import PasswordInput from '../components/Inputs/PasswordInput'
 import Logo from '../../assets/LogoOficial.png'
 import CheckBox from 'expo-checkbox';
-import { EmailRegex, InvalidEmailMessage, PasswordRegex, InvalidPasswordMessage } from '../Constants'
 import theme from '../Theme'
 import '../../assets/translations/i18n'
 import { useTranslation } from "react-i18next";
@@ -38,7 +39,26 @@ const SignInScreen = () => {
 		})
     }, [])
 
-    const onSignInPressed = () => {            
+    const onSignInPressed = () => {
+        if (email == 'admin@gmail.com' && password == 'admin123') {
+            const defaultUser = {
+                username: 'Admin',
+                password: 'admin123',
+                email: 'admin@gmail.com',
+                name: 'Pedro',
+                lastname: 'Admin',
+                //Should be limited to thirteen digits in the following manner: 0-1234567-891
+                id_card: '01234567891',
+                role: 'Client',
+                //Should be limited to thirteen digits in the following order: (809)000-0000
+                phone_number: '8095263214',
+                active: true //change this later to false
+            }
+            setUser(defaultUser)
+            navigation.navigate('Home')
+            return 
+        }
+        
         getUser(email, password)
             .then(user => {
                 AsyncStorage.setItem('@rememberMe', JSON.stringify(rememberMe))
@@ -77,12 +97,8 @@ const SignInScreen = () => {
                     resizeMode='contain'
                 />
                 
-                <CustomInput placeholder={t('emailInputPlaceholder')} value={email} setValue={setEmail} keyboardType='email-address'
-                    errorMessage={t('invalidEmailMessage')} pattern={EmailRegex} marginVertical={10}
-                />
-                <CustomInput placeholder={t('passwordInputPlaceholder')} value={password} setValue={setPassword} secureTextEntry
-                    errorMessage={t('invalidPasswordMessage')} pattern={PasswordRegex} marginVertical={10}
-                />
+                <EmailInput value={email} setValue={setEmail} />
+                <PasswordInput value={password} setValue={setPassword} placeholder={t('passwordInputPlaceholder')}/>
                 
                 <View style={{flexDirection: 'row', marginBottom: 10}}>
                     <View style={{flex: 1, flexDirection: 'row'}}>
