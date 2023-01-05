@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Image, StyleSheet, useWindowDimensions } from "react-native";
-import Car from '../../assets/CarPlaceholder.png'
+import Car from '../../assets/tesla.png'
 import ProgressBar from "../components/ProgressBar";
+import CustomText from "../components/CustomText";
 import { useUser } from "../context/UserContext";
 import theme from "../Theme";
+import { BarIndicator, WaveIndicator } from "react-native-indicators";
 
 const ServiceState = ({state}) => {
     if (state == "In Process") {
@@ -52,7 +54,6 @@ const MyCarScreen = () => {
             .then(response => response.json())
             .then(result => {
                 setService(result[0])
-                console.log(result)
             })
             .catch(err => console.log(err))
     }, [])
@@ -60,21 +61,24 @@ const MyCarScreen = () => {
     return (
         <View style={styles.container}>
             <View style={styles.centeredContainer}>
-                <Image source={Car} style={{height: height * 0.3, width: width * 0.85}}/>
+                <CustomText style={{fontSize: 20, marginBottom: 10}} type="Bold">Estado del servicio</CustomText>
+                <Image source={Car} style={{height: height * 0.65, width: width * 0.9, resizeMode: 'stretch', backgroundColor: 'white'}}/>
+                <BarIndicator style={{marginTop: 20}} color={theme.colors.black} count={8} size={40}/>
                 <View style={styles.progressText}>
                     {   /* 
                     <Text style={{flex: 2}}>Tiempo estimado:</Text>
                     <View style={{flex: 0.9}}></View>
                     <Text style={{flex: 1}}>5 Horas</Text>
                         */  }
-                    { service === undefined ? (
-                        <Text>No existe ningún servicio en progreso</Text>
-                    ) : (
-                        <Text>Estado del servicio: {service.state}</Text>
-                    )}
+                    <View>
+                        { service === undefined ? (
+                            <CustomText>No existe ningún servicio en progreso</CustomText>
+                        ) : (
+                            <CustomText style={{fontSize: 17}} type="Medium">{service.state}</CustomText>
+                        )}
+                    </View>
                 </View>
             </View>
-            <ProgressBar step={0} steps={10} height={20} />
             <View style={styles.updatesContainer}>
                 { service === undefined ? (
                     <View></View>
@@ -89,16 +93,13 @@ const MyCarScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: theme.colors.bgColor,
+        backgroundColor: theme.colors.white,
         padding: 20,
     },
     centeredContainer: {
         alignItems: 'center',
     },
     progressText: {
-        flexDirection: 'row',
-        padding: 5,
-        width: 250,
         marginTop: 25
     },
     updatesContainer: {

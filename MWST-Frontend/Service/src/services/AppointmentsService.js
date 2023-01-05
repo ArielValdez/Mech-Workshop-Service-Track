@@ -1,5 +1,5 @@
 import { API_URL } from "@env"
-import { format } from "../utils/DateFormatting";
+import { formatDate } from "../utils/DateFormatting";
 
 export const getAppointment = async (appointmentId) => {
     const response = await fetch(`{API_URL}/services/${appointmentId}`, {
@@ -23,6 +23,20 @@ export const getAllAppointments = async (userId) => {
     if (response.ok) {
         const result = await response.json()
         return Promise.resolve(result)
+    }
+    else {
+        return Promise.reject(response)
+    }
+}
+
+export const getLatestFinishedAppointments = async (userId) => { 
+    const response =  await fetch(`${API_URL}/services?user_id=${userId}&state=Finished`, {
+        method: 'GET',
+    })
+
+    if (response.ok) {
+        const result = await response.json()
+        return Promise.resolve(result.slice(0, 3))
     }
     else {
         return Promise.reject(response)
@@ -58,9 +72,9 @@ export const createAppointment = async (serviceType, title, vehicleId, selectedT
             state: 'Not started',
             state_description: 'The mechanics have not looked at the vehicle',
             vehicle_id: vehicleId,
-            startedAt:  format(selectedTime),
-            expectedAt: format(selectedTime),
-            finishedAt: format(selectedTime),
+            startedAt:  formatDate(selectedTime),
+            expectedAt: formatDate(selectedTime),
+            finishedAt: formatDate(selectedTime),
             payment_id: 1,
             workshop_id: 1,
             user_id: user.id

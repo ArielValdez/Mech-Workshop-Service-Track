@@ -1,9 +1,9 @@
 import React, { useRef, useState } from "react";
 import { View, TextInput, StyleSheet, Text } from 'react-native'
-import theme from '../Theme'
-import CustomText from "./CustomText";
+import theme from '../../Theme'
+import CustomText from "../CustomText";
 
-const CustomInput = ({value, setValue, placeholder, secureTextEntry, keyboardType, errorMessage, pattern, padding, bgColor}) => {
+export const CustomInput = ({value, setValue, placeholder, errorMessage, pattern, padding, bgColor, showErrorMessage, ...rest}) => {
     const [ showErrorText, setShowErrorText ] = useState(false)
 
     const handleChange = (value) => {
@@ -16,8 +16,15 @@ const CustomInput = ({value, setValue, placeholder, secureTextEntry, keyboardTyp
                 setShowErrorText(true)
             }
         }
-
         setValue(value)
+    }
+
+    // Update error message if the user fills the input
+    if (showErrorMessage && !showErrorText && errorMessage) {
+        const regex = new RegExp(pattern)
+        if (regex.test(value)) {
+            showErrorMessage = false
+        }
     }
 
     return (
@@ -28,11 +35,10 @@ const CustomInput = ({value, setValue, placeholder, secureTextEntry, keyboardTyp
                     onChangeText={handleChange}
                     placeholder={placeholder}
                     placeholderTextColor={'rgba(0, 0, 0, 0.6)'}
-                    secureTextEntry={secureTextEntry}
-                    keyboardType={keyboardType}
+                    {...rest}
                 />
             </View>
-            { showErrorText &&
+            { (showErrorText || showErrorMessage) &&
                 <CustomText style={styles.errorMessage} >
                     {errorMessage}
                 </CustomText>
@@ -65,5 +71,17 @@ const styles = StyleSheet.create({
         color: 'red',
     },
 })
+
+// Don't use this
+export const useInput = () => {
+    const [ value, setValue ] = useState('')
+    const [isErrorMessageShowing, setShowErrorMessage ] = useState(false)
+
+    const CustomInput = () => <CustomInput value={value} setValue={setValue} />
+    const displayErrorMessage = () => setShowErrorMessage(true)
+    const hideErrorMessage = () => setShowErrorMessage(false)
+
+    return { CustomInput, input: { value, setValue, isErrorMessageShowing, displayErrorMessage, hideErrorMessage }} 
+}
 
 export default CustomInput

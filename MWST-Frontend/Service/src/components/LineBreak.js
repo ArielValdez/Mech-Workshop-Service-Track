@@ -9,7 +9,7 @@ const LineBreak = ({marginHorizontal, height, color}) => {
             styles.linebreak, 
             marginHorizontal ? {marginHorizontal: marginHorizontal} : {},
             height ? {height: height} : {},
-            color ? {color: color} : {} 
+            color ? {backgroundColor: color} : {} 
         ]}>
             <Text></Text>
         </View>

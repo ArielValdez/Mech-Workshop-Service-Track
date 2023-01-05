@@ -2,7 +2,10 @@ import React, { useState } from "react"
 import { View, Text, StyleSheet, Image, useWindowDimensions, ScrollView } from 'react-native'
 import { useNavigation } from "@react-navigation/native"
 import CustomButton from '../components/CustomButton'
-import CustomInput from '../components/CustomInput'
+import CustomInput from '../components/Inputs/CustomInput'
+import EmailInput from '../components/Inputs/EmailInput'
+import UsernameInput from '../components/Inputs/UsernameInput'
+import PasswordInput from '../components/Inputs/PasswordInput'
 import CustomText from "../components/CustomText"
 import SuccessModal from "../components/Modals/SuccessModal"
 import ErrorModal from "../components/Modals/ErrorModal"
@@ -35,6 +38,7 @@ const SignUpScreen = () => {
     const [ confirmPassword, setConfirmPassword ] = useState('')
     const [ successModalVisible, setSuccessModalVisible ] = useState(false)
     const [ errorModalVisible, setErrorModalVisible ] = useState(false)
+    const [ errorModalText, setErrorModalText ] = useState('')
 
     const { height, width } = useWindowDimensions()
     const navigation = useNavigation()
@@ -44,11 +48,20 @@ const SignUpScreen = () => {
         if (nameRegex.test(firstname) && nameRegex.test(lastname) && usernameRegex.test(username) &&
                 emailRegex.test(email) && phoneRegex.test(phone) && idCardRegex.test(idCard) && 
                 passwordRegex.test(password) && password == confirmPassword) {
-            
-            createUser(firstname, lastname, email, phone, username, idCard, password)
-                .then(result => setSuccessModalVisible(true))
+                    // Check if the user alredy exist before attempting to create a new account
+                    getUser(email, password).then(user => {
+                        if (user !== undefined) {
+                            setErrorModalText(t('userAlredyExistsMessage'))
+                            setErrorModalVisible(true)
+                        }
+                        else {
+                            createUser(firstname, lastname, email, phone, username, idCard, password)
+                                .then(result => setSuccessModalVisible(true))
+                        }    
+                    })
         }
         else {
+            setErrorModalText(t('invalidRegisterMessage'))
             setErrorModalVisible(true)
         }
 	}
@@ -76,7 +89,7 @@ const SignUpScreen = () => {
                 />
                 <ErrorModal
                     visible={errorModalVisible}
-                    errorText={t('invalidRegisterMessage')}
+                    errorText={errorModalText}
                     onRequestClose={() => setErrorModalVisible(false)}
                     buttonText='Ok'
                 />
@@ -88,29 +101,23 @@ const SignUpScreen = () => {
                 />
 
                 <CustomInput placeholder={t('nameInputPlaceholder')} value={firstname} setValue={setFirstname} 
-                    pattern={nameRegex} errorMessage={t('invalidNameMessage')}
+                    pattern={nameRegex} errorMessage={t('invalidNameMessage')} maxLength={25} textContentType='name' 
+                    autoComplete='name'  
                 />
                 <CustomInput placeholder={t('lastNameInputPlaceholder')} value={lastname} setValue={setLastname}
-                    pattern={nameRegex} errorMessage={t('invalidNameMessage')}
+                    pattern={nameRegex} errorMessage={t('invalidNameMessage')} maxLength={25} autoComplete='name-family'
                 />
-                <CustomInput placeholder={t('emailInputPlaceholder')} value={email} setValue={setEmail} 
-                    keyboardType='email-address' errorMessage={t('invalidEmailMessage')} pattern={EmailRegex}
-                />
+                <EmailInput value={email} setValue={setEmail}/>
                 <CustomInput placeholder={t('phoneNumberInputPlaceholder')} value={phone} setValue={setPhone} 
                     keyboardType='number-pad' pattern={phoneRegex} errorMessage={t('invalidPhoneMessage')}
+                    maxLength={10} textContentType='telephoneNumber' autoComplete='tel'
                 />
-                <CustomInput placeholder={t('usernameInputPlaceholder')} value={username} setValue={setUsername} 
-                    pattern={UsernameRegex} errorMessage={t('invalidUsernameMessage')} 
+                <UsernameInput value={username} setValue={setUsername}/>
+                <CustomInput placeholder='001-0000000-1' value={idCard} setValue={setIdCard} keyboardType='number-pad'
+                    pattern={idCardRegex} errorMessage={t('invalidIdCardMessage')} maxLength={11} 
                 />
-                <CustomInput placeholder='001-0000000-1' value={idCard} setValue={setIdCard} 
-                    keyboardType='number-pad' pattern={idCardRegex} errorMessage={t('invalidIdCardMessage')} 
-                />
-                <CustomInput placeholder={t('passwordInputPlaceholder')} value={password} setValue={setPassword} secureTextEntry
-                    pattern={PasswordRegex} errorMessage={t('invalidPasswordMessage')}
-                />
-                <CustomInput placeholder={t('confirmPasswordInputPlaceholder')} value={confirmPassword} setValue={setConfirmPassword} 
-                    secureTextEntry errorMessage={t('invalidPasswordMessage')} pattern={PasswordRegex}
-                />
+                <PasswordInput value={password} setValue={setPassword} placeholder={t('passwordInputPlaceholder')}/>
+                <PasswordInput value={confirmPassword} setValue={setConfirmPassword} placeholder={t('confirmPasswordInputPlaceholder')}/>
                 
                 <CustomText style={styles.politicsText}>
                     {t('politicsText1')}{' '}

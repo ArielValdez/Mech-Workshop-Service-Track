@@ -12,7 +12,7 @@ import { getAllVehicles, deleteVehicle } from "../../services/VehicleService"
 import PressableOpacity from "../../components/PressableOpacity"
 import VehicleRenderItem from "./VehicleRenderItem.js"
 
-const VehicleListScreen = () => {
+const VehicleListScreen = ({ route }) => {
     const [ vehicles, setVehicles ] = useState()
 
     const [ user, setUser ] = useUser()
@@ -23,14 +23,20 @@ const VehicleListScreen = () => {
         loadVehicleList()
     }, [])
 
+    useEffect(() => {
+        if (route.params?.shouldRefresh) {
+            loadVehicleList()
+        }
+    }, [route.params?.shouldRefresh])
+
     const loadVehicleList = useCallback(() => {
         getAllVehicles(user.id)
             .then(vehicles => setVehicles(vehicles))
             .catch(err => console.log(err))
-    }, user)
+    }, [user])
 
     const onAddVehiclePress = () => {
-        navigation.navigate('AddVehicle', { refreshCallback: loadVehicleList, isEditing: false })
+        navigation.navigate('AddVehicle', { isEditing: false })
     }
 
     return (

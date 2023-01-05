@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Text, View, ScrollView, StyleSheet, FlatList } from 'react-native';
 import CustomButton from '../components/CustomButton';
-import CustomInput from '../components/CustomInput';
+import CustomInput from '../components/Inputs/CustomInput';
 import CustomText from '../components/CustomText';
 import theme from '../Theme';
 import { Ionicons } from '@expo/vector-icons'

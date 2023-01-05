@@ -5,21 +5,29 @@ import { ScrollView, View, FlatList, Text, StyleSheet, Pressable } from "react-n
 import CustomButton from "../../components/CustomButton"
 import CustomText from "../../components/CustomText"
 import LineBreak from "../../components/LineBreak"
-import { FontAwesome5, AntDesign } from "@expo/vector-icons"
+import { FontAwesome, AntDesign } from "@expo/vector-icons"
 import theme from "../../Theme"
 import { useUser } from "../../context/UserContext"
 import { getAllVehicles, deleteVehicle } from "../../services/VehicleService"
+import { getAllCards, createCard, editCard, deleteCard } from "../../services/CreditCardsService"
 import PressableOpacity from "../../components/PressableOpacity"
 
-const VehicleRenderItem = ({ item, onDeleteCallback }) => {
+const CreditCarRenderItem = ({ item, onDeleteCallback }) => {
     const navigation = useNavigation()
 
+    const formatCardNumbers = (numbers) => {
+        return (
+            numbers.substring(0, 4) + '-' + numbers.substring(4, 8) + '-'
+            + numbers.substring(8, 12) + '-' + numbers.substring(12, 16)
+        )
+    }
+
     const onEditPress = () => {
-        navigation.navigate('AddVehicle', { isEditing: true, vehicle: item })
+        navigation.navigate('EditCreditCard', { isEditing: true, creditCard: item })
     }
 
     const onDeletePress = () => {
-        deleteVehicle(item.id)
+        deleteCard(item.id)
             .then(result => onDeleteCallback())
             .catch(err => console.log(err))
     }
@@ -28,12 +36,11 @@ const VehicleRenderItem = ({ item, onDeleteCallback }) => {
         <View style={styles.container}>
             <View style={styles.dataContainer}>
                 <View style={styles.firstColumn}>
-                    <FontAwesome5 name='car' size={40} color={theme.colors.darkPrimary} />
+                    <FontAwesome name='credit-card' size={40} color={theme.colors.darkPrimary} />
                 </View>
                 <View style={styles.secondColumn}>
-                    <CustomText>{item.plate}</CustomText>
-                    <CustomText>{item.model}</CustomText>
-                    <CustomText>{item.vin}</CustomText>
+                    <CustomText>{formatCardNumbers(item.numbers)}</CustomText>
+                    <CustomText>{item.expiration_date}</CustomText>
                 </View>
                 <View style={styles.thirdColumn}>
                     <PressableOpacity animatedViewStyle={styles.icons} onPress={onEditPress}>
@@ -75,4 +82,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default VehicleRenderItem
+export default CreditCarRenderItem

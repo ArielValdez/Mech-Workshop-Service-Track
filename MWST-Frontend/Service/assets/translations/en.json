@@ -24,6 +24,7 @@
         "returnButtonText": "Return",
         "successfullRegisterMessage": "Your account has been successfully created.",
         "invalidRegisterMessage": "Registration failed.",
+        "userAlredyExistsMessage": "Email is alredy in use.",
         "invalidNameMessage": "The name must be between 3 and 25 characters",
         "invalidPhoneMessage": "Must provide 10 numbers",
         "invalidIdCardMessage": "Must provide 11 numbers",
@@ -73,9 +74,14 @@
         "model": "Model",
         "vin": "VIN",
         "save": "Save",
+        "pickImageText": "Pick an image from camera roll",
 
         "_comment9": "Translation data for VehicleListScreen",
         "addVehicle": "Add Vehicle",
+        "addCreditCard": "Add credit card",
+        "invalidPlateMessage": "Must be between 5 and 10 characters",
+        "invalidModelMessage": "Must be between 3 and 50 characters",
+        "invalidVinMessage": "Vin numbers are 17 characters",
 
         "emptyInputsAlert": "You must fill in all the fields",
 

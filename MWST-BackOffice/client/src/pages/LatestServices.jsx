@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react"
 import "./latestServices.css"
 
 const getStateClassName = (state) => {
@@ -9,10 +10,40 @@ const getStateClassName = (state) => {
         return "Finished"
 }
 
-const LatestServices = ({ services }) => {
+const LatestServices = ({ services, dataProvider }) => {
     const Button = ({ state }) => {
         return (
             <button className={"widgetLgButton " + getStateClassName(state)}>{state}</button>
+        )
+    }
+
+    const TableRow = ({ service }) => {
+        const [ user, setUser ] = useState({
+            name: '',
+            lastname: ''
+        })
+        const [ payment, setPayment ] = useState({
+            amount: ''
+        }) 
+
+        useEffect(() => {
+            dataProvider.getOne('users', { id: service.user_id })
+                .then(result => setUser(result.data))
+            dataProvider.getOne('payments', { id: service.payment_id })
+                .then(result => setPayment(result.data))
+        }, [])
+
+        return (
+            <tr className="widgetLgTr">
+                <td className="widgetLgUser">
+                    <span className="widgetLgName">{user.name + ' ' + user.lastname}</span>
+                </td>
+                <td className="widgetLgDate">{service.startedAt}</td>
+                <td className="widgetLgAmount">${payment.amount}</td>
+                <td className="widgetLgStatus">
+                    <Button state={service.state}/>
+                </td>
+            </tr>
         )
     }
 
@@ -26,18 +57,7 @@ const LatestServices = ({ services }) => {
                     <th className="widgetLgTh">Amount</th>
                     <th className="widgetLgTh">Status</th>
                 </tr>
-                {services.map(service => (
-                    <tr className="widgetLgTr">
-                    <td className="widgetLgUser">
-                        <span className="widgetLgName">Susan Carol</span>
-                    </td>
-                    <td className="widgetLgDate">{service.startedAt}</td>
-                    <td className="widgetLgAmount">$122.00</td>
-                    <td className="widgetLgStatus">
-                        <Button state={service.state}/>
-                    </td>
-                </tr>
-                ))}
+                {services.map(service => <TableRow service={service} />)}
             </table>
         </div>
     )

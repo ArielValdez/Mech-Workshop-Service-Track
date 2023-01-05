@@ -10,6 +10,7 @@
 .widgetLgTitle {
     font-size: 20px;
     font-weight: 600;
+    margin-left: 20px;
 }
 
 .widgetLgTable {
@@ -30,7 +31,6 @@
 .widgetLgUser {
     display: flex;
     align-items: center;
-    font-weight: 600;
 }
 
 .widgetLgDate,.widgetLgAmount {

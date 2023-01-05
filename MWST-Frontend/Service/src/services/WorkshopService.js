@@ -13,3 +13,14 @@ export const getWorkshop = async (workshopId) => {
         return Promise.reject(response)
     }
 }
+
+export const getEmptyWorkshop = () => {
+    return {
+        "id": "",
+        "name": "",
+        "managerId": "",
+        "address": "",
+        "openAt": "",
+        "closedAt": ""
+    }
+}

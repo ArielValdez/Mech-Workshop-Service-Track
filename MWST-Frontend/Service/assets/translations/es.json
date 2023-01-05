@@ -24,7 +24,8 @@
         "registerButtonText": "Crear cuenta",
         "returnButtonText": "Regresar",
         "successfullRegisterMessage": "Su registro ha sido completado de manera satisfactoria.",
-        "invalidRegisterMessage": "Registro fallido.",
+        "invalidRegisterMessage": "Registro fallo.",
+        "userAlredyExistsMessage": "El correo electrónico ya esta en uso",
         "invalidNameMessage": "El nombre debe de estar entre 3 y 25 carácteres",
         "invalidPhoneMessage": "Debe proveer 10 números",
         "invalidIdCardMessage": "Debe proveer 11 números",
@@ -75,9 +76,14 @@
         "model": "Modelo",
         "vin": "VIN",
         "save": "Guardar",
+        "pickImageText": "Seleccionar imagen",
         
         "_comment9": "Translation data for VehicleListScreen",
-        "addVehicle": "Add Vehicle",
+        "addVehicle": "Añadir Vehículo",
+        "addCreditCard": "Añadir tarjeta de crédito",
+        "invalidPlateMessage": "Debe estar entre 5 y 10 carácteres",
+        "invalidModelMessage": "Debe estar entre 3 y 50 carácteres",
+        "invalidVinMessage": "El número vin ha de ser 17 carácteres",
 
         "emptyInputsAlert": "Debes llenar todos los campos",
 

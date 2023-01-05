@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { View, Text, StyleSheet, useWindowDimensions, ScrollView } from 'react-native'
 import CustomButton from '../components/CustomButton'
-import CustomInput from '../components/CustomInput'
+import CustomInput from '../components/Inputs/CustomInput'
 import CustomText from "../components/CustomText"
 
 const ConfirmEmailScreen = () => {

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image, useWindowDimensions, ScrollView, Modal, 
 import { Calendar, CalendarUtils, LocaleConfig } from 'react-native-calendars'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import CustomButton from "../components/CustomButton";
-import CustomInput from "../components/CustomInput";
+import CustomInput from "../components/Inputs/CustomInput";
 import CustomText from "../components/CustomText";
 import theme from "../Theme";
 import { FontAwesome5, Entypo, AntDesign } from '@expo/vector-icons'

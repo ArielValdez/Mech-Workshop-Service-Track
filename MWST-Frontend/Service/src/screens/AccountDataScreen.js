@@ -79,15 +79,21 @@ const AccountDataScreen = () => {
     }
 
     const onPaymentHistoryPress = () => { 
-        console.log('payment history pressed')
+        navigation.navigate('ItemList', { isVehicleList: false })
     }
 
     const onCarListPress = () => {
-        navigation.navigate('VehicleList')
+        //navigation.navigate('VehicleList')
+        navigation.navigate('ItemList', { isVehicleList: true })
     }
 
     const onReturnToSignInPress = () => {
         navigation.navigate('SignIn')
+    }
+
+    const formatPhoneNumber = (phoneNumber) => {
+        return phoneNumber.substring(0, 3) + '-' + phoneNumber.substring(3, 6) +
+            '-' + phoneNumber.substring(6, 10)
     }
 
     return (
@@ -110,7 +116,7 @@ const AccountDataScreen = () => {
                 />
                 <AccountDataButton 
                     LeftIcon={() => <FontAwesome name='phone' size={40} color={theme.colors.darkPrimary} />}
-                    text={user.phone_number}
+                    text={formatPhoneNumber(user.phone_number)}
                     greyedText={true}
                     RightIcon={() => <Ionicons />}
                 />

@@ -6,8 +6,10 @@ import ConfirmEmailScreen from './src/screens/ConfirmEmailScreen';
 import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
 import NewPasswordScreen from './src/screens/NewPasswordScreen';
 import VehicleListScreen from './src/screens/VehicleListScreen/VehicleListScreen.js';
-import AddVehicleScreen from './src/screens/AddVehicleScreen';
+import AddVehicleScreen from './src/screens/AddVehicleScreen/AddVehicleScreen.js';
 import AppointmentDetailScreen from './src/screens/AppointmentDetailScreen.js'
+import ItemListScreen from './src/screens/ItemListScreen/ItemListScreen';
+import CreditCarEditScreen from './src/screens/CreditCarEditScreen/CreditCarEditScreen.js'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { LocaleConfig } from 'react-native-calendars'
@@ -16,6 +18,8 @@ import './assets/translations/i18n'
 import CalendarConfigSetup from './src/CalendarSetup';
 import { UserProvider } from './src/context/UserContext';
 import { useFonts } from 'expo-font';
+import "intl"
+import "intl/locale-data/jsonp/en";
 
 CalendarConfigSetup()
 
@@ -83,7 +87,23 @@ export default function App() {
 								component={AppointmentDetailScreen}
 								options={{
 									headerShown: true,
-									title: 'Details'
+									title: "Details"
+								}}
+							/>
+							<Stack.Screen 
+								name="ItemList"
+								component={ItemListScreen}
+								options={{
+									headerShown: true,
+									title: "Item List"
+								}}
+							/>
+							<Stack.Screen 
+								name="EditCreditCard"
+								component={CreditCarEditScreen}
+								options={{
+									headerShown: true,
+									title: "Edit card"
 								}}
 							/>
 						</Stack.Navigator>

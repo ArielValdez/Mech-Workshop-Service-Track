@@ -36,7 +36,7 @@ const Dashboard = () => {
             <Title title="Dashboard"/>
             <CardContent>
                 <FeaturedInfo />
-                <LatestServices services={services} />
+                <LatestServices services={services} dataProvider={dataProvider}/>
             </CardContent>
         </Card>
     )

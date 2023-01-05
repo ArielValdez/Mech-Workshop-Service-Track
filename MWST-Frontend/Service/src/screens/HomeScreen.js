@@ -1,6 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import FeedScreen from "./FeedScreen";
+import DashboardScreen from "./NewDashboardScreen/DashboardScreen";
 import MyCarScreen from "./MyCarScreen";
 import ChatScreen from "./ChatScreen";
 import AppointmentsScreen from "./AppointmentsScreen"
@@ -15,10 +16,11 @@ const HomeScreen = () => {
 
     return (
         <Tab.Navigator>
-            <Tab.Screen name='Feed' component={FeedScreen} 
+            <Tab.Screen name='Feed' component={DashboardScreen} 
                 options={{
                     tabBarIcon: ({color, size}) => <Ionicons name='md-home' size={28}/>,
-                    title: t('feed')
+                    title: t('feed'),
+                    headerShown: false
                 }}
             />
             <Tab.Screen name='MyCar' component={MyCarScreen} 
