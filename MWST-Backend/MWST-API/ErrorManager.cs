@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MWST_API.Models
+namespace MWST_API
 {
     public class ErrorManager
     {
