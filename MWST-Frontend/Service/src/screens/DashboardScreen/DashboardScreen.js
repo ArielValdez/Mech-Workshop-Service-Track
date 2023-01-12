@@ -6,15 +6,20 @@ import theme from '../../Theme'
 import PendingServiceInfo from './PendingServiceInfo'
 import ServiceInfo from './ServiceInfo'
 import LineBreak from '../../components/LineBreak'
-import { getLatestFinishedAppointments } from '../../services/AppointmentsService'
+import { getLatestFinishedAppointments, getPendingAppointment } from '../../services/AppointmentsService'
 import { useUser } from '../../context/UserContext'
+import { useTranslation } from 'react-i18next'
 
 const DashboardScreen = () => {
     const [ pendingService, setPendingService ] = useState()
     const [ latestFinishedServices, setLatestFinishedServices ] = useState([])
+
+    const { t, i18n } = useTranslation()
     const [ user, setUser ] = useUser()
     
     useEffect(() => {
+        getPendingAppointment(user.id)
+            .then(appointment => setPendingService(appointment))
         getLatestFinishedAppointments(user.id)
             .then(appointments => setLatestFinishedServices(appointments))
             .catch(err => console.log(err))
@@ -28,9 +33,9 @@ const DashboardScreen = () => {
                     style={styles.logo}
                 />
             </View>
-            <CustomText style={styles.headerText} type='Bold'>Citas en proceso</CustomText>
-            <PendingServiceInfo />
-            <CustomText style={styles.headerText} type='Bold'>Recent</CustomText>
+            <CustomText style={styles.headerText} type='Bold'>{t('appointmentsAlredyStarted')}</CustomText>
+            <PendingServiceInfo service={pendingService} />
+            <CustomText style={styles.headerText} type='Bold'>{t('recent')}</CustomText>
             <View style={styles.recentServicesContainer}>
                 <ServiceInfo service={latestFinishedServices[0]} />
                 <LineBreak color='rgba(0, 0, 0, 0.45)' />

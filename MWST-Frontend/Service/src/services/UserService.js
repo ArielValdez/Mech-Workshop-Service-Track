@@ -5,18 +5,30 @@ export const getUser = async (email, password) =>  {
     const response = await fetch(`${API_URL}/users?email=${email}&password=${password}`, {
         method: 'GET'
     })
-    let result
-    if (response.ok)
-        result = await response.json()
-    else
-        return Promise.reject(response)
-        
-    if (result.length > 0) {
-        return Promise.resolve(result[0])
+    
+    if (response.ok) {
+        const result = await response.json()
+        if (result.length > 0) {
+            return Promise.resolve(result[0])
+        }
+        else {
+            return Promise.resolve(undefined)
+        }
     }
     else {
-        return Promise.reject('No user was found with the given credentials')
+        return Promise.reject(response)
     }
+    // if (response.ok)
+    //     result = await response.json()
+    // else
+    //     return Promise.reject(response)
+        
+    // if (result.length > 0) {
+    //     return Promise.resolve(result[0])
+    // }
+    // else {
+    //     return Promise.reject('No user was found with the given credentials')
+    // }
 }
 
 export const createUser = async (firstname, lastname, email, phone, username, idCard, password) => {
@@ -32,10 +44,10 @@ export const createUser = async (firstname, lastname, email, phone, username, id
 		    name: firstname,
 		    lastname: lastname,
 		    //Should be limited to thirteen digits in the following manner: 0-1234567-891
-		    id_card: idCard,
+		    idCard: idCard,
 		    role: 'Client',
 		    //Should be limited to thirteen digits in the following order: (809)000-0000
-		    phone_number: phone,
+		    phoneNumber: phone,
             active: true //change this later to false
         })
     }) 

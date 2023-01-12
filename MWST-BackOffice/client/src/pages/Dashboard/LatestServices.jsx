@@ -27,9 +27,9 @@ const LatestServices = ({ services, dataProvider }) => {
         }) 
 
         useEffect(() => {
-            dataProvider.getOne('users', { id: service.user_id })
+            dataProvider.getOne('users', { id: service.userId })
                 .then(result => setUser(result.data))
-            dataProvider.getOne('payments', { id: service.payment_id })
+            dataProvider.getOne('payments', { id: service.paymentId })
                 .then(result => setPayment(result.data))
         }, [])
 

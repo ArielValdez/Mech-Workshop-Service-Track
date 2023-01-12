@@ -40,7 +40,7 @@ const CreditCarRenderItem = ({ item, onDeleteCallback }) => {
                 </View>
                 <View style={styles.secondColumn}>
                     <CustomText>{formatCardNumbers(item.numbers)}</CustomText>
-                    <CustomText>{item.expiration_date}</CustomText>
+                    <CustomText>{item.expirationDate}</CustomText>
                 </View>
                 <View style={styles.thirdColumn}>
                     <PressableOpacity animatedViewStyle={styles.icons} onPress={onEditPress}>

@@ -48,10 +48,10 @@ const SignInScreen = () => {
                 name: 'Pedro',
                 lastname: 'Admin',
                 //Should be limited to thirteen digits in the following manner: 0-1234567-891
-                id_card: '01234567891',
+                idCard: '01234567891',
                 role: 'Client',
                 //Should be limited to thirteen digits in the following order: (809)000-0000
-                phone_number: '8095263214',
+                phoneNumber: '8095263214',
                 active: true //change this later to false
             }
             setUser(defaultUser)
@@ -61,16 +61,21 @@ const SignInScreen = () => {
         
         getUser(email, password)
             .then(user => {
-                AsyncStorage.setItem('@rememberMe', JSON.stringify(rememberMe))
-                if (rememberMe) {
-                    AsyncStorage.setItem('@email', email)
-                    AsyncStorage.setItem('@password', password)
+                if (user) {
+                    AsyncStorage.setItem('@rememberMe', JSON.stringify(rememberMe))
+                    if (rememberMe) {
+                        AsyncStorage.setItem('@email', email)
+                        AsyncStorage.setItem('@password', password)
+                    }
+                    setUser(user)
+                    navigation.navigate('Home')
                 }
-                setUser(user)
-                navigation.navigate('Home') 
+                else {
+                    setErrorModalVisible(true)
+                } 
             })
             // TODO: Instead of logging show a modal with information useful for the user
-            .catch(error => setErrorModalVisible(true))
+            .catch(error => console.log(error))
     }
 
     const onForgotPasswordPressed = () => {

@@ -1,7 +1,6 @@
 import React from "react";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import FeedScreen from "./FeedScreen";
-import DashboardScreen from "./NewDashboardScreen/DashboardScreen";
+import DashboardScreen from "./DashboardScreen/DashboardScreen"
 import MyCarScreen from "./MyCarScreen";
 import ChatScreen from "./ChatScreen";
 import AppointmentsScreen from "./AppointmentsScreen"

@@ -12,19 +12,20 @@ export const ServiceList = (props) => {
                 <TextField source='serviceType' />
                 <TextField source='description' />
                 <TextField source='state' />
-                <ReferenceField source='vehicle_id' reference='vehicles'>
+                <TextField source="stateDescription"/>
+                <ReferenceField source='vehicleId' reference='vehicles'>
                     <TextField source='plate'/>
                 </ReferenceField>
                 <DateField source='startedAt' showTime showDate />
                 <DateField source='expectedAt' showTime showDate />
                 <DateField source='finishedAt' showTime showDate />
-                <ReferenceField source='workshop_id' reference='workshops'>
+                <ReferenceField source='workshopId' reference='workshops'>
                     <TextField source='name' />
                 </ReferenceField>
-                <ReferenceField source='payment_id' reference='payments'>
+                <ReferenceField source='paymentId' reference='payments'>
                     <TextField source='amount' />
                 </ReferenceField>
-                <ReferenceField source='user_id' reference='users'>
+                <ReferenceField source='userId' reference='users'>
                     <TextField source='name' />
                 </ReferenceField>
                 <EditButton />
@@ -48,13 +49,14 @@ export const ServiceCreate = (props) => {
                     { id: 'In Process', name: 'In Process'},
                     { id: 'Finished', name: 'Finished'},
                 ]} />
-                <ReferenceInput source='vehicle_id' reference='vehicles'/>
+                <TextInput source='stateDescription' multiline />
+                <ReferenceInput source='vehicleId' reference='vehicles'/>
                 <DateTimeInput source='startedAt' />
                 <DateTimeInput source='expectedAt' />
                 <DateTimeInput source='finishedAt'/>
-                <ReferenceInput source='workshop_id' reference='workshops'/>
-                <ReferenceInput source='payment_id' reference='payments'/>
-                <ReferenceInput source='user_id' reference='users'/>
+                <ReferenceInput source='workshopId' reference='workshops'/>
+                <ReferenceInput source='paymentId' reference='payments'/>
+                <ReferenceInput source='userId' reference='users'/>
             </SimpleForm>
         </Create>
     )
@@ -74,13 +76,14 @@ export const ServiceEdit = (props) => {
                     { id: 'In Process', name: 'In Process'},
                     { id: 'Finished', name: 'Finished'},
                 ]} />
-                <ReferenceInput source='vehicle_id' reference='vehicles'/>
+                <TextInput source='stateDescription' multiline />
+                <ReferenceInput source='vehicleId' reference='vehicles'/>
                 <DateTimeInput source='startedAt' />
                 <DateTimeInput source='expectedAt' />
                 <DateTimeInput source='finishedAt'/>
-                <ReferenceInput source='workshop_id' reference='workshops'/>
-                <ReferenceInput source='payment_id' reference='payments'/>
-                <ReferenceInput source='user_id' reference='users'/>
+                <ReferenceInput source='workshopId' reference='workshops'/>
+                <ReferenceInput source='paymentId' reference='payments'/>
+                <ReferenceInput source='userId' reference='users'/>
             </SimpleForm>
         </Edit>
     )

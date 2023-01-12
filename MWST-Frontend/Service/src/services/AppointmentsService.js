@@ -16,7 +16,7 @@ export const getAppointment = async (appointmentId) => {
 }
 
 export const getAllAppointments = async (userId) => {
-    const response =  await fetch(`${API_URL}/services?user_id=${userId}`, {
+    const response =  await fetch(`${API_URL}/services?userId=${userId}`, {
         method: 'GET',
     })
 
@@ -30,7 +30,7 @@ export const getAllAppointments = async (userId) => {
 }
 
 export const getLatestFinishedAppointments = async (userId) => { 
-    const response =  await fetch(`${API_URL}/services?user_id=${userId}&state=Finished`, {
+    const response =  await fetch(`${API_URL}/services?userId=${userId}&state=Finished&_expand=payment`, {
         method: 'GET',
     })
 
@@ -43,20 +43,34 @@ export const getLatestFinishedAppointments = async (userId) => {
     }
 }
 
+export const getPendingAppointment = async (userId) => {
+    const response = await fetch(`${API_URL}/services?userId=${userId}&state=In Process&_expand=workshop`, {
+        method: 'GET'
+    })
+
+    if (response.ok) {
+        const result = await response.json()
+        return Promise.resolve(result[0])
+    }
+    else {
+        return Promise.reject(response)
+    }
+}
+
 export const getEmptyAppointment = () => {
     return {
         id: '',
         serviceType: '',
         description: '',
         state: '',
-        state_description: '',
-        vehicle_id: '',
+        stateDescription: '',
+        vehicleId: '',
         startedAt: '',
         expectedAt: '',
         finishedAt: '',
-        payment_id: '',
-        workshop_id: '',
-        user_id: ''
+        paymentId: '',
+        workshopId: '',
+        userId: ''
     }
 }
 
@@ -70,14 +84,14 @@ export const createAppointment = async (serviceType, title, vehicleId, selectedT
             serviceType: serviceType,
             description: title,
             state: 'Not started',
-            state_description: 'The mechanics have not looked at the vehicle',
-            vehicle_id: vehicleId,
+            stateDescription: 'The mechanics have not looked at the vehicle',
+            vehicleId: vehicleId,
             startedAt:  formatDate(selectedTime),
             expectedAt: formatDate(selectedTime),
             finishedAt: formatDate(selectedTime),
-            payment_id: 1,
-            workshop_id: 1,
-            user_id: user.id
+            paymentId: 1,
+            workshopId: 1,
+            userId: user.id
         })
     })
 

@@ -1,7 +1,7 @@
 import { API_URL } from "@env"
 
 export const getAllVehicles = async (userId) => {
-    const response = await fetch(`${API_URL}/vehicles?user_id=${userId}`, {
+    const response = await fetch(`${API_URL}/vehicles?userId=${userId}`, {
         method: 'GET'
     })
 
@@ -21,7 +21,7 @@ export const createVehicle = async (userId, plate, model, vin) => {
             'Content-type': 'application/json'
         },
         body: JSON.stringify({
-            user_id: userId,
+            userId: userId,
             plate: plate,
             model: model,
             vin: vin
@@ -41,7 +41,7 @@ export const editVehicle = async (vehicleId, userId, plate, model, vin) => {
             'Content-type': 'application/json'
         },
         body: JSON.stringify({
-            user_id: userId,
+            userId: userId,
             plate: plate,
             model: model,
             vin: vin

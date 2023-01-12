@@ -41,6 +41,7 @@
         "switchLanguage": "Cambiar idioma",
         "paymentHistory": "Historia de pagos",
         "returnToSignIn": "Regresar a login",
+        "creditCardList": "Lista de tarjetas de crédito",
         "vehicleList": "Lista de vehículos",
 
         "_comment5": "Home screen translation data",
@@ -92,6 +93,16 @@
         "understood": "Entendido",
         "invalidUsernameMessage": "Nombre de usuario debe estar entre 4 y 16 carácteres",
         "invalidEmailMessage": "El correo no es válido",
-        "invalidPasswordMessage": "La contraseña debe tener al menos 8 carácteres"
+        "invalidPasswordMessage": "La contraseña debe tener al menos 8 carácteres",
+
+        "NewDashBoardScreen": "Translation data for dashboard screen",
+        "appointmentsAlredyStarted": "Citas ya comenzadas",
+        "recent": "Reciente",
+        "noPendingServices": "No tienes servicio pendiente",
+        "noServiceAvailable": "No existe ningún servicio en el historial",
+
+        "MyCarScreen": "Translation data for MyCarScreen",
+        "serviceState": "Estado del servicio",
+        "noServiceInProgress": "No tienes ningún servicio en progreso"
     }
 }

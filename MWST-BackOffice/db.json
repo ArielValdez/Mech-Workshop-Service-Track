@@ -9,7 +9,7 @@
       "lastname": "Roque",
       "id_card": "402-3041820-0",
       "role": "Client",
-      "phone_number": "8293412424",
+      "phoneNumber": "8293412424",
       "active": "true"
     },
     {
@@ -20,7 +20,7 @@
       "lastname": "Alonzo",
       "id_card": "402-3041120-0",
       "role": "Client",
-      "phone_number": "8096257412",
+      "phoneNumber": "8096257412",
       "id": "1s8jE4q",
       "active": "true"
     },
@@ -32,7 +32,7 @@
       "lastname": "Alonzo",
       "id_card": "402-3041120-0",
       "role": "Client",
-      "phone_number": "8095622091",
+      "phoneNumber": "8095622091",
       "active": true,
       "id": "Joxes0h"
     },
@@ -44,7 +44,7 @@
       "lastname": "Lopez",
       "id_card": "402-3041120-0",
       "role": "Client",
-      "phone_number": "8095622091",
+      "phoneNumber": "8095622091",
       "active": true,
       "id": "lzqgbOv"
     },
@@ -56,7 +56,7 @@
       "lastname": "",
       "id_card": "",
       "role": "Client",
-      "phone_number": "",
+      "phoneNumber": "",
       "active": true,
       "id": "aiOxvX5"
     },
@@ -68,19 +68,9 @@
       "lastname": "Roque",
       "id_card": "42096587685",
       "role": "Client",
-      "phone_number": "8095622091",
+      "phoneNumber": "8095622091",
       "active": true,
       "id": "zEH_jhu"
-    }
-  ],
-  "userProfiles": [
-    {
-      "profileId": "1",
-      "identificationCard": "402-3335212-20",
-      "telephone": "8095622091",
-      "phone": "8293412424",
-      "email": "carlosroque197@gmail.com",
-      "createdAt": "11/3/2022 9:07"
     }
   ],
   "services": [
@@ -89,69 +79,27 @@
       "serviceType": "Reparation",
       "description": "Morning checkup",
       "state": "In Process",
-      "state_description": "The state of the card is currently being checked",
-      "vehicle_id": "1",
-      "startedAt": "10/3/2022",
+      "stateDescription": "The state of the car is currently being checked",
+      "vehicleId": "1",
+      "startedAt": "2022-10-03T18:00:00",
       "expectedAt": "2022-10-03T18:30:00.000Z",
       "finishedAt": "2022-10-03T19:00:00.000Z",
-      "payment_id": "1",
-      "workshop_id": "1",
-      "user_id": "1"
-    },
-    {
-      "serviceType": "Reparation",
-      "description": "Nuevo servicio",
-      "state": "Not started",
-      "state_description": "The mechanics have not looked at the vehicle",
-      "vehicle_id": "1",
-      "startedAt": "Sun Dec 11 2022 13:53:04 GMT-0400 (AST)",
-      "expectedAt": "Sun Dec 11 2022 13:53:04 GMT-0400 (AST)",
-      "finishedAt": "Sun Dec 11 2022 13:53:04 GMT-0400 (AST)",
-      "payment_id": 1,
-      "workshop_id": 1,
-      "id": "SwUV83x",
-      "user_id": "1"
-    },
-    {
-      "serviceType": "Checkup",
-      "description": "Chequeo rutinario",
-      "state": "Not started",
-      "state_description": "The mechanics have not looked at the vehicle",
-      "vehicle_id": 1,
-      "startedAt": "Thu Jan 13 2022 16:30:20 GMT-0400 (AST)",
-      "expectedAt": "Thu Jan 13 2022 16:30:20 GMT-0400 (AST)",
-      "finishedAt": "Thu Jan 13 2022 16:30:20 GMT-0400 (AST)",
-      "payment_id": 1,
-      "workshop_id": 1,
-      "user_id": "lzqgbOv",
-      "id": "PfAsAwq"
-    },
-    {
-      "serviceType": "Reparation",
-      "description": "Nuevo chequeo",
-      "state": "Not started",
-      "state_description": "The mechanics have not looked at the vehicle",
-      "vehicle_id": 2,
-      "startedAt": "11/13/2022 22:55:57",
-      "expectedAt": "11/13/2022 22:55:57",
-      "finishedAt": "11/13/2022 22:55:57",
-      "payment_id": 1,
-      "workshop_id": 1,
-      "user_id": "1",
-      "id": "q6MHt2X"
+      "paymentId": "1",
+      "workshopId": "1",
+      "userId": "1"
     },
     {
       "serviceType": "Reparation",
       "description": "Nuevo chequeo",
       "state": "Finished",
-      "state_description": "The mechanics have not looked at the vehicle",
-      "vehicle_id": 2,
-      "startedAt": "1995-12-15T03:24:00",
+      "stateDescription": "The mechanics have not looked at the vehicle",
+      "vehicleId": "2",
+      "startedAt": "1995-12-17T03:00:00",
       "expectedAt": "1995-12-17T03:24:00",
       "finishedAt": "1995-12-17T05:24:00",
-      "payment_id": 1,
-      "workshop_id": 1,
-      "user_id": "1",
+      "paymentId": "1",
+      "workshopId": "1",
+      "userId": "1",
       "id": "kEJfXK6"
     }
   ],
@@ -161,81 +109,53 @@
       "name": "Mech Workshop Santo Domingo",
       "managerId": "2",
       "address": "Av. de los Próceres 49, Santo Domingo 10602",
-      "openAt": "9:00",
-      "closedAt": "22:00"
+      "openAt": "2023-01-10T13:00:11.386Z",
+      "closedAt": "22:00",
+      "longitude": "-69.945969",
+      "latitude": "18.467191"
     },
     {
       "name": "Nuevo Taller",
       "managerId": "1",
       "address": "Av. de los Próceres 49, Santo Domingo 10602",
       "openAt": "2022-12-08T13:00:43.869Z",
-      "closedAt": "2022-12-08T22:00:52.948Z",
+      "closedAt": "2023-01-10T23:00:54.081Z",
+      "longitude": "-69.945969",
+      "latitude": "18.467191",
       "id": "dwbmVbz"
     }
   ],
   "payments": [
     {
       "id": "1",
-      "service_id": "1",
-      "payment_type": "credit card",
+      "serviceId": "1",
+      "paymentType": "credit card",
       "amount": "10000"
     }
   ],
   "vehicles": [
     {
-      "user_id": "lzqgbOv",
+      "userId": "1",
       "plate": "A161900",
       "model": "Dodge Gran Caravan",
       "vin": "A87765J5432GF9876",
       "id": 1
     },
     {
-      "plate": "Sjsjsjj33",
-      "model": "Jnsjss",
-      "vin": "Snsnsns",
-      "id": 2
-    },
-    {
-      "plate": "A7665",
-      "model": "Ford F-Series",
-      "vin": "Ququs8zbajai11",
-      "id": 3
-    },
-    {
-      "plate": "Uuus",
-      "model": "Sjssj",
-      "vin": "Skskks",
-      "id": 4
-    },
-    {
-      "user_id": "1",
+      "userId": "1",
       "plate": "AB7725",
       "model": "Ford F-Series",
-      "vin": "Iaiqid87qbn",
+      "vin": "Iaiqid87qbnTYY",
       "id": 5
-    },
-    {
-      "user_id": "1",
-      "plate": "JKNKUUO",
-      "model": "Mujk",
-      "vin": "K",
-      "id": 6
-    },
-    {
-      "user_id": "1",
-      "plate": "HPPHM",
-      "model": "I",
-      "vin": "T",
-      "id": 7
     }
   ],
-  "credit_cards": [
+  "creditCards": [
     {
-      "id": "1",
-      "user_id": "1",
-      "numbers": "4256987145893265",
-      "expiration_date": "07/25",
-      "cvv": "333",
+      "id": 1,
+      "userId": "1",
+      "numbers": "4251658425439854",
+      "expirationDate": "07/25",
+      "cvv": "336",
       "name": "CARLOS ROQUE"
     }
   ]

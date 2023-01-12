@@ -26,13 +26,13 @@ const ServiceInfo = ({ service }) => {
                     <CustomText type="Medium">{service.serviceType}</CustomText>
                     <CustomText style={styles.grayText}>{printTime()}</CustomText>
                 </View>
-                <CustomText style={styles.price}>$100.00</CustomText>
+                <CustomText style={styles.price}>{'RD$' + service.payment.amount}</CustomText>
             </View>
         )
     }
     else {
         return (
-            <CustomText style={styles.noService}>No existe ningún servicio en el historial</CustomText>
+            <CustomText style={styles.noService}>{t('noServiceAvailable')}</CustomText>
         )
     }
 }

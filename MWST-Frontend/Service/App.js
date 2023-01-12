@@ -7,7 +7,7 @@ import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
 import NewPasswordScreen from './src/screens/NewPasswordScreen';
 import VehicleListScreen from './src/screens/VehicleListScreen/VehicleListScreen.js';
 import AddVehicleScreen from './src/screens/AddVehicleScreen/AddVehicleScreen.js';
-import AppointmentDetailScreen from './src/screens/AppointmentDetailScreen.js'
+import AppointmentDetailScreen from './src/screens/AppointmentDetailScreen/AppointmentDetailScreen.js'
 import ItemListScreen from './src/screens/ItemListScreen/ItemListScreen';
 import CreditCarEditScreen from './src/screens/CreditCarEditScreen/CreditCarEditScreen.js'
 import { NavigationContainer } from '@react-navigation/native';

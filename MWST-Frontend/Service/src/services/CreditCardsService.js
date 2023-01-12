@@ -1,7 +1,7 @@
 import { API_URL } from "@env"
 
 export const getAllCards = async (userId) => {
-    const response = await fetch(`${API_URL}/credit_cards?user_id=${userId}`, {
+    const response = await fetch(`${API_URL}/credit_cards?userId=${userId}`, {
         method: 'GET',
     })
 
@@ -17,10 +17,13 @@ export const getAllCards = async (userId) => {
 export const createCard = async (userId, numbers, expirationDate, cvv, name) => {
     const response = await fetch(`${API_URL}/credit_cards`, {
         method: 'POST',
+        headers: {
+            'Content-type': 'application/json'
+        },
         body: JSON.stringify({
-            'user_id': userId,
+            'userId': userId,
             'numbers': numbers,
-            'expiration_date': expirationDate,
+            'expirationDate': expirationDate,
             'cvv': cvv,
             'name': name
         })
@@ -37,11 +40,14 @@ export const createCard = async (userId, numbers, expirationDate, cvv, name) => 
 export const editCard = async (id, userId, numbers, expirationDate, cvv, name) => {
     const response = await fetch(`${API_URL}/credit_cards/${id}`, {
         method: 'PUT',
+        headers: {
+            'Content-type': 'application/json'
+        },
         body: JSON.stringify({
             'id': id,
-            'user_id': userId,
+            'userId': userId,
             'numbers': numbers,
-            'expiration_date': expirationDate,
+            'expirationDate': expirationDate,
             'cvv': cvv,
             'name': name
         })

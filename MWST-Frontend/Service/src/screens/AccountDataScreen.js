@@ -116,7 +116,7 @@ const AccountDataScreen = () => {
                 />
                 <AccountDataButton 
                     LeftIcon={() => <FontAwesome name='phone' size={40} color={theme.colors.darkPrimary} />}
-                    text={formatPhoneNumber(user.phone_number)}
+                    text={formatPhoneNumber(user.phoneNumber)}
                     greyedText={true}
                     RightIcon={() => <Ionicons />}
                 />
@@ -128,7 +128,7 @@ const AccountDataScreen = () => {
                 />
                 <AccountDataButton 
                     LeftIcon={() => <AntDesign name='creditcard' size={40} color={theme.colors.darkPrimary} />}
-                    text={t('paymentHistory')}
+                    text={t('creditCardList')}
                     RightIcon={() => <Ionicons />}
                     onPress={onPaymentHistoryPress}
                 />

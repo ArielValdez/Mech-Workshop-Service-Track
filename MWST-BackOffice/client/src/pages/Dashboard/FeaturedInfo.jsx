@@ -22,6 +22,15 @@ const FeaturedInfo = () => {
     const [ mostCommonModel, setMostCommonModel ] = useState('')
     const [ mostCommonService, setMostCommonService ] = useState('')
 
+    const printMostCommonService = () => {
+        if (mostCommonService == 'Reparation') {
+            return 'Reparación'
+        }
+        else {
+            return 'Chequeo'
+        }
+    }
+
     useEffect(() => {
         dataProvider
 			.getList("vehicles", {
@@ -56,7 +65,7 @@ const FeaturedInfo = () => {
     return (
         <div className="featured">
             <div className="featuredItem">
-                <span className="featuredTitle">Automovil más común</span>
+                <span className="featuredTitle">Modelo de Automovil más común</span>
                 <div className="featuredMoneyContainer">
                     <span className="featuredMoney">{mostCommonModel}</span>
                 </div>
@@ -64,7 +73,7 @@ const FeaturedInfo = () => {
             <div className="featuredItem">
                 <span className="featuredTitle">Tipo de servicio más deseado</span>
                 <div className="featuredMoneyContainer">
-                    <span className="featuredMoney">{mostCommonService}</span>
+                    <span className="featuredMoney">{printMostCommonService()}</span>
                 </div>
             </div>
         </div>

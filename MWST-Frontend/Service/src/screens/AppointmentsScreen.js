@@ -14,6 +14,7 @@ import { useUser } from "../context/UserContext";
 import { getAllAppointments, createAppointment } from "../services/AppointmentsService";
 import { getAllVehicles } from "../services/VehicleService";
 import PressableOpacity from "../components/PressableOpacity.js"
+import { format } from "date-fns";
 
 const appointmentTitleRegex = /[a-zA-Z]{3,}/
 const appointmentTitleErrorMessage = 'Título de cita debe tener al menos 3 carácteres'
@@ -43,10 +44,6 @@ const AppointmentModal = ({visible, onRequestClose, onReturnPress, onOkPress, ti
         if (isFocused) {
             getAllVehicles(user.id)
                 .then(vehicles => {
-                    //var arr = []
-                    //vehicles.forEach(vehicle => {
-                       // arr.push({ label: vehicle.plate, value: vehicle.id})
-                    //})
                     setVehicles(vehicles)
                 })
                 .catch(err => console.log(err))
@@ -78,7 +75,7 @@ const AppointmentModal = ({visible, onRequestClose, onReturnPress, onOkPress, ti
 						style={modalStyles.clockIcon}
 						onPress={() => setShowTimePicker(true)}
 					>
-						<FontAwesome5 name="clock" size={35} />
+						<FontAwesome5 name="clock" size={35} color={theme.colors.black}/>
 					</Pressable>
 
 					<DropDownPicker
@@ -270,7 +267,8 @@ const AppointmentsScreen = () => {
     const onModalOkPress = (title, vehicleId, serviceType) => {
         fetchServices()
         setModalVisible(false)
-        createAppointment(serviceType, title, vehicleId, selectedTime, user.id)
+        const formattedDate = format(selectedTime, "yyyy-MM-dd'T'HH:mm:ss")
+        createAppointment(serviceType, title, vehicleId, formattedDate, user.id)
             .then(result => console.log('The service has been successfully posted'))
             .catch(err => console.log(err))
     }

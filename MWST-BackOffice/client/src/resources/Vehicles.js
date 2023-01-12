@@ -6,7 +6,7 @@ export const VehicleList = (props) => {
         <List title='Vehicle list' {...props}>
             <Datagrid>
                 <TextField source='id' />
-                <TextField source='user_id' />
+                <TextField source='userId' />
                 <TextField source='plate' />
                 <TextField source='model' />
                 <TextField source='vin' />
@@ -21,7 +21,7 @@ export const VehicleCreate = (props) => {
     return (
         <Create title='Create vehicle' {...props}>
             <SimpleForm>
-                <TextInput source='user_id' />
+                <TextInput source='userId' />
                 <TextInput source='plate' placeholder='A759686'/>
                 <TextInput source='model' />
                 <TextInput source='vin' placeholder='4Y1SL65848Z411439'/>
@@ -34,7 +34,7 @@ export const VehicleEdit = (props) => {
     return (
         <Edit title='Edit vehicle' {...props}>
             <SimpleForm>
-                <TextInput source='user_id' />
+                <TextInput source='userId' />
                 <TextInput source='plate' placeholder='A759686'/>
                 <TextInput source='model' />
                 <TextInput source='vin' placeholder='4Y1SL65848Z411439'/>

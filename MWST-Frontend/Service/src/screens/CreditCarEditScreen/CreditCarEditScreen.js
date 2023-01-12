@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next"
 import CustomButton from "../../components/CustomButton"
 import { editCard, createCard } from "../../services/CreditCardsService"
 import { useUser } from "../../context/UserContext"
+import { useNavigation } from "@react-navigation/native"
 
 const CreditCarEditScreen = ({route}) => {
     const [ cardNumber1, setCardNumber1 ] = useState()
@@ -17,7 +18,8 @@ const CreditCarEditScreen = ({route}) => {
     const [ cardHolderName, setCardHolderName ] = useState() 
 
     const { t, i18n } = useTranslation()
-    const user = useUser()
+    const navigation = useNavigation()
+    const [ user, setUser ]= useUser()
 
     useEffect(() => {
         if (route.params.isEditing) {
@@ -26,22 +28,27 @@ const CreditCarEditScreen = ({route}) => {
             setCardNumber2(card.numbers.substring(4, 8))
             setCardNumber3(card.numbers.substring(8, 12))
             setCardNumber4(card.numbers.substring(12, 16))
-            setExpirationDate(card.expiration_date)
+            setExpirationDate(card.expirationDate)
             setCvv(card.cvv)
             setCardHolderName(card.name)
         }
     }, [])
 
     const onSavePress = () => {
-        // Check for validity before editing/creating
+        // TODO: Check for validity before editing/creating
+        const numbers = cardNumber1 + cardNumber2 + cardNumber3 + cardNumber4
         if (route.params.isEditing) {
             editCard(route.params.creditCard.id, user.id, numbers, expirationDate, cvv, cardHolderName)
-                .then(result => console.log(result))
+                .then(result => {
+                    navigation.navigate('ItemList', { shouldRefresh: true })
+                })
                 .catch(err => console.log(err))
         }
         else {
             createCard(user.id, numbers, expirationDate, cvv, cardHolderName)
-                .then(result => console.log(result))
+                .then(result => {
+                    navigation.navigate('ItemList', { shouldRefresh: true })
+                })
                 .catch(err => console.log(err))
         }
     }

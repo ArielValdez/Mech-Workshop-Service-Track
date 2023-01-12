@@ -1,4 +1,6 @@
-import { Datagrid, DateField, List, TextField, field, Create, SimpleForm, TextInput, TimeInput, EditButton, DeleteButton, Edit } from "react-admin"
+import { Datagrid, DateField, List, TextField, field,
+    Create, SimpleForm, TextInput, TimeInput, EditButton,
+    DeleteButton, Edit, NumberInput } from "react-admin"
 
 export const WorkshopList = (props) => {
     return (
@@ -7,9 +9,10 @@ export const WorkshopList = (props) => {
                 <TextField source='id' />
                 <TextField source='name' />
                 <TextField source='managerId' />
-                <TextField source='locationId' />
                 <DateField source='openAt' showTime showDate={false} />
                 <DateField source='closedAt' showTime showDate={false} />
+                <TextField source="latitude" />
+                <TextField source="longitude" />
                 <EditButton />
                 <DeleteButton />
             </Datagrid>
@@ -23,9 +26,10 @@ export const WorkshopCreate = (props) => {
             <SimpleForm>
                 <TextInput source='name' />
                 <TextInput source='managerId' />
-                <TextInput source='locationId' />
                 <TimeInput source='openAt' />
                 <TimeInput source='closedAt' />
+                <NumberInput source="latitude" />
+                <NumberInput source="longitude" />
             </SimpleForm>
         </Create>
     )
@@ -37,9 +41,10 @@ export const WorkshopEdit = (props) => {
             <SimpleForm>
                 <TextInput source='name' />
                 <TextInput source='managerId' />
-                <TextInput source='locationId' />
                 <TimeInput source='openAt' />
                 <TimeInput source='closedAt' />
+                <NumberInput source="latitude" />
+                <NumberInput source="longitude" />
             </SimpleForm>
         </Edit>
     )

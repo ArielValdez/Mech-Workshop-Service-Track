@@ -14,7 +14,7 @@ import { UsernameRegex, InvalidUsernameMessage, EmailRegex,
      InvalidEmailMessage, PasswordRegex, InvalidPasswordMessage } from '../Constants'
 import theme from "../Theme"
 import { useTranslation } from "react-i18next"
-import { createUser } from "../services/UserService"
+import { createUser, getUser } from "../services/UserService"
 
 //  TODO: Regex pattern for name input, last name input, phone number input and idCard input
 //  TODO: Make error messages available in english and spanish
@@ -50,7 +50,7 @@ const SignUpScreen = () => {
                 passwordRegex.test(password) && password == confirmPassword) {
                     // Check if the user alredy exist before attempting to create a new account
                     getUser(email, password).then(user => {
-                        if (user !== undefined) {
+                        if (user) {
                             setErrorModalText(t('userAlredyExistsMessage'))
                             setErrorModalVisible(true)
                         }

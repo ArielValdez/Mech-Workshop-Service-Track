@@ -5,8 +5,8 @@ export const PaymentList = (props) => {
         <List title='Payments' {...props}>
             <Datagrid>
                 <TextField source='id' />
-                <TextField source='service_id' />
-                <TextField source='payment_type' />
+                <TextField source='serviceId' />
+                <TextField source='paymentType' />
                 <NumberField source='amount' locales='en-US' options={{style: 'currency', currency: 'USD'}} />
             </Datagrid>
         </List>
