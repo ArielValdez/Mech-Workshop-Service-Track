@@ -48,3 +48,23 @@ export const createUser = async (firstname, lastname, email, phone, username, id
         return Promise.reject('We failed to create the user for some reason')
     }
 }
+
+export const isEmailTaken = async (email) => {
+    const response = await fetch(`${API_URL}/users?email=${email}`, {
+        method: 'GET'
+    })
+
+    if (response.ok) {
+        const result = await response.json()
+        console.log(result)
+        if (result.length > 0) {
+            return Promise.resolve(true)
+        }
+        else {
+            return Promise.resolve(false)
+        }
+    }
+    else {
+        return Promise.reject(response)
+    }
+}
