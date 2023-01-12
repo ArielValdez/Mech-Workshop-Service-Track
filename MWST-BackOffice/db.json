@@ -71,6 +71,18 @@
       "phoneNumber": "8095622091",
       "active": true,
       "id": "zEH_jhu"
+    },
+    {
+      "username": "Pepe",
+      "password": "pepe@123",
+      "email": "carlosroque197@gmail.com",
+      "name": "Carlos",
+      "lastname": "Roque",
+      "idCard": "00089643512",
+      "role": "Client",
+      "phoneNumber": "8095632091",
+      "active": true,
+      "id": "djfdFbs"
     }
   ],
   "services": [
@@ -111,8 +123,8 @@
       "address": "Av. de los Próceres 49, Santo Domingo 10602",
       "openAt": "2023-01-10T13:00:11.386Z",
       "closedAt": "22:00",
-      "longitude": "-69.945969",
-      "latitude": "18.467191"
+      "longitude": -69.939752,
+      "latitude": 18.468213
     },
     {
       "name": "Nuevo Taller",
@@ -120,8 +132,8 @@
       "address": "Av. de los Próceres 49, Santo Domingo 10602",
       "openAt": "2022-12-08T13:00:43.869Z",
       "closedAt": "2023-01-10T23:00:54.081Z",
-      "longitude": "-69.945969",
-      "latitude": "18.467191",
+      "longitude": -69.94211,
+      "latitude": 18.472517,
       "id": "dwbmVbz"
     }
   ],

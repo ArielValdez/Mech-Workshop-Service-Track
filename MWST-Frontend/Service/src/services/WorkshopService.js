@@ -14,6 +14,20 @@ export const getWorkshop = async (workshopId) => {
     }
 }
 
+export const getAllWorkshops = async () => {
+    const response = await fetch(`${API_URL}/workshops`, {
+        method: 'GET'
+    })
+
+    if (response.ok) {
+        const result = await response.json()
+        return Promise.resolve(result)
+    }
+    else {
+        return Promise.reject(response)
+    }
+}
+
 export const getEmptyWorkshop = () => {
     return {
         "id": "",

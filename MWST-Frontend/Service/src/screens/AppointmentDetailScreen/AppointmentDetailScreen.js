@@ -34,24 +34,28 @@ const AppointmentDetailScreen = ({ route }) => {
                     <CustomText>Santo Domingo, República Dominicana</CustomText>
                 </View>
             </View>
+            { workshop &&
             <MapView 
                 style={styles.map}
                 initialRegion={{
-                    latitude: 18.467191,
-                    longitude: -69.945969,
+                    latitude: workshop.latitude,
+                    longitude: workshop.longitude,
                     latitudeDelta: 0.0200,
                     longitudeDelta: 0.0200,
                 }}
             >
-                <Marker coordinate={{
-                    latitude: 18.467191,
-                    longitude: -69.945969, 
-                }}>
+                <Marker
+                    coordinate={{
+                        latitude: workshop.latitude,
+                        longitude: workshop.longitude  
+                    }}
+                >
                     <Callout>
                         <CustomText>{workshop.name}</CustomText>
                     </Callout>
                 </Marker>
             </MapView>
+            }           
             <CustomText style={styles.title} type="Medium">Horario</CustomText>
             <View style={styles.shadowContainer}>
                 <View style={styles.floatingContainer}>

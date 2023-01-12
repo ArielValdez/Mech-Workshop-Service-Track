@@ -18,17 +18,6 @@ export const getUser = async (email, password) =>  {
     else {
         return Promise.reject(response)
     }
-    // if (response.ok)
-    //     result = await response.json()
-    // else
-    //     return Promise.reject(response)
-        
-    // if (result.length > 0) {
-    //     return Promise.resolve(result[0])
-    // }
-    // else {
-    //     return Promise.reject('No user was found with the given credentials')
-    // }
 }
 
 export const createUser = async (firstname, lastname, email, phone, username, idCard, password) => {

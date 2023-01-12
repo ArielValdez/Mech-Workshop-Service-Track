@@ -10,6 +10,7 @@ import AddVehicleScreen from './src/screens/AddVehicleScreen/AddVehicleScreen.js
 import AppointmentDetailScreen from './src/screens/AppointmentDetailScreen/AppointmentDetailScreen.js'
 import ItemListScreen from './src/screens/ItemListScreen/ItemListScreen';
 import CreditCarEditScreen from './src/screens/CreditCarEditScreen/CreditCarEditScreen.js'
+import WorkshopsMarkerScreen from './src/screens/WorkshopsMarkerScreen/WorkshopsMarkerScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { LocaleConfig } from 'react-native-calendars'
@@ -104,6 +105,14 @@ export default function App() {
 								options={{
 									headerShown: true,
 									title: "Edit card"
+								}}
+							/>
+							<Stack.Screen 
+								name="WorkshopsMarker"
+								component={WorkshopsMarkerScreen}
+								options={{
+									headerShown: true,
+									title: "Workshops"
 								}}
 							/>
 						</Stack.Navigator>

@@ -89,6 +89,10 @@ const AccountDataScreen = () => {
         navigation.navigate('ItemList', { isVehicleList: true })
     }
 
+    const onLocationPinPress = () => {
+        navigation.navigate('WorkshopsMarker')
+    }
+
     const onReturnToSignInPress = () => {
         navigation.navigate('SignIn')
     }
@@ -110,73 +114,83 @@ const AccountDataScreen = () => {
     }
 
     return (
-        <View style={styles.container}>
-            <LinearGradient
-                style={styles.gradientRectangle}
-                colors={[theme.colors.darkPrimary, theme.colors.lightPrimary]}
-                end={{x: 0.8, y: 0.5}} 
-            >
-            </LinearGradient>
-            <View style={styles.whiteCircle}>
-                <MaterialCommunityIcons style={styles.accountIcon} name='account' size={100}/>
-            </View>
-            <View style={styles.accountDataContainer}>
-                <AccountDataButton 
-                    LeftIcon={() => <MaterialCommunityIcons name='face-man' size={40} color={theme.colors.darkPrimary} />} 
-                    text={user.name + ' ' + user.lastname}  
-                    greyedText={true}
-                    RightIcon={() => <Ionicons />}
-                />
-                <AccountDataButton 
-                    LeftIcon={() => <FontAwesome name='phone' size={40} color={theme.colors.darkPrimary} />}
-                    text={formatPhoneNumber(user.phoneNumber)}
-                    greyedText={true}
-                    RightIcon={() => <Ionicons />}
-                />
-                <AccountDataButton 
-                    LeftIcon={() => <Entypo name='language' size={40} color={theme.colors.darkPrimary} />}
-                    text={t('switchLanguage')}
-                    RightIcon={() => <Octicons name='arrow-switch' size={40} />}
-                    onPress={onLanguageSwitchPress}
-                />
-                <AccountDataButton 
-                    LeftIcon={() => <AntDesign name='creditcard' size={40} color={theme.colors.darkPrimary} />}
-                    text={t('creditCardList')}
-                    RightIcon={() => <Ionicons />}
-                    onPress={onPaymentHistoryPress}
-                />
-                <AccountDataButton 
-                    LeftIcon={() => <FontAwesome5 name='car' size={40} color={theme.colors.darkPrimary} />}
-                    text={t('vehicleList')}
-                    RightIcon={() => <Ionicons />}
-                    onPress={onCarListPress}
-                />
+        <ScrollView style={styles.scrollContainer}>
+            <View style={styles.container}>
+                <LinearGradient
+                    style={styles.gradientRectangle}
+                    colors={[theme.colors.darkPrimary, theme.colors.lightPrimary]}
+                    end={{x: 0.8, y: 0.5}} 
+                >
+                </LinearGradient>
+                <View style={styles.whiteCircle}>
+                    <MaterialCommunityIcons style={styles.accountIcon} name='account' size={100}/>
+                </View>
+                <View style={styles.accountDataContainer}>
+                    <AccountDataButton 
+                        LeftIcon={() => <MaterialCommunityIcons name='face-man' size={40} color={theme.colors.darkPrimary} />} 
+                        text={user.name + ' ' + user.lastname}  
+                        greyedText={true}
+                        RightIcon={() => <Ionicons />}
+                    />
+                    <AccountDataButton 
+                        LeftIcon={() => <FontAwesome name='phone' size={40} color={theme.colors.darkPrimary} />}
+                        text={formatPhoneNumber(user.phoneNumber)}
+                        greyedText={true}
+                        RightIcon={() => <Ionicons />}
+                    />
+                    <AccountDataButton 
+                        LeftIcon={() => <Entypo name='language' size={40} color={theme.colors.darkPrimary} />}
+                        text={t('switchLanguage')}
+                        RightIcon={() => <Octicons name='arrow-switch' size={40} />}
+                        onPress={onLanguageSwitchPress}
+                    />
+                    <AccountDataButton 
+                        LeftIcon={() => <AntDesign name='creditcard' size={40} color={theme.colors.darkPrimary} />}
+                        text={t('creditCardList')}
+                        RightIcon={() => <Ionicons />}
+                        onPress={onPaymentHistoryPress}
+                    />
+                    <AccountDataButton 
+                        LeftIcon={() => <FontAwesome5 name='car' size={40} color={theme.colors.darkPrimary} />}
+                        text={t('vehicleList')}
+                        RightIcon={() => <Ionicons />}
+                        onPress={onCarListPress}
+                    />
+                    <AccountDataButton 
+                        LeftIcon={() => <Entypo name='location-pin' size={40} color={theme.colors.darkPrimary} />}
+                        text={t('findWorkshops')}
+                        RightIcon={() => <Ionicons />}
+                        onPress={onLocationPinPress}
+                    />
 
-                 <AccountDataButton 
-                    LeftIcon={() => <FontAwesome5 name='question-circle' size={40} color={theme.colors.darkPrimary} />}
-                    text={t('support')}
-                    RightIcon={() => <Ionicons />}
-                    onPress={() => openSupport(SupportLink)}
-                />
+                    <AccountDataButton 
+                        LeftIcon={() => <FontAwesome5 name='question-circle' size={40} color={theme.colors.darkPrimary} />}
+                        text={t('support')}
+                        RightIcon={() => <Ionicons />}
+                        onPress={() => openSupport(SupportLink)}
+                    />
 
-                <PressableOpacity onPress={onReturnToSignInPress}>
-                    <LinearGradient 
-                        style={styles.returnButton} 
-                        colors={[theme.colors.darkPrimary, theme.colors.lightPrimary]}
-                        end={{x: 0.9, y: 0.5}}
-                    >
-                        <CustomText style={styles.returnButtonText}>{t('returnToSignIn')}</CustomText>
-                    </LinearGradient>
-                </PressableOpacity> 
+                    <PressableOpacity onPress={onReturnToSignInPress}>
+                        <LinearGradient 
+                            style={styles.returnButton} 
+                            colors={[theme.colors.darkPrimary, theme.colors.lightPrimary]}
+                            end={{x: 0.9, y: 0.5}}
+                        >
+                            <CustomText style={styles.returnButtonText}>{t('returnToSignIn')}</CustomText>
+                        </LinearGradient>
+                    </PressableOpacity> 
+                </View>
             </View>
-        </View>
+        </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
+    scrollContainer: {
+        backgroundColor: theme.colors.white
+    },
     container: {
         flex: 1,
-        backgroundColor: theme.colors.white,
     },
     gradientRectangle: {
         height: 150,
