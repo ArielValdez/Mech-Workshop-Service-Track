@@ -1,5 +1,5 @@
 import { React, useState } from 'react'
-import { ScrollView, View, StyleSheet, FlatList, Text, Pressable } from "react-native"
+import { ScrollView, View, StyleSheet, FlatList, Text, Pressable, Linking } from "react-native"
 import { StackActions, useNavigation } from "@react-navigation/native";
 import { useTranslation } from 'react-i18next';
 import { Ionicons, MaterialIcons, MaterialCommunityIcons, FontAwesome, Octicons, Entypo, AntDesign, FontAwesome5 } from '@expo/vector-icons'
@@ -61,6 +61,8 @@ const accountDataStyles = StyleSheet.create({
     },
 })
 
+const SupportLink = "https://rafael00003.wixsite.com/mwst";
+
 const AccountDataScreen = () => {
     const { t, i18n } = useTranslation()
     const navigation = useNavigation()
@@ -89,6 +91,17 @@ const AccountDataScreen = () => {
 
     const onReturnToSignInPress = () => {
         navigation.navigate('SignIn')
+    }
+
+
+    const openSupport= async (url) => {
+        const isSupported = await Linking.canOpenURL(url);
+        if (isSupported){
+            await Linking.openURL(url);
+        } else  {
+            Alert.alert('Error');
+        }
+        
     }
 
     const formatPhoneNumber = (phoneNumber) => {
@@ -137,6 +150,13 @@ const AccountDataScreen = () => {
                     text={t('vehicleList')}
                     RightIcon={() => <Ionicons />}
                     onPress={onCarListPress}
+                />
+
+                 <AccountDataButton 
+                    LeftIcon={() => <FontAwesome5 name='question-circle' size={40} color={theme.colors.darkPrimary} />}
+                    text={t('support')}
+                    RightIcon={() => <Ionicons />}
+                    onPress={() => openSupport(SupportLink)}
                 />
 
                 <PressableOpacity onPress={onReturnToSignInPress}>

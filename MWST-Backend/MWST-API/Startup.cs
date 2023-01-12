@@ -35,16 +35,19 @@ namespace MWST_API
             });
 
             // Email Verification
-            //services.AddIdentity<IdentityUser, IdentityRole>(c =>
-            //{
-            //    //c.Password.RequiredLength = 4;
-            //    //c.Password.RequireDigit = false;
-            //    //c.Password.RequireNonAlphanumeric = false;
-            //    //c.Password.RequireUppercase = false;
-            //    c.SignIn.RequireConfirmedEmail = true;
-            //})
+            //services.AddIdentity<IdentityUser, IdentityRole>()
             //    .AddDefaultTokenProviders();
-                
+
+            //services.Configure<IdentityOptions>(options =>
+            //{
+            //    options.Password.RequiredLength = 4;
+            //    options.Password.RequiredUniqueChars = 0;
+            //    options.Password.RequireDigit = false;
+            //    options.Password.RequireLowercase = false;
+            //    options.Password.RequireNonAlphanumeric = false;
+            //    options.Password.RequireUppercase = false;
+            //    options.SignIn.RequireConfirmedAccount = true;
+            //});
 
             // JSON Serializer
             services.AddControllersWithViews().AddNewtonsoftJson(options => 
