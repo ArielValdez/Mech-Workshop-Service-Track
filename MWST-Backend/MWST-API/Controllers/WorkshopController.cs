@@ -27,10 +27,10 @@ namespace MWST_API.Controllers
 
         [Route("getWorkshop")]
         [HttpGet]
-        public JsonResult Get(WorkShop workShop)
+        public JsonResult Get(int idWorkshop)
         {
             // Query to select the data needed. Change to stored procedures
-            bool query = models.CheckWorkshop(workShop.ID_WorkShop);
+            bool query = models.CheckWorkshop(idWorkshop);
 
             try
             {

@@ -24,7 +24,7 @@ namespace MWST_API.Controllers
         {
         }
 
-        [Route("getModel")]
+        [Route("getModels")]
         [HttpGet]
         public JsonResult Get()
         {
@@ -59,6 +59,34 @@ namespace MWST_API.Controllers
                 return new JsonResult("An error has occurred during Get Request.");
             }
         }
+
+        //[Route("getModel")]
+        //[HttpDelete]
+        //public JsonResult Get(int idModel)
+        //{
+        //    bool query = models.G(idModel);
+
+        //    try
+        //    {
+        //        if (query)
+        //        {
+        //            error.Success();
+        //            return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Model has been deleted!");
+        //        }
+        //        else
+        //        {
+        //            return new JsonResult("Not all fields have been filled");
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        error.ErrorCode = "400";
+        //        error.ErrorMessage = "Something went wrong";
+        //        error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+        //        return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
+        //    }
+        //}
+
 
         [Route("postModel")]
         [HttpPost]
@@ -116,9 +144,9 @@ namespace MWST_API.Controllers
 
         [Route("deleteModel")]
         [HttpDelete]
-        public JsonResult Delete(Model model)
+        public JsonResult Delete(int idModel)
         {
-            bool query = models.DeleteModelo(model.ID_Model);
+            bool query = models.DeleteModelo(idModel);
 
             try
             {

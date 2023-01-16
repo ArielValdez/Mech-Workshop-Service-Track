@@ -126,9 +126,9 @@ namespace MWST_API.Controllers
 
         [Route("deleteMarca")]
         [HttpDelete]
-        public JsonResult Delete(Marca marca)
+        public JsonResult Delete(int idMarca)
         {
-            bool query = models.DeleteMarca(marca.ID_Marca);
+            bool query = models.DeleteMarca(idMarca);
 
             try
             {

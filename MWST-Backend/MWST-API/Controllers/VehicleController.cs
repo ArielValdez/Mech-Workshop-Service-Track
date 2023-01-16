@@ -25,7 +25,7 @@ namespace MWST_API.Controllers
 
         }
 
-        [Route("getVehicle")]
+        [Route("getVehicles")]
         [HttpGet]
         public JsonResult Get()
         {
@@ -61,6 +61,34 @@ namespace MWST_API.Controllers
                 return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
             }
         }
+
+        [Route("getVehicle")]
+        [HttpDelete]
+        public JsonResult Get(string matricula)
+        {
+            bool query = models.CheckVehicle(matricula);
+
+            try
+            {
+                if (query)
+                {
+                    error.Success();
+                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Vehicle has been deleted!");
+                }
+                else
+                {
+                    return new JsonResult("Not all fields have been filled");
+                }
+            }
+            catch (Exception e)
+            {
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
+            }
+        }
+
 
         [Route("postVehicle")]
         [HttpPost]
@@ -117,9 +145,9 @@ namespace MWST_API.Controllers
 
         [Route("deleteVehicle")]
         [HttpDelete]
-        public JsonResult Delete(Vehicle car)
+        public JsonResult Delete(int idCar)
         {
-            bool query = models.DeleteVehicle(car.ID_Vehicle);
+            bool query = models.DeleteVehicle(idCar);
 
             try
             {

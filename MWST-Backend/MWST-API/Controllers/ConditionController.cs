@@ -28,10 +28,10 @@ namespace MWST_API.Controllers
         }
         [Route("getCondition")]
         [HttpGet]
-        public JsonResult Get(Condition condition)
+        public JsonResult Get(int idCondition)
         {
             // Query to select the data needed. Change to stored procedures
-            bool query = models.CheckCondition(condition.ID_Estado);
+            bool query = models.CheckCondition(idCondition);
 
             try
             {
@@ -139,9 +139,9 @@ namespace MWST_API.Controllers
 
         [Route("deleteCondition")]
         [HttpDelete]
-        public JsonResult deleteCondition(Condition condition)
+        public JsonResult deleteCondition(int idCondition)
         {
-            bool query = models.DeleteCondition(condition.ID_Estado);
+            bool query = models.DeleteCondition(idCondition);
 
             try
             {

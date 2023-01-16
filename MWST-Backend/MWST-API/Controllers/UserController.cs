@@ -27,7 +27,7 @@ namespace MWST_API.Controllers
         }
 
         //Selects to get information
-        [Route("getUser")]
+        [Route("getUsersTester")]
         [HttpGet]
         public JsonResult Get()
         {

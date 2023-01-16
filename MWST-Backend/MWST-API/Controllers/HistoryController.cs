@@ -28,9 +28,9 @@ namespace MWST_API.Controllers
         // Gets the information of the users history
         [Route("getHistory")]
         [HttpGet]
-        public JsonResult Get(History history)
+        public JsonResult Get(int idUser, int idHistory)
         {
-            bool query = models.CheckHistory(history.ID_User, history.ID_History);
+            bool query = models.CheckHistory(idUser, idHistory);
 
             try
             {
@@ -129,9 +129,9 @@ namespace MWST_API.Controllers
 
         [Route("deleteHistory")]
         [HttpDelete]
-        public JsonResult Delete(History history)
+        public JsonResult Delete(int idHistory)
         {
-            bool query = models.DeleteHistory(history.ID_History);
+            bool query = models.DeleteHistory(idHistory);
             try
             {
                 if (query)

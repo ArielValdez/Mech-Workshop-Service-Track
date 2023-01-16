@@ -27,10 +27,10 @@ namespace MWST_API.Controllers
 
         [Route("getService")]
         [HttpGet]
-        public JsonResult Get(Service service)
+        public JsonResult Get(int idService)
         {
             // Query to select the data needed. Change to stored procedures
-            bool query = models.CheckService(service.ID_Service);
+            bool query = models.CheckService(idService);
 
             try
             {

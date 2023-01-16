@@ -30,8 +30,7 @@ namespace MWST_API.Controllers
             // Query to select the data needed
             // Use domain
             string query = @"select Forma_Pago, Pago_Servicio, Tipo_Servicio, FechaPromesa" +
-                            "from tblPago inner join Servicio on Servicio.ID_Servicio = Pago.ID_Servicio" +
-                            "where ID_Pago = @idPayment";
+                            "from tblPago inner join Servicio on Servicio.ID_Servicio = Pago.ID_Servicio";
 
             DataTable table = new DataTable();
             // New the connection string

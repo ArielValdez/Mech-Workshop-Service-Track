@@ -60,10 +60,10 @@ namespace MWST_API.Controllers
 
         [Route("getMaintenances")]
         [HttpGet]
-        public JsonResult Get(Mantenimiento maintenance)
+        public JsonResult Get(int idMaintenance)
         {
             // Query to select the data needed
-            bool query = models.CheckMaintenance(maintenance.ID_Mantenimiento);
+            bool query = models.CheckMaintenance(idMaintenance);
 
 
             try

@@ -27,10 +27,10 @@ namespace MWST_API.Controllers
 
         [Route("getPieza")]
         [HttpGet]
-        public JsonResult Get(Pieza parts)
+        public JsonResult Get(int idPart)
         {
             // Query to select the data needed. Change to stored procedures
-            bool query = models.CheckParts(parts.ID_Pago); //Check data access and Pieza model later
+            bool query = models.CheckParts(idPart);
 
             try
             {
