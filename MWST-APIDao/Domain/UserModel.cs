@@ -64,17 +64,17 @@ namespace Domain
         #endregion
 
         #region Register: Post
-        public bool RegisterAUser(int id, string username, string password, string email, string nombre,
+        public bool RegisterAUser(string username, string password, string email, string nombre,
                                   string apellido, string cedula, string rol,
                                   string telefono, string celular)
         {
-            bool registering = userDao.RegisterUser(id, username, password, email, nombre, apellido, cedula, rol, telefono, celular);
+            bool registering = userDao.RegisterUser(username, password, email, nombre, apellido, cedula, rol, telefono, celular);
             return registering;
         }
 
-        public bool RegisterUsersVehicle(string matricula, int idUser, int idMarca, int idModelo, string vin, string color)
+        public bool RegisterUsersVehicle(string matricula, int idUser, int idMarca, int idModelo, string vin/*, string color*/)
         {
-            bool registering = userDao.RegisterVehicle(matricula, idUser, idMarca, idModelo, vin, color);
+            bool registering = userDao.RegisterVehicle(matricula, idUser, idMarca, idModelo, vin/*, color*/);
             return registering;
         }
 
@@ -130,9 +130,9 @@ namespace Domain
             return updating;
         }
 
-        public bool UpdateVehicle(int idVehiculo, string matricula, int idUsuario, int idMarca, int idModelo, string vin, string color)
+        public bool UpdateVehicle(int idVehiculo, string matricula, int idUsuario, int idMarca, int idModelo, string vin/*, string color*/)
         {
-            bool updating = userDao.UpdateVehicle(idVehiculo, matricula, idUsuario, idMarca, idModelo, vin, color);
+            bool updating = userDao.UpdateVehicle(idVehiculo, matricula, idUsuario, idMarca, idModelo, vin/*, color*/);
             return updating;
         }
 

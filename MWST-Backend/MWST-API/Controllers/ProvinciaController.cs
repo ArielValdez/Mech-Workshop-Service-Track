@@ -17,6 +17,7 @@ namespace MWST_API.Controllers
     {
         private readonly Connection con = new Connection();
         private UserModel models = new UserModel();
+        private ErrorManager error = new ErrorManager();
 
         public ProvinciaController()
         {
@@ -27,16 +28,36 @@ namespace MWST_API.Controllers
         [HttpGet]
         public JsonResult Get()
         {
-            // This should not delete a row. Instead, put a user as "ïnactive".
+            // Query to select the data needed. Change to stored procedures
+            string query = @"select * from tblProvincia";
+
+            DataTable table = new DataTable();
+            // Check if does not return connection string
+            string sqlDataSource = con.ReturnConnection().ConnectionString;
+            SqlDataReader reader;
             try
             {
-                return new JsonResult("Not implemented yet.");
+                // Use the domain instead
+                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        reader = command.ExecuteReader();
+                        table.Load(reader);
+                        reader.Close();
+                        connection.Close();
+                    }
+                }
+                error.Success();
+                return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Vehicle get!");
             }
             catch (Exception e)
             {
-                Console.WriteLine("Get Exception Type: {0}", e.GetType());
-                Console.WriteLine("  Message: {0}", e.Message);
-                return new JsonResult("An error has occurred during Get Request.");
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
             }
         }
 

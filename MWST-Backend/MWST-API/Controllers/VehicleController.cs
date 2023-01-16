@@ -30,7 +30,7 @@ namespace MWST_API.Controllers
         public JsonResult Get()
         {
             // Query to select the data needed. Change to stored procedures
-            string query = @"select Matricula, VIN, Color from tblVehiculo";
+            string query = @"select Matricula, VIN from tblVehiculo";
 
             DataTable table = new DataTable();
             // Check if does not return connection string
@@ -94,7 +94,7 @@ namespace MWST_API.Controllers
         [HttpPost]
         public JsonResult Post(Vehicle car)
         {
-            bool query = models.RegisterUsersVehicle(car.Matricula, car.ID_User, car.ID_Marca, car.ID_Model, car.VIN, car.Color);
+            bool query = models.RegisterUsersVehicle(car.Matricula, car.ID_User, car.ID_Marca, car.ID_Model, car.VIN);
 
             try
             {
@@ -121,7 +121,7 @@ namespace MWST_API.Controllers
         [HttpPut]
         public JsonResult Put(Vehicle car)
         {
-            bool query = models.UpdateVehicle(car.ID_Vehicle, car.Matricula, car.ID_User, car.ID_Marca, car.ID_Model, car.VIN, car.Color);
+            bool query = models.UpdateVehicle(car.ID_Vehicle, car.Matricula, car.ID_User, car.ID_Marca, car.ID_Model, car.VIN);
             try
             {
                 if (query)

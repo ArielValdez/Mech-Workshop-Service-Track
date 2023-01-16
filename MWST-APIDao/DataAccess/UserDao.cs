@@ -419,7 +419,7 @@ namespace DataAccess
         #region Register
         // This method is used when the user registers into the database
         // Rol should be stored as an enum
-        public bool RegisterUser(int idUser, string username, string password, string email, string nombre,
+        public bool RegisterUser(string username, string password, string email, string nombre,
                                  string apellido, string cedula, string rol,
                                  string telefono, string celular)
         {
@@ -445,19 +445,15 @@ namespace DataAccess
                     {
                         //Inserting values into the database, table Usuario
                         command.CommandText = "insert into tblUsuario(ID_Usuario, Nombre, Apellido, Rol, Activo) " +
-                                                $"values({idUser}, @nombre, @apellido, @rol, {1})";
+                                                $"@nombre, @apellido, @rol, {1})";
 
                         command.Parameters.Add("@nombre", SqlDbType.VarChar, 30).Value = nombre;
                         command.Parameters.Add("@apellido", SqlDbType.VarChar, 30).Value = apellido;
                         command.Parameters.Add("@rol", SqlDbType.Char, 1).Value = rol;
 
-                        command.CommandType = CommandType.Text;
-                        command.ExecuteNonQuery();
-
                         //Inserting values into the database, table PerfilUsuario
                         command.CommandText = "insert into tblPerfilUsuario(ID_Usuario, Cedula, Username, uPassword, TelefonoFijo, Celular, Email, Fecha_Creacion) " +
-                                                $"values({idUser}, " +
-                                                "@cedula, @username, @password, @telefono, @celular, @email, @fechaCreacion)";
+                                                $"SCOPE_IDENTITY(), @cedula, @username, @password, @telefono, @celular, @email, @fechaCreacion)";
 
                         command.Parameters.Add("@username", SqlDbType.VarChar, 20).Value = username;
                         command.Parameters.Add("@password", SqlDbType.VarChar, 20).Value = password;
@@ -493,7 +489,7 @@ namespace DataAccess
             }
         }
 
-        public bool RegisterVehicle(string matricula, int idUsuario, int idMarca, int idModelo, string vin, string color)
+        public bool RegisterVehicle(string matricula, int idUsuario, int idMarca, int idModelo, string vin /*,string color*/)
         {
             using (var connection = GetConnection())
             {
@@ -517,7 +513,7 @@ namespace DataAccess
                         command.Parameters.Add("@idMarca", SqlDbType.Int).Value = idMarca; // FK of Marca
                         command.Parameters.Add("@idModelo", SqlDbType.Int).Value = idModelo; // FK of Modelo
                         command.Parameters.Add("@vin", SqlDbType.Char, 17).Value = vin;
-                        command.Parameters.Add("@color", SqlDbType.VarChar, 15).Value = color;
+                        //command.Parameters.Add("@color", SqlDbType.VarChar, 15).Value = color;
 
                         command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
@@ -977,7 +973,7 @@ namespace DataAccess
             }
         }
 
-        public bool UpdateVehicle(int idVehiculo, string matricula, int idUsuario, int idMarca, int idModelo, string vin, string color)
+        public bool UpdateVehicle(int idVehiculo, string matricula, int idUsuario, int idMarca, int idModelo, string vin/*, string color*/)
         {
             using (var connection = GetConnection())
             {
@@ -1002,7 +998,7 @@ namespace DataAccess
                         command.Parameters.Add("@idMarca", SqlDbType.Int).Value = idMarca; // FK of Marca
                         command.Parameters.Add("@idModelo", SqlDbType.Int).Value = idModelo; // FK of Modelo
                         command.Parameters.Add("@vin", SqlDbType.Char, 17).Value = vin;
-                        command.Parameters.Add("@color", SqlDbType.VarChar, 15).Value = color;
+                        //command.Parameters.Add("@color", SqlDbType.VarChar, 15).Value = color;
 
                         command.CommandType = CommandType.StoredProcedure;
                         int reader = command.ExecuteNonQuery();
