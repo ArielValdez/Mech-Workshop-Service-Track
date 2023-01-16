@@ -46,11 +46,60 @@ namespace MWST_API.Controllers
                     {
                         reader = command.ExecuteReader();
                         table.Load(reader);
-                        reader.Close();
-                        connection.Close();
                     }
                 }
-                return new JsonResult(table);
+                if (table.Rows.Count > 0 && table != null)
+                {
+                    return new JsonResult(table);
+                }
+                else
+                {
+                    return new JsonResult("Nothing here");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Get Request.");
+            }
+        }
+
+
+        [Route("getModel{id}")]
+        [HttpGet]
+        public JsonResult Get(int idModel)
+        {
+            // Query to select the data needed. Change to stored procedures
+            string query = @"select Nombre_Modelo from tblModelo where ID_Modelo = @idModel";
+
+            DataTable table = new DataTable();
+            // New the connection string
+            string sqlDataSource = (con.ReturnConnection().ConnectionString);
+            SqlDataReader reader;
+
+            try
+            {
+                // Use the domain instead
+                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@idModel", idModel);
+                        command.ExecuteNonQuery();
+                        reader = command.ExecuteReader();
+                        table.Load(reader);
+                    }
+                }
+                if (table.Rows.Count > 0 && table != null)
+                {
+                    return new JsonResult(table);
+                }
+                else
+                {
+                    return new JsonResult(table);
+                }
             }
             catch (Exception e)
             {
@@ -64,7 +113,7 @@ namespace MWST_API.Controllers
         //[HttpDelete]
         //public JsonResult Get(int idModel)
         //{
-        //    bool query = models.G(idModel);
+        //    bool query = models.CheckModel(idModel);
 
         //    try
         //    {

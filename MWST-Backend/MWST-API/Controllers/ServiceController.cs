@@ -25,19 +25,19 @@ namespace MWST_API.Controllers
             
         }
 
-        [Route("getService")]
+        [Route("getService{id}")]
         [HttpGet]
         public JsonResult Get(int idService)
         {
             // Query to select the data needed. Change to stored procedures
-            bool query = models.CheckService(idService);
+            DataTable query = models.CheckService(idService);
 
             try
             {
-                if (query)
+                if (query != null && query.Rows.Count > 0)
                 {
                     error.Success();
-                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Service get!");
+                    return new JsonResult(query);
                 }
                 else
                 {

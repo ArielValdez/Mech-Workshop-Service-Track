@@ -47,13 +47,14 @@ namespace DataAccess
             }
         }
         #region Access
-        public bool Login(string username, string password)
+        public DataTable Login(string username, string password)
         {
             try
             {
                 using (var connection = GetConnection())
                 {
                     connection.Open();
+                    DataTable table = new DataTable();
                     using (var command = new SqlCommand())
                     {
                         command.Connection = connection;
@@ -68,11 +69,12 @@ namespace DataAccess
 
                         if (reader.HasRows)
                         {
-                            return true;
+                            table.Load(reader);
+                            return table;
                         }
                         else
                         {
-                            return false;
+                            return table;
                         }
                     }
                 }
@@ -81,17 +83,18 @@ namespace DataAccess
             {
                 Console.WriteLine("Commit Exception Type: {0}", e.GetType());
                 Console.WriteLine("  Message: {0}", e.Message);
-                return false;
+                return null;
             }
         }
 
-        public bool UserHistory(int idUser, int idHistory)
+        public DataTable UserHistory(int idUser, int idHistory)
         {
             try
             {
                 using (var connection = GetConnection())
                 {
                     connection.Open();
+                    DataTable table = new DataTable();
                     using (var command = new SqlCommand())
                     {
                         command.Connection = connection;
@@ -108,11 +111,12 @@ namespace DataAccess
 
                         if (reader.HasRows)
                         {
-                            return true;
+                            table.Load(reader);
+                            return table;
                         }
                         else
                         {
-                            return false;
+                            return table;
                         }
                     }
                 }
@@ -121,17 +125,18 @@ namespace DataAccess
             {
                 Console.WriteLine("Commit Exception Type: {0}", e.GetType());
                 Console.WriteLine("  Message: {0}", e.Message);
-                return false;
+                return null;
             }
         }
 
-        public bool CheckVehicle(string matricula)
+        public DataTable CheckVehicle(string matricula)
         {
             try
             {
                 using (var connection = GetConnection())
                 {
                     connection.Open();
+                    DataTable table = new DataTable();
                     using (var command = new SqlCommand())
                     {
                         command.Connection = connection;
@@ -147,11 +152,12 @@ namespace DataAccess
 
                         if (reader.HasRows)
                         {
-                            return true;
+                            table.Load(reader);
+                            return table;
                         }
                         else
                         {
-                            return false;
+                            return table;
                         }
                     }
                 }
@@ -160,17 +166,18 @@ namespace DataAccess
             {
                 Console.WriteLine("Commit Exception Type: {0}", e.GetType());
                 Console.WriteLine("  Message: {0}", e.Message);
-                return false;
+                return null;
             }
         }
 
-        public bool CheckMaintenance(int idMaintenance)
+        public DataTable CheckMaintenance(int idMaintenance)
         {
             try
             {
                 using (var connection = GetConnection())
                 {
                     connection.Open();
+                    DataTable table = new DataTable();
                     using (var command = new SqlCommand())
                     {
                         command.Connection = connection;
@@ -184,11 +191,12 @@ namespace DataAccess
 
                         if (reader.HasRows)
                         {
-                            return true;
+                            table.Load(reader);
+                            return table;
                         }
                         else
                         {
-                            return false;
+                            return table;
                         }
                     }
                 }
@@ -197,17 +205,18 @@ namespace DataAccess
             {
                 Console.WriteLine("Commit Exception Type: {0}", e.GetType());
                 Console.WriteLine("  Message: {0}", e.Message);
-                return false;
+                return null;
             }
         }
 
-        public bool CheckService(int idService)
+        public DataTable CheckService(int idService)
         {
             try
             {
                 using (var connection = GetConnection())
                 {
                     connection.Open();
+                    DataTable table = new DataTable();
                     using (var command = new SqlCommand())
                     {
                         command.Connection = connection;
@@ -222,11 +231,12 @@ namespace DataAccess
 
                         if (reader.HasRows)
                         {
-                            return true;
+                            table.Load(reader);
+                            return table;
                         }
                         else
                         {
-                            return false;
+                            return table;
                         }
                     }
                 }
@@ -235,17 +245,18 @@ namespace DataAccess
             {
                 Console.WriteLine("Commit Exception Type: {0}", e.GetType());
                 Console.WriteLine("  Message: {0}", e.Message);
-                return false;
+                return null;
             }
         }
 
-        public bool CheckCondition(int idCondition)
+        public DataTable CheckCondition(int idCondition)
         {
             try
             {
                 using (var connection = GetConnection())
                 {
                     connection.Open();
+                    DataTable table = new DataTable();
                     using (var command = new SqlCommand())
                     {
                         command.Connection = connection;
@@ -261,11 +272,12 @@ namespace DataAccess
 
                         if (reader.HasRows)
                         {
-                            return true;
+                            table.Load(reader);
+                            return table;
                         }
                         else
                         {
-                            return false;
+                            return table;
                         }
                     }
                 }
@@ -274,16 +286,17 @@ namespace DataAccess
             {
                 Console.WriteLine("Commit Exception Type: {0}", e.GetType());
                 Console.WriteLine("  Message: {0}", e.Message);
-                return false;
+                return null;
             }
         }
 
-        public bool CheckPayment(int idPayment) {
+        public DataTable CheckPayment(int idPayment) {
             try
             {
                 using (var connection = GetConnection())
                 {
                     connection.Open();
+                    DataTable table = new DataTable();
                     using (var command = new SqlCommand())
                     {
                         command.Connection = connection;
@@ -299,11 +312,12 @@ namespace DataAccess
 
                         if (reader.HasRows)
                         {
-                            return true;
+                            table.Load(reader);
+                            return table;
                         }
                         else
                         {
-                            return false;
+                            return table;
                         }
                     }
                 }
@@ -312,7 +326,7 @@ namespace DataAccess
             {
                 Console.WriteLine("Commit Exception Type: {0}", e.GetType());
                 Console.WriteLine("  Message: {0}", e.Message);
-                return false;
+                return null;
             }
         }
 
@@ -321,12 +335,13 @@ namespace DataAccess
             return false;
         }
 
-        public bool CheckParts(int idParts) {
+        public DataTable CheckParts(int idParts) {
             try
             {
                 using (var connection = GetConnection())
                 {
                     connection.Open();
+                    DataTable table = new DataTable();
                     using (var command = new SqlCommand())
                     {
                         command.Connection = connection;
@@ -342,11 +357,12 @@ namespace DataAccess
 
                         if (reader.HasRows)
                         {
-                            return true;
+                            table.Load(reader);
+                            return table;
                         }
                         else
                         {
-                            return false;
+                            return table;
                         }
                     }
                 }
@@ -355,16 +371,17 @@ namespace DataAccess
             {
                 Console.WriteLine("Commit Exception Type: {0}", e.GetType());
                 Console.WriteLine("  Message: {0}", e.Message);
-                return false;
+                return null;
             }
         }
 
-        public bool CheckWorkshop (int idWorkshop) {
+        public DataTable CheckWorkshop (int idWorkshop) {
             try
             {
                 using (var connection = GetConnection())
                 {
                     connection.Open();
+                    DataTable table = new DataTable();
                     using (var command = new SqlCommand())
                     {
                         command.Connection = connection;
@@ -380,11 +397,12 @@ namespace DataAccess
 
                         if (reader.HasRows)
                         {
-                            return true;
+                            table.Load(reader);
+                            return table;
                         }
                         else
                         {
-                            return false;
+                            return table;
                         }
                     }
                 }
@@ -393,7 +411,7 @@ namespace DataAccess
             {
                 Console.WriteLine("Commit Exception Type: {0}", e.GetType());
                 Console.WriteLine("  Message: {0}", e.Message);
-                return false;
+                return null;
             }
         }
         #endregion

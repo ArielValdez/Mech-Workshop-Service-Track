@@ -25,19 +25,19 @@ namespace MWST_API.Controllers
             
         }
 
-        [Route("getPieza")]
+        [Route("getPieza{id}")]
         [HttpGet]
         public JsonResult Get(int idPart)
         {
             // Query to select the data needed. Change to stored procedures
-            bool query = models.CheckParts(idPart);
+            DataTable query = models.CheckParts(idPart);
 
             try
             {
-                if (query)
+                if (query != null && query.Rows.Count > 0)
                 {
                     error.Success();
-                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Pieza get!");
+                    return new JsonResult(query);
                 }
                 else
                 {

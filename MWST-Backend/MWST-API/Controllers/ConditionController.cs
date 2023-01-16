@@ -31,14 +31,14 @@ namespace MWST_API.Controllers
         public JsonResult Get(int idCondition)
         {
             // Query to select the data needed. Change to stored procedures
-            bool query = models.CheckCondition(idCondition);
+            DataTable query = models.CheckCondition(idCondition);
 
             try
             {
-                if (query)
+                if (query != null && query.Rows.Count > 0)
                 {
                     error.Success();
-                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Condition get!");
+                    return new JsonResult(query);
                 }
                 else
                 {

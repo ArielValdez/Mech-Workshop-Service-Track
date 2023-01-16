@@ -25,19 +25,19 @@ namespace MWST_API.Controllers
             
         }
 
-        [Route("getWorkshop")]
+        [Route("getWorkshop{id}")]
         [HttpGet]
         public JsonResult Get(int idWorkshop)
         {
             // Query to select the data needed. Change to stored procedures
-            bool query = models.CheckWorkshop(idWorkshop);
+            DataTable query = models.CheckWorkshop(idWorkshop);
 
             try
             {
-                if (query)
+                if (query != null && query.Rows.Count > 0)
                 {
                     error.Success();
-                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Workshop get!");
+                    return new JsonResult(query);
                 }
                 else
                 {

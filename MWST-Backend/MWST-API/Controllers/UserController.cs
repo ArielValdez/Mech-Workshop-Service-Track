@@ -36,7 +36,7 @@ namespace MWST_API.Controllers
                 error.Success();
                 DataTable table = models.Test();
 
-                return new JsonResult($"{error.ErrorCode}: {error.ErrorMessage} \n\r" + table);
+                return new JsonResult(table);
             }
             catch (Exception e)
             {
@@ -46,6 +46,34 @@ namespace MWST_API.Controllers
                 return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
             }
         }
+
+        //[Route("getUser{id}")]
+        //[HttpDelete]
+        //public JsonResult Get(int idUser)
+        //{
+        //    DataTable query = models.CheckUser(idUser);
+
+        //    try
+        //    {
+        //        if (query != null && query.Rows.Count > 0)
+        //        {
+        //            error.Success();
+        //            return new JsonResult(query);
+        //        }
+        //        else
+        //        {
+        //            return new JsonResult("Not all fields have been filled");
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        error.ErrorCode = "400";
+        //        error.ErrorMessage = "Something went wrong";
+        //        error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+        //        return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
+        //    }
+        //}
+
 
         // Adds information into the database
         [Route("registerUser")]

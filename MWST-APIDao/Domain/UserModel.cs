@@ -15,56 +15,50 @@ namespace Domain
         }
 
         #region Access: Get
-        public bool LoginUser(string username, string password)
+        public DataTable LoginUser(string username, string password)
         {
-            bool satisfactoryLogin = userDao.Login(username, password);
+            DataTable satisfactoryLogin = userDao.Login(username, password);
             Console.WriteLine("Login access: {0}", satisfactoryLogin);
             return satisfactoryLogin;
         }
 
-        //Check later
-        public bool CheckHistory(int idUser, int idHistory) {
-            bool checking = userDao.UserHistory(idUser, idHistory);
+        public DataTable CheckHistory(int idUser, int idHistory) {
+            DataTable checking = userDao.UserHistory(idUser, idHistory);
             return checking;
         }
 
-        public bool CheckVehicle(string matricula) {
-            bool checking = userDao.CheckVehicle(matricula);
+        public DataTable CheckVehicle(string matricula) {
+            DataTable checking = userDao.CheckVehicle(matricula);
             return checking;
         }
 
-        //Check later
-        public bool CheckMaintenance(int idMaintenance) {
-            bool checking = userDao.CheckMaintenance(idMaintenance);
+        public DataTable CheckMaintenance(int idMaintenance) {
+            DataTable checking = userDao.CheckMaintenance(idMaintenance);
             return checking;
         }
 
-        //Check later
-        public bool CheckService(int idService) {
-            bool checking = userDao.CheckService(idService);
+        public DataTable CheckService(int idService) {
+            DataTable checking = userDao.CheckService(idService);
             return checking;
         }
 
-        //Check later
-        public bool CheckCondition(int idCondition) {
-            bool checking = userDao.CheckCondition(idCondition);
+        public DataTable CheckCondition(int idCondition) {
+            DataTable checking = userDao.CheckCondition(idCondition);
             return checking;
         }
 
-        //Check later
-        public bool CheckPayment(int idService) {
-            bool checking = userDao.CheckPayment(idService);
+        public DataTable CheckPayment(int idService) {
+            DataTable checking = userDao.CheckPayment(idService);
             return checking;
         }
 
-        //Check later
-        public bool CheckParts(int idPayment) {
-            bool checking = userDao.CheckParts(idPayment);
+        public DataTable CheckParts(int idPayment) {
+            DataTable checking = userDao.CheckParts(idPayment);
             return checking;
         }
 
-        public bool CheckWorkshop(int idWorkshop) {
-            bool checking = userDao.CheckWorkshop(idWorkshop);
+        public DataTable CheckWorkshop(int idWorkshop) {
+            DataTable checking = userDao.CheckWorkshop(idWorkshop);
             return checking;
         }
         #endregion

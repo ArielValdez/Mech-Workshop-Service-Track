@@ -17,13 +17,14 @@ namespace MWST_API.Controllers
     {
         private readonly Connection con = new Connection();
         private UserModel models = new UserModel();
+        private ErrorManager error = new ErrorManager();
 
         public PagoController(IConfiguration configuration)
         {
         }
 
         //Selects to get information
-        [Route("getPago")]
+        [Route("getPagos")]
         [HttpGet]
         public JsonResult Get()
         {
@@ -60,6 +61,35 @@ namespace MWST_API.Controllers
                 return new JsonResult("An error has occurred during Get Request.");
             }
         }
+
+        [Route("getPago{id}")]
+        [HttpGet]
+        public JsonResult Get(int idPayment)
+        {
+            // Query to select the data needed. Change to stored procedures
+            DataTable query = models.CheckParts(idPayment);
+
+            try
+            {
+                if (query != null && query.Rows.Count > 0)
+                {
+                    error.Success();
+                    return new JsonResult(query);
+                }
+                else
+                {
+                    return new JsonResult("Not all fields have been filled");
+                }
+            }
+            catch (Exception e)
+            {
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
+            }
+        }
+
 
         // Adds information into the database
         [Route("postPago")]

@@ -30,20 +30,20 @@ namespace MWST_API.Controllers
         public JsonResult Get(string username, string password)
         {
             // Query to select the data needed. Change to stored procedures
-            bool query = models.LoginUser(username, password);
+            DataTable query = models.LoginUser(username, password);
             
             try
             {
                 if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
                 {
-                    if (query)
+                    if (query != null && query.Rows.Count > 0)
                     {
                         error.Success();
-                        return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Login Successful!");
+                        return new JsonResult(query);
                     }
                     else
                     {
-                        return new JsonResult("User does not exists.");
+                        return new JsonResult("User does not exist in the database");
                     }
                 }
                 else

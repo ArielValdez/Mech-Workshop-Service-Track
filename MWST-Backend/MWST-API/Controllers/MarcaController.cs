@@ -24,7 +24,7 @@ namespace MWST_API.Controllers
         {
         }
 
-        [Route("getMarca")]
+        [Route("getMarcas")]
         [HttpGet]
         public JsonResult Get()
         {
@@ -58,6 +58,50 @@ namespace MWST_API.Controllers
                 return new JsonResult("An error has occurred during Get Request.");
             }
         }
+
+        [Route("getMarca{id}")]
+        [HttpGet]
+        public JsonResult Get(int idMarca)
+        {
+            // Query to select the data needed. Change to stored procedures
+            string query = @"select Nombre_Modelo from tblModelo where ID_Marca = @idMarca";
+
+            DataTable table = new DataTable();
+            // New the connection string
+            string sqlDataSource = (con.ReturnConnection().ConnectionString);
+            SqlDataReader reader;
+
+            try
+            {
+                // Use the domain instead
+                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@idMarca", idMarca);
+                        command.ExecuteNonQuery();
+                        reader = command.ExecuteReader();
+                        table.Load(reader);
+                    }
+                }
+                if (table.Rows.Count > 0 && table != null)
+                {
+                    return new JsonResult(table);
+                }
+                else
+                {
+                    return new JsonResult(table);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Get Exception Type: {0}", e.GetType());
+                Console.WriteLine("  Message: {0}", e.Message);
+                return new JsonResult("An error has occurred during Get Request.");
+            }
+        }
+
 
         // There is no Data Access to Register or Update Marca
         /*

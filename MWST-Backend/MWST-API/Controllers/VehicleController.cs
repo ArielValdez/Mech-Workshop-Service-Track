@@ -62,18 +62,18 @@ namespace MWST_API.Controllers
             }
         }
 
-        [Route("getVehicle")]
+        [Route("getVehicle{id}")]
         [HttpDelete]
         public JsonResult Get(string matricula)
         {
-            bool query = models.CheckVehicle(matricula);
+            DataTable query = models.CheckVehicle(matricula);
 
             try
             {
-                if (query)
+                if (query != null && query.Rows.Count > 0)
                 {
                     error.Success();
-                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Vehicle has been deleted!");
+                    return new JsonResult(query);
                 }
                 else
                 {

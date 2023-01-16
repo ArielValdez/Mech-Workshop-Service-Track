@@ -30,14 +30,14 @@ namespace MWST_API.Controllers
         [HttpGet]
         public JsonResult Get(int idUser, int idHistory)
         {
-            bool query = models.CheckHistory(idUser, idHistory);
+            DataTable query = models.CheckHistory(idUser, idHistory);
 
             try
             {
-                if (query)
+                if (query != null && query.Rows.Count > 0)
                 {
                     error.Success();
-                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "History get!");
+                    return new JsonResult(query);
                 }
                 else
                 {

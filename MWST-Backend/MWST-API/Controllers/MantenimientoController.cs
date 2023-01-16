@@ -63,15 +63,14 @@ namespace MWST_API.Controllers
         public JsonResult Get(int idMaintenance)
         {
             // Query to select the data needed
-            bool query = models.CheckMaintenance(idMaintenance);
-
+            DataTable query = models.CheckMaintenance(idMaintenance);
 
             try
             {
-                if (query)
+                if (query != null && query.Rows.Count > 0)
                 {
                     error.Success();
-                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Maintenance get!");
+                    return new JsonResult(query);
                 }
                 else
                 {

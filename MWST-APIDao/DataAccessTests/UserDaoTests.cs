@@ -12,7 +12,7 @@ namespace DataAccessTests
         {
             UserDao userdao = new UserDao();
             var check = userdao.Login("Ariel Valdez", "1234");
-            var validate = check == true ? true : false;
+            var validate = check;
 
             Assert.AreEqual(validate, check);
         }
@@ -22,7 +22,7 @@ namespace DataAccessTests
         {
             UserDao userdao = new UserDao();
             var check = userdao.UserHistory(1, 2);
-            var validate = check == true ? true : false;
+            var validate = check;
 
             Assert.AreEqual(validate, check);
         }
@@ -32,7 +32,7 @@ namespace DataAccessTests
         {
             UserDao userdao = new UserDao();
             var check = userdao.CheckVehicle("A222222");
-            var validate = check == true ? true : false;
+            var validate = check;
 
             Assert.AreEqual(validate, check);
         }
@@ -42,7 +42,7 @@ namespace DataAccessTests
         {
             UserDao userdao = new UserDao();
             var check = userdao.CheckMaintenance(1);
-            var validate = check == true ? true : false;
+            var validate = check;
 
             Assert.AreEqual(validate, check);
         }
@@ -52,7 +52,7 @@ namespace DataAccessTests
         {
             UserDao userdao = new UserDao();
             var check = userdao.CheckService(1);
-            var validate = check == true ? true : false;
+            var validate = check;
 
             Assert.AreEqual(validate, check);
         }
@@ -72,7 +72,7 @@ namespace DataAccessTests
         {
             UserDao userdao = new UserDao();
             var check = userdao.CheckPayment(1);
-            var validate = check == true ? true : false;
+            var validate = check;
 
             Assert.AreEqual(validate, check);
         }
@@ -82,7 +82,7 @@ namespace DataAccessTests
         {
             UserDao userdao = new UserDao();
             var check = userdao.CheckParts(1);
-            var validate = check == true ? true : false;
+            var validate = check;
 
             Assert.AreEqual(validate, check);
         }
@@ -92,7 +92,7 @@ namespace DataAccessTests
         {
             UserDao userdao = new UserDao();
             var check = userdao.CheckWorkshop(1);
-            var validate = check == true ? true : false;
+            var validate = check;
 
             Assert.AreEqual(validate, check);
         }
