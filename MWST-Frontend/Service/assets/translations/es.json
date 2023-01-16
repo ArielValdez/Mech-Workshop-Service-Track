@@ -100,11 +100,14 @@
         "NewDashBoardScreen": "Translation data for dashboard screen",
         "appointmentsAlredyStarted": "Citas ya comenzadas",
         "recent": "Reciente",
-        "noPendingServices": "No tienes servicio pendiente",
+        "noPendingServices": "No tienes servicio en progreso",
         "noServiceAvailable": "No existe ningún servicio en el historial",
 
         "MyCarScreen": "Translation data for MyCarScreen",
         "serviceState": "Estado del servicio",
-        "noServiceInProgress": "No tienes ningún servicio en progreso"
+        "noServiceInProgress": "No tienes ningún servicio en progreso",
+
+        "WorkshopsMarkerScreen": "Translation data for WorkshopsMarkerScreen",
+        "you": "Tú"
     }
 }

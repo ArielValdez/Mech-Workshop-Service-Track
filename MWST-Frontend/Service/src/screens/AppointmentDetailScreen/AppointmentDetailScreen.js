@@ -34,7 +34,7 @@ const AppointmentDetailScreen = ({ route }) => {
                     <CustomText>Santo Domingo, República Dominicana</CustomText>
                 </View>
             </View>
-            { workshop &&
+            { workshop.latitude &&
             <MapView 
                 style={styles.map}
                 initialRegion={{

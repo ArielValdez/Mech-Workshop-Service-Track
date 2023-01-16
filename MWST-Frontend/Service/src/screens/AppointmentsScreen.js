@@ -190,7 +190,7 @@ const Appointment = ({ service }) => {
                 {service.description}
             </CustomText>
             <CustomText style={appointmentStyles.date}>
-                {service.expectedAt}
+                {format(new Date(service.expectedAt), 'yyyy-MM-dd HH:mm')}
             </CustomText>
         </PressableOpacity>
     )
@@ -265,11 +265,13 @@ const AppointmentsScreen = () => {
     }
 
     const onModalOkPress = (title, vehicleId, serviceType) => {
-        fetchServices()
         setModalVisible(false)
         const formattedDate = format(selectedTime, "yyyy-MM-dd'T'HH:mm:ss")
         createAppointment(serviceType, title, vehicleId, formattedDate, user.id)
-            .then(result => console.log('The service has been successfully posted'))
+            .then(result => {
+                fetchServices()
+                console.log('The service has been successfully posted')
+            })
             .catch(err => console.log(err))
     }
 

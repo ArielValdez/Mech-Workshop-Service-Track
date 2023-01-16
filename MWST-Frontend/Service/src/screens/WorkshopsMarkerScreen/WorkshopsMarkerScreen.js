@@ -64,7 +64,7 @@ const WorkshopsMarkerScreen = () => {
                 pinColor={theme.colors.lightPrimary}
             >
                 <Callout>
-                    <CustomText>This is you</CustomText>
+                    <CustomText>{t('you')}</CustomText>
                 </Callout>
             </Marker>
             }

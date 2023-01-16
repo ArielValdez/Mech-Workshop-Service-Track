@@ -13,6 +13,9 @@ const ServiceStateFeedback = ({ service }) => {
     const { t, i18n } = useTranslation() 
 
     if (service) {
+        if (service.state == 'Not started') {
+            return <></>
+        }
         if (service.state == 'In Process') {
             return (
                 <View style={{alignItems: 'center'}}>
@@ -33,7 +36,7 @@ const ServiceStateFeedback = ({ service }) => {
     else {
         return (
             <View>
-                <CustomText style={{fontSize: 17}} type="Medium">{t('noServiceInProgress')}</CustomText>
+                <CustomText style={{fontSize: 17, alignSelf: 'center'}} type="Medium">{t('noServiceInProgress')}</CustomText>
             </View>
         )
     }
@@ -71,9 +74,11 @@ const MyCarScreen = () => {
     return (
         <View style={styles.container}>
             <View style={styles.centeredContainer}>
-                <CustomText style={{fontSize: 20, marginBottom: 10, alignSelf: 'center'}} type="Bold">{t('serviceState')}</CustomText>
-                <Image source={Car} style={{height: height * 0.65, width: width * 0.9, resizeMode: 'stretch', backgroundColor: 'white'}}/>
-                <ServiceStateFeedback service={service}/>
+                <CustomText style={{fontSize: 20, marginBottom: 10, alignSelf: 'center'}} type="Bold">
+                    {t('serviceState')}
+                </CustomText>
+                <Image source={Car} style={{height: height * 0.65, width: width * 0.9, resizeMode: 'stretch', backgroundColor: 'white'}} />
+                <ServiceStateFeedback service={service} />
             </View>
         </View>
     )

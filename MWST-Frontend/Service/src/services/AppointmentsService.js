@@ -1,5 +1,6 @@
 import { API_URL } from "@env"
 import { formatDate } from "../utils/DateFormatting";
+import { format } from "date-fns";
 
 export const getAppointment = async (appointmentId) => {
     const response = await fetch(`{API_URL}/services/${appointmentId}`, {
@@ -74,7 +75,7 @@ export const getEmptyAppointment = () => {
     }
 }
 
-export const createAppointment = async (serviceType, title, vehicleId, selectedTime, userId) => {
+export const createAppointment = async (serviceType, title, vehicleId, formattedDate, userId) => {
     const response = await fetch(`${API_URL}/services`, {
         method: 'POST',
         headers: {
@@ -86,12 +87,12 @@ export const createAppointment = async (serviceType, title, vehicleId, selectedT
             state: 'Not started',
             stateDescription: 'The mechanics have not looked at the vehicle',
             vehicleId: vehicleId,
-            startedAt:  formatDate(selectedTime),
-            expectedAt: formatDate(selectedTime),
-            finishedAt: formatDate(selectedTime),
+            startedAt:  formattedDate,
+            expectedAt: formattedDate,
+            finishedAt: formattedDate,
             paymentId: 1,
             workshopId: 1,
-            userId: user.id
+            userId: userId
         })
     })
 

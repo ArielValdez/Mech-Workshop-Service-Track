@@ -32,7 +32,6 @@ const ItemListScreen = ({ route }) => {
     }, [])
 
     useEffect(() => {
-        console.log(route.params.shouldRefresh)
         if (isFocused && route.params?.shouldRefresh) {
             if (isVehicleList.current) {
                 loadVehicleList()
@@ -56,7 +55,7 @@ const ItemListScreen = ({ route }) => {
     }, [user])
 
     const onAddButtonPress = () => {
-        if (route.params.isVehicleList) {
+        if (route.params?.isVehicleList || isVehicleList.current) {
             navigation.navigate('AddVehicle', { isEditing: false })
         }
         else {
@@ -65,7 +64,7 @@ const ItemListScreen = ({ route }) => {
     }
 
     const getAddButtonText = () => {
-        if (route.params.isVehicleList) {
+        if (route.params?.isVehicleList || isVehicleList.current) {
             return t('addVehicle')
         }
         else {

@@ -143,6 +143,30 @@
       "phoneNumber": "8095632091",
       "active": true,
       "id": "oeHINGX"
+    },
+    {
+      "username": "JoseUsuario",
+      "password": "contra@123",
+      "email": "carlosroque199@gmail.com",
+      "name": "Jose",
+      "lastname": "Perez",
+      "idCard": "08932578469",
+      "role": "Client",
+      "phoneNumber": "8095632091",
+      "active": true,
+      "id": "gFtd_0w"
+    },
+    {
+      "username": "Usuario",
+      "password": "contra@123",
+      "email": "carlosroque200@gmail.com",
+      "name": "Jose",
+      "lastname": "Perez",
+      "idCard": "07859632541",
+      "role": "Client",
+      "phoneNumber": "8095632091",
+      "active": true,
+      "id": "IX1uW2W"
     }
   ],
   "services": [
@@ -173,6 +197,62 @@
       "workshopId": "1",
       "userId": "1",
       "id": "kEJfXK6"
+    },
+    {
+      "serviceType": "Reparation",
+      "description": "Cita 3",
+      "state": "Not started",
+      "stateDescription": "The mechanics have not looked at the vehicle",
+      "vehicleId": 1,
+      "startedAt": "2023-01-12T02:30:14",
+      "expectedAt": "2023-01-12T02:30:14",
+      "finishedAt": "2023-01-12T02:30:14",
+      "paymentId": 1,
+      "workshopId": 1,
+      "userId": "1",
+      "id": "o2MTCaZ"
+    },
+    {
+      "serviceType": "Checkup",
+      "description": "Cita 4",
+      "state": "Not started",
+      "stateDescription": "The mechanics have not looked at the vehicle",
+      "vehicleId": 5,
+      "startedAt": "2023-01-12T16:46:26",
+      "expectedAt": "2023-01-12T16:46:26",
+      "finishedAt": "2023-01-12T16:46:26",
+      "paymentId": 1,
+      "workshopId": 1,
+      "userId": "1",
+      "id": "ViR7-sl"
+    },
+    {
+      "serviceType": "Reparation",
+      "description": "Cita ejemplo",
+      "state": "Not started",
+      "stateDescription": "The mechanics have not looked at the vehicle",
+      "vehicleId": 6,
+      "startedAt": "2023-01-12T12:30:23",
+      "expectedAt": "2023-01-12T12:30:23",
+      "finishedAt": "2023-01-12T12:30:23",
+      "paymentId": 1,
+      "workshopId": 1,
+      "userId": "gFtd_0w",
+      "id": "_Kn-9Fa"
+    },
+    {
+      "serviceType": "Reparation",
+      "description": "Cita ejemplo",
+      "state": "Not started",
+      "stateDescription": "The mechanics have not looked at the vehicle",
+      "vehicleId": 7,
+      "startedAt": "2023-01-12T12:30:26",
+      "expectedAt": "2023-01-12T12:30:26",
+      "finishedAt": "2023-01-12T12:30:26",
+      "paymentId": 1,
+      "workshopId": 1,
+      "userId": "IX1uW2W",
+      "id": "UK2pEZ3"
     }
   ],
   "workshops": [
@@ -219,6 +299,20 @@
       "model": "Ford F-Series",
       "vin": "Iaiqid87qbnTYY",
       "id": 5
+    },
+    {
+      "userId": "gFtd_0w",
+      "plate": "A108G7",
+      "model": "FordFSeries",
+      "vin": "108827J72927BAY64",
+      "id": 6
+    },
+    {
+      "userId": "IX1uW2W",
+      "plate": "A85J47",
+      "model": "FordFSeries",
+      "vin": "0426VGF68BHFD5BK8",
+      "id": 7
     }
   ],
   "creditCards": [
@@ -229,6 +323,14 @@
       "expirationDate": "07/25",
       "cvv": "336",
       "name": "CARLOS ROQUE"
+    },
+    {
+      "userId": "IX1uW2W",
+      "numbers": "4342542839536427",
+      "expirationDate": "04/27",
+      "cvv": "384",
+      "name": "JOSE PEREZ",
+      "id": 2
     }
   ]
 }
