@@ -51,7 +51,7 @@ namespace MWST_API.Controllers
         [HttpGet]
         public JsonResult Get(string email, string password)
         {
-            string query = @"select * from tblPerfilUsuario where Email=@email and uPassword=@password";
+            string query = @"select * from tblUsuario where Email=@email and uPassword=@password";
 
             DataTable table = new DataTable();
             // New the connection string
@@ -92,7 +92,7 @@ namespace MWST_API.Controllers
         [HttpGet]
         public JsonResult Get(string email)
         {
-            string query = @"select * from tblPerfilUsuario where Email=@email";
+            string query = @"select * from tblUsuario where Email=@email";
 
             DataTable table = new DataTable();
             // New the connection string
@@ -149,8 +149,7 @@ namespace MWST_API.Controllers
             {
                 if (query)
                 {
-                    error.Success();
-                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "User has been registered!");
+                    return new JsonResult("User has been registered!");
                 }
                 else
                 {
@@ -171,10 +170,6 @@ namespace MWST_API.Controllers
         [HttpPut]
         public JsonResult Put(User user)
         {
-            // Create, later, a data access for and to update
-            // Query to update the information of the user
-
-            // This only updates the table PerfilUsuario
             string role = user.GetUserRol();
 
             bool query = models.UpdateUser(user.ID_User, user.Username, user.Password, user.Email, user.Name, user.Surname, user.Cedula, role, user.PhoneNumber, user.Cellphone);

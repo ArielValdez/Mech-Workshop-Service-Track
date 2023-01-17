@@ -60,7 +60,7 @@ namespace DataAccess
                         command.Connection = connection;
 
                         //Selects the users credential
-                        command.CommandText = "select * from tblPerfilUsuario where Username=@username and uPassword=@password";
+                        command.CommandText = "select * from tblUsuario where Username=@username and uPassword=@password";
                         command.Parameters.AddWithValue("@username", username);
                         command.Parameters.AddWithValue("@password", password);
                         command.CommandType = CommandType.Text;
@@ -444,10 +444,8 @@ namespace DataAccess
                     try
                     {
                         //Inserting values into the database, table Usuario
-                        command.CommandText = $"insert into tblPerfilUsuario(Cedula, Username, uPassword, TelefonoFijo, Celular, Email, Fecha_Creacion) " +
-                                                $"Values(@cedula, @username, @password, @telefono, @celular, @email, @fechaCreacion) " +
-                                                $"insert into tblUsuario(ID_Usuario, Nombre, Apellido, Rol, Activo) " +
-                                                $"Values(SCOPE_IDENTITY(), @nombre, @apellido, @rol, {1}) ";
+                        command.CommandText = $"insert into tblUsuario(Nombre, Apellido, Rol, Activo, Cedula, Username, uPassword, TelefonoFijo, Celular, Email, Fecha_Creacion) " +
+                                                $"Values(@nombre, @apellido, @rol, {1}, @cedula, @username, @password, @telefono, @celular, @email, @fechaCreacion) ";
 
                         command.Parameters.Add("@nombre", SqlDbType.VarChar, 30).Value = nombre;
                         command.Parameters.Add("@apellido", SqlDbType.VarChar, 30).Value = apellido;
@@ -925,7 +923,8 @@ namespace DataAccess
                     try
                     {
                         command.CommandText = "update tblUsuario " +
-                        "set Nombre = @nombre, Apellido = @apellido, Rol = @rol " +
+                        "set Nombre = @nombre, Apellido = @apellido, Rol = @rol, " +
+                        "Username = @username, uPassword = @password, Cedula = @cedula, TelefonoFijo = @telefono, Celular = @celular, Email = @email, Fecha_Creacion = @fechaCreacion " +
                         "where ID_Usuario = @idUsuario";
 
                         command.Parameters.AddWithValue("@idUsuario", idUsuario);
@@ -935,10 +934,6 @@ namespace DataAccess
                         command.Parameters.Add("@rol", SqlDbType.VarChar, 13).Value = rol; // Replace this with an enum value
 
                         command.CommandType = CommandType.Text;
-
-                        command.CommandText = "update tblPerfilUsuario " +
-                                                "set Username = @username, uPassword = @password, Cedula = @cedula, TelefonoFijo = @telefono, Celular = @celular, Email = @email, Fecha_Creacion = @fechaCreacion " +
-                                                "where ID_Usuario = @idUsuario";
                         
                         command.Parameters.Add("@username", SqlDbType.VarChar, 20).Value = username;
                         command.Parameters.Add("@password", SqlDbType.VarChar, 20).Value = password;
@@ -1415,7 +1410,6 @@ namespace DataAccess
                     try
                     {
                         command.CommandText = "delete tblUsuario where ID_Usuario = @idUsuario";
-                        command.CommandText = "delete tblPerfilUsuario where ID_Usuario = @idUsuario";
                         command.Parameters.AddWithValue("@idUsuario", idUsuario);
 
                         command.CommandType = CommandType.Text;
