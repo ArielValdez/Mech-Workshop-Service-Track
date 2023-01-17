@@ -444,16 +444,14 @@ namespace DataAccess
                     try
                     {
                         //Inserting values into the database, table Usuario
-                        command.CommandText = "insert into tblUsuario(ID_Usuario, Nombre, Apellido, Rol, Activo) " +
-                                                $"@nombre, @apellido, @rol, {1})";
+                        command.CommandText = $"insert into tblPerfilUsuario(Cedula, Username, uPassword, TelefonoFijo, Celular, Email, Fecha_Creacion) " +
+                                                $"Values(@cedula, @username, @password, @telefono, @celular, @email, @fechaCreacion) " +
+                                                $"insert into tblUsuario(Nombre, Apellido, Rol, Activo) " +
+                                                $"Values(@nombre, @apellido, @rol, {1}) ";
 
                         command.Parameters.Add("@nombre", SqlDbType.VarChar, 30).Value = nombre;
                         command.Parameters.Add("@apellido", SqlDbType.VarChar, 30).Value = apellido;
                         command.Parameters.Add("@rol", SqlDbType.Char, 1).Value = rol;
-
-                        //Inserting values into the database, table PerfilUsuario
-                        command.CommandText = "insert into tblPerfilUsuario(ID_Usuario, Cedula, Username, uPassword, TelefonoFijo, Celular, Email, Fecha_Creacion) " +
-                                                $"SCOPE_IDENTITY(), @cedula, @username, @password, @telefono, @celular, @email, @fechaCreacion)";
 
                         command.Parameters.Add("@username", SqlDbType.VarChar, 20).Value = username;
                         command.Parameters.Add("@password", SqlDbType.VarChar, 20).Value = password;

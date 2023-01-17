@@ -71,7 +71,7 @@ public class User
         }
         else
         {
-            rol = "P"; // Pending role
+            rol = "C"; // Customer
         }
         return rol;
     }
