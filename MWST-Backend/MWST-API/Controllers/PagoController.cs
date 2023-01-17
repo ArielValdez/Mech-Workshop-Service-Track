@@ -205,6 +205,7 @@ namespace MWST_API.Controllers
 
         #region CreditCard
         [Route("getAllCards")]
+        [HttpGet]
         public JsonResult GetCreditCard(int idUser)
         {
             string query = @"SELECT * tblCreditCards WHERE ID_Usuario = @idUser";
