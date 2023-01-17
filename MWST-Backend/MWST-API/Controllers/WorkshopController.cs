@@ -64,7 +64,7 @@ namespace MWST_API.Controllers
         }
 
 
-        [Route("getWorkshop{id}")]
+        [Route("getWorkshop")]
         [HttpGet]
         public JsonResult Get(int idWorkshop)
         {
@@ -80,7 +80,7 @@ namespace MWST_API.Controllers
                 }
                 else
                 {
-                    return new JsonResult("Not all fields have been filled");
+                    return new JsonResult("Workshop not found!");
                 }
             }
             catch (Exception e)
@@ -93,58 +93,56 @@ namespace MWST_API.Controllers
         }
 
         // Adds information into the database
-        /* Data access to register a workshop does not exist
         [Route("postWorkshop")]
         [HttpPost]
         public JsonResult Post(WorkShop workShop)
         {
-            // Query to insert the data needed
-            bool query = models.RegisterWorkshop();
+            string query = @"insert into tblTaller_Mecanico(Nombre_Taller, Encargado, ID_Provincia, Horario_Abierto, Horario_Cierre, ID_Usuario)
+                             values (@taller, @encarcago, @idProvincia, @abierto, @cierre, @idUsuario)";
 
             DataTable table = new DataTable();
             // New the connection string
-            string sqlDataSource = _configuration.GetConnectionString(con.ReturnConnection().ConnectionString);
+            string sqlDataSource = (con.ReturnConnection().ConnectionString);
             SqlDataReader reader;
-            
+
+            // Use the domain instead
             try
             {
-                if (query)
+                using (SqlConnection connection = new SqlConnection(sqlDataSource))
                 {
-                    using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        connection.Open();
-                        using (SqlCommand command = new SqlCommand())
-                        {
-                            reader = command.ExecuteReader();
-                            table.Load(reader);
-                            reader.Close();
-                            connection.Close();
-                        }
-                    }
-                    return new JsonResult(table);
-                }
-                else
-                {
-                    return new JsonResult("Not all parameters have been filled.");
-                }
-            }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Get Exception Type: {0}", e.GetType());
-                    Console.WriteLine("  Message: {0}", e.Message);
-                    return new JsonResult("An error has occurred during Post Request.");
-                }  
-        */
+                        command.Parameters.AddWithValue("@taller", workShop.Name_WorkShop);
+                        command.Parameters.AddWithValue("@encarcago", string.Empty); // Check later
+                        command.Parameters.AddWithValue("@idProvincia", workShop.Location);
+                        command.Parameters.AddWithValue("@abierto", DateTime.Now);
+                        command.Parameters.AddWithValue("@cierre", DateTime.Now.AddHours(8));
+                        command.Parameters.AddWithValue("@idUsuario", 1);
 
-        // Updates the information of the user. INCOMPLETE
+                        reader = command.ExecuteReader();
+                        table.Load(reader);
+                        reader.Close();
+                        connection.Close();
+                    }
+                }
+                // Check for security
+                error.Success();
+                return new JsonResult("Workshop registered!");
+            }
+            catch (Exception e)
+            {
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
+            }
+        }
+
         [Route("putWorkshop")]
         [HttpPut]
         public JsonResult Put(WorkShop workShop)
         {
-            // Create, later, a data access for and to update
-            // Query to update the information of the user
-
             string query = @"update tblTaller_Mecanico
                              set Nombre_Taller = @taller, Encargado = @encarcago
                              where ID_Taller = @idTaller";
@@ -164,7 +162,9 @@ namespace MWST_API.Controllers
                     {
                         command.Parameters.AddWithValue("@idTaller", workShop.ID_WorkShop);
                         command.Parameters.AddWithValue("@taller", workShop.Name_WorkShop);
-                        command.Parameters.AddWithValue("@encarcago", string.Empty); // Check later
+                        command.Parameters.AddWithValue("@encargado", string.Empty);
+
+                        command.ExecuteNonQuery();
 
                         reader = command.ExecuteReader();
                         table.Load(reader);
@@ -172,9 +172,7 @@ namespace MWST_API.Controllers
                         connection.Close();
                     }
                 }
-                // Check for security
-                error.Success();
-                return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Workshop get!");
+                return new JsonResult("Workshop updated!");
             }
             catch (Exception e)
             {
@@ -187,18 +185,46 @@ namespace MWST_API.Controllers
 
         [Route("deleteWorkshop")]
         [HttpDelete]
-        public JsonResult Delete()
+        public JsonResult Delete(int idWorkshop)
         {
+            string query = @"Delete from tblTaller_Mecanico
+                             where ID_Taller = @idTaller";
+
+            DataTable table = new DataTable();
+            // New the connection string
+            string sqlDataSource = (con.ReturnConnection().ConnectionString);
+            SqlDataReader reader;
+
+            // Use the domain instead
             try
             {
-                return new JsonResult("Not implemented yet");
+                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@idTaller", idWorkshop);
+
+                        command.ExecuteNonQuery();
+
+                        reader = command.ExecuteReader();
+                        table.Load(reader);
+                        reader.Close();
+                        connection.Close();
+                    }
+                }
+                // Check for security
+                error.Success();
+                return new JsonResult("Workshop deleted!");
             }
             catch (Exception e)
             {
-                Console.WriteLine("Get Exception Type: {0}", e.GetType());
-                Console.WriteLine("  Message: {0}", e.Message);
-                return new JsonResult("An error has occurred during Delete Request.");
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
             }
+
         }
     }
 }

@@ -66,7 +66,7 @@ namespace MWST_API.Controllers
         }
 
 
-        [Route("getModel{id}")]
+        [Route("getModel")]
         [HttpGet]
         public JsonResult Get(int idModel)
         {

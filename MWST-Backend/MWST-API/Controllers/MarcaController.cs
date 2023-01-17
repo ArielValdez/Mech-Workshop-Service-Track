@@ -59,7 +59,7 @@ namespace MWST_API.Controllers
             }
         }
 
-        [Route("getMarca{id}")]
+        [Route("getMarca")]
         [HttpGet]
         public JsonResult Get(int idMarca)
         {
@@ -102,8 +102,6 @@ namespace MWST_API.Controllers
             }
         }
 
-
-        // There is no Data Access to Register or Update Marca
         /*
         [Route("postMarca")]
         [HttpPost]

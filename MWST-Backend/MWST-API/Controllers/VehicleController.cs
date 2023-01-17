@@ -89,7 +89,7 @@ namespace MWST_API.Controllers
         }
 
         [Route("getAllVehicles")]
-        [HttpDelete]
+        [HttpGet]
         public JsonResult Get(int idUser)
         {
             string query = @"select Matricula, VIN from tblVehiculo where ID_Usuario = @idUser";

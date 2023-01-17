@@ -25,7 +25,7 @@ namespace MWST_API.Controllers
             
         }
 
-        [Route("getPieza{id}")]
+        [Route("getPieza")]
         [HttpGet]
         public JsonResult Get(int idPart)
         {

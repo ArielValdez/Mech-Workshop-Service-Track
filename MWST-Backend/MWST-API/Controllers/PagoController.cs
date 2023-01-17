@@ -63,7 +63,7 @@ namespace MWST_API.Controllers
             }
         }
 
-        [Route("getPago{id}")]
+        [Route("getPago")]
         [HttpGet]
         public JsonResult Get(int idPayment)
         {
@@ -337,7 +337,7 @@ namespace MWST_API.Controllers
         }
 
         [Route("deleteCard")]
-        [HttpGet]
+        [HttpDelete]
         public JsonResult DeleteCreditCard(int idCard)
         {
             string query = @"DELETE FROM tblCreditCards WHERE ID_Credit = @idCard";

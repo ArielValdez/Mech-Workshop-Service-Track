@@ -25,7 +25,7 @@ namespace MWST_API.Controllers
             
         }
 
-        [Route("getService{id}")]
+        [Route("getService")]
         [HttpGet]
         public JsonResult Get(int idService)
         {
