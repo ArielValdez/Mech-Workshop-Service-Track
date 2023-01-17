@@ -36,7 +36,7 @@ namespace MWST_API.Controllers
             {
                 if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
                 {
-                    if (query != null && query.Rows.Count > 0)
+                    if (query.Rows.Count > 0)
                     {
                         error.Success();
                         return new JsonResult(query);

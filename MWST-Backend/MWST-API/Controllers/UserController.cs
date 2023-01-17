@@ -47,33 +47,92 @@ namespace MWST_API.Controllers
             }
         }
 
-        //[Route("getUser{id}")]
-        //[HttpDelete]
-        //public JsonResult Get(int idUser)
-        //{
-        //    DataTable query = models.CheckUser(idUser);
+        [Route("getUser")]
+        [HttpGet]
+        public JsonResult Get(string email, string password)
+        {
+            string query = @"select * from tblPerfilUsuario where Email=@email and uPassword=@password";
 
-        //    try
-        //    {
-        //        if (query != null && query.Rows.Count > 0)
-        //        {
-        //            error.Success();
-        //            return new JsonResult(query);
-        //        }
-        //        else
-        //        {
-        //            return new JsonResult("Not all fields have been filled");
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        error.ErrorCode = "400";
-        //        error.ErrorMessage = "Something went wrong";
-        //        error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
-        //        return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
-        //    }
-        //}
+            DataTable table = new DataTable();
+            // New the connection string
+            string sqlDataSource = (con.ReturnConnection().ConnectionString);
+            SqlDataReader reader;
 
+            // Use the domain instead
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@email", email);
+                        command.Parameters.AddWithValue("@password", password);
+
+                        reader = command.ExecuteReader();
+                        table.Load(reader);
+                        reader.Close();
+                        connection.Close();
+                    }
+                }
+                // Check for security
+                error.Success();
+                return new JsonResult(table);
+            }
+            catch (Exception e)
+            {
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
+            }
+        }
+
+        [Route("isEmailTaken")]
+        [HttpGet]
+        public JsonResult Get(string email)
+        {
+            string query = @"select * from tblPerfilUsuario where Email=@email";
+
+            DataTable table = new DataTable();
+            // New the connection string
+            string sqlDataSource = (con.ReturnConnection().ConnectionString);
+            SqlDataReader reader;
+            bool isTaken = false;
+
+            // Use the domain instead
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@email", email);
+
+                        reader = command.ExecuteReader();
+                        table.Load(reader);
+                        reader.Close();
+                        connection.Close();
+                    }
+                }
+
+                if (table.Rows.Count > 0)
+                {
+                    isTaken = true;
+                }
+
+                error.Success();
+                return new JsonResult(isTaken);
+            }
+            catch (Exception e)
+            {
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
+            }
+        }
 
         // Adds information into the database
         [Route("registerUser")]

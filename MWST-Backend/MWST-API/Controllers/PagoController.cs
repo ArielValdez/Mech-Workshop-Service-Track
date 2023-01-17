@@ -8,6 +8,7 @@ using Domain;
 using Microsoft.Extensions.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using MWST_API.Models;
 
 namespace MWST_API.Controllers
 {
@@ -22,7 +23,7 @@ namespace MWST_API.Controllers
         public PagoController(IConfiguration configuration)
         {
         }
-
+        #region Payment
         //Selects to get information
         [Route("getPagos")]
         [HttpGet]
@@ -71,14 +72,14 @@ namespace MWST_API.Controllers
 
             try
             {
-                if (query != null && query.Rows.Count > 0)
+                if (query.Rows.Count > 0)
                 {
                     error.Success();
                     return new JsonResult(query);
                 }
                 else
                 {
-                    return new JsonResult("Not all fields have been filled");
+                    return new JsonResult("Not found");
                 }
             }
             catch (Exception e)
@@ -200,5 +201,179 @@ namespace MWST_API.Controllers
                 return new JsonResult("An error has occurred during Post Request.");
             }
         }
+        #endregion
+
+        #region CreditCard
+        [Route("getAllCards")]
+        public JsonResult GetCreditCard(int idUser)
+        {
+            string query = @"SELECT * tblCreditCards WHERE ID_Usuario = @idUser";
+
+            DataTable table = new DataTable();
+            // New the connection string
+            string sqlDataSource = (con.ReturnConnection().ConnectionString);
+            SqlDataReader reader;
+
+            // Use the domain instead
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@idUser", idUser);
+
+                        command.ExecuteNonQuery();
+
+                        reader = command.ExecuteReader();
+                        table.Load(reader);
+                        reader.Close();
+                        connection.Close();
+                    }
+                }
+                return new JsonResult("Credit Card Deleted");
+            }
+            catch (Exception e)
+            {
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
+            }
+        }
+
+        [Route("createCreditCard")]
+        [HttpPost]
+        public JsonResult CreateCredit(CreditCard cc)
+        {
+            string query = @"INSERT INTO tblCreditCards(Numeros, FechaExpiracion, Nombre, ID_Usuario) 
+                             VALUES(@numbers, @expiration, @cvv, @name, @idUser)";
+
+            DataTable table = new DataTable();
+            // New the connection string
+            string sqlDataSource = (con.ReturnConnection().ConnectionString);
+            SqlDataReader reader;
+
+            // Use the domain instead
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@idUser", cc.IdUser);
+                        command.Parameters.AddWithValue("@numbers", cc.Numbers);
+                        command.Parameters.AddWithValue("@expiracion", cc.ExpirationDate.ToString("MM-yyyy"));
+                        command.Parameters.AddWithValue("@cvv", cc.CVV);
+                        command.Parameters.AddWithValue("@name", cc.Name);
+
+                        command.ExecuteNonQuery();
+
+                        reader = command.ExecuteReader();
+                        table.Load(reader);
+                        reader.Close();
+                        connection.Close();
+                    }
+                }
+                return new JsonResult("Card registered!");
+            }
+            catch (Exception e)
+            {
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
+            }
+        }
+
+        [Route("editCards")]
+        [HttpPut]
+        public JsonResult EditCard(CreditCard cc)
+        {
+            string query = @"update tblCreditCards
+                             set Numeros = @numbers, FechaExpiracion = @expiracion,
+                             CVV = @cvv, Nombre = @name where ID_Card = @idCard and ID_Usuario = @idUser";
+
+            DataTable table = new DataTable();
+            // New the connection string
+            string sqlDataSource = (con.ReturnConnection().ConnectionString);
+            SqlDataReader reader;
+
+            // Use the domain instead
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@idCard", cc.ID);
+                        command.Parameters.AddWithValue("@idUser", cc.IdUser);
+                        command.Parameters.AddWithValue("@numbers", cc.Numbers);
+                        command.Parameters.AddWithValue("@expiracion", cc.ExpirationDate.ToString("MM-yyyy"));
+                        command.Parameters.AddWithValue("@cvv", cc.CVV);
+                        command.Parameters.AddWithValue("@name", cc.Name);
+
+                        command.ExecuteNonQuery();
+
+                        reader = command.ExecuteReader();
+                        table.Load(reader);
+                        reader.Close();
+                        connection.Close();
+                    }
+                }
+                return new JsonResult("Card updated!");
+            }
+            catch (Exception e)
+            {
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
+            }
+        }
+
+        [Route("deleteCard")]
+        [HttpGet]
+        public JsonResult DeleteCreditCard(int idCard)
+        {
+            string query = @"DELETE FROM tblCreditCards WHERE ID_Credit = @idCard";
+
+            DataTable table = new DataTable();
+            // New the connection string
+            string sqlDataSource = (con.ReturnConnection().ConnectionString);
+            SqlDataReader reader;
+
+            // Use the domain instead
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@idCard", idCard);
+
+                        command.ExecuteNonQuery();
+
+                        reader = command.ExecuteReader();
+                        table.Load(reader);
+                        reader.Close();
+                        connection.Close();
+                    }
+                }
+                return new JsonResult("Credit Card Deleted");
+            }
+            catch (Exception e)
+            {
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
+            }
+        }
+        #endregion
     }
 }

@@ -25,6 +25,45 @@ namespace MWST_API.Controllers
             
         }
 
+        [Route("getAllWorkshops")]
+        [HttpGet]
+        public JsonResult Get()
+        {
+            // Query to select the data needed. Change to stored procedures
+            string query = @"SELECT * FROM tblTaller_Mecanico";
+
+            DataTable table = new DataTable();
+            // New the connection string
+            string sqlDataSource = (con.ReturnConnection().ConnectionString);
+            SqlDataReader reader;
+
+            // Use the domain instead
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        reader = command.ExecuteReader();
+                        table.Load(reader);
+                        reader.Close();
+                        connection.Close();
+                    }
+                }
+                error.Success();
+                return new JsonResult(table);
+            }
+            catch (Exception e)
+            {
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
+            }
+        }
+
+
         [Route("getWorkshop{id}")]
         [HttpGet]
         public JsonResult Get(int idWorkshop)

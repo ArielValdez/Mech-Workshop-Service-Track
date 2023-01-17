@@ -29,7 +29,6 @@ namespace MWST_API.Controllers
         [HttpGet]
         public JsonResult Get()
         {
-            // Query to select the data needed. Change to stored procedures
             string query = @"select Matricula, VIN from tblVehiculo";
 
             DataTable table = new DataTable();
@@ -51,7 +50,7 @@ namespace MWST_API.Controllers
                     }
                 }
                 error.Success();
-                return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Vehicle get!");
+                return new JsonResult(table);
             }
             catch (Exception e)
             {
@@ -62,23 +61,62 @@ namespace MWST_API.Controllers
             }
         }
 
-        [Route("getVehicle{id}")]
-        [HttpDelete]
+        [Route("getVehicle")]
+        [HttpGet]
         public JsonResult Get(string matricula)
         {
             DataTable query = models.CheckVehicle(matricula);
 
             try
             {
-                if (query != null && query.Rows.Count > 0)
+                if (query.Rows.Count > 0)
                 {
                     error.Success();
                     return new JsonResult(query);
                 }
                 else
                 {
-                    return new JsonResult("Not all fields have been filled");
+                    return new JsonResult("Not found");
                 }
+            }
+            catch (Exception e)
+            {
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
+            }
+        }
+
+        [Route("getAllVehicles")]
+        [HttpDelete]
+        public JsonResult Get(int idUser)
+        {
+            string query = @"select Matricula, VIN from tblVehiculo where ID_Usuario = @idUser";
+
+            DataTable table = new DataTable();
+            // Check if does not return connection string
+            string sqlDataSource = con.ReturnConnection().ConnectionString;
+            SqlDataReader reader;
+            try
+            {
+                // Use the domain instead
+                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@idUser", idUser);
+                        command.ExecuteNonQuery();
+
+                        reader = command.ExecuteReader();
+                        table.Load(reader);
+                        reader.Close();
+                        connection.Close();
+                    }
+                }
+                error.Success();
+                return new JsonResult(table);
             }
             catch (Exception e)
             {
@@ -101,7 +139,7 @@ namespace MWST_API.Controllers
                 if (query)
                 {
                     error.Success();
-                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Vehicle has been registered!");
+                    return new JsonResult("Vehicle has been registered!");
                 }
                 else
                 {
@@ -117,7 +155,7 @@ namespace MWST_API.Controllers
             }
         }
 
-        [Route("putVehicle")]
+        [Route("editVehicle")]
         [HttpPut]
         public JsonResult Put(Vehicle car)
         {
@@ -127,7 +165,7 @@ namespace MWST_API.Controllers
                 if (query)
                 {
                     error.Success();
-                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Vehicle has been updated!");
+                    return new JsonResult("Vehicle has been updated!");
                 }
                 else
                 {
@@ -154,7 +192,7 @@ namespace MWST_API.Controllers
                 if (query)
                 {
                     error.Success();
-                    return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Vehicle has been deleted!");
+                    return new JsonResult("Vehicle has been deleted!");
                 }
                 else
                 {

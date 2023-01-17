@@ -34,14 +34,14 @@ namespace MWST_API.Controllers
 
             try
             {
-                if (query != null && query.Rows.Count > 0)
+                if (query.Rows.Count > 0)
                 {
                     error.Success();
                     return new JsonResult(query);
                 }
                 else
                 {
-                    return new JsonResult("Not all fields have been filled");
+                    return new JsonResult("Not found");
                 }
             }
             catch (Exception e)

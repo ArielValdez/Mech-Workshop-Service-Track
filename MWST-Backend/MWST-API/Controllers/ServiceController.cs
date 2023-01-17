@@ -34,14 +34,14 @@ namespace MWST_API.Controllers
 
             try
             {
-                if (query != null && query.Rows.Count > 0)
+                if (query.Rows.Count > 0)
                 {
                     error.Success();
                     return new JsonResult(query);
                 }
                 else
                 {
-                    return new JsonResult("Not all fields have been filled");
+                    return new JsonResult("Not found");
                 }
             }
             catch (Exception e)
@@ -52,6 +52,112 @@ namespace MWST_API.Controllers
                 return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
             }
         }
+
+        [Route("getAllServices")]
+        [HttpGet]
+        public JsonResult Get()
+        {
+            string query = @"SELECT * FROM tblServicio";
+
+            DataTable table = new DataTable();
+            string sqlDataSource = (con.ReturnConnection().ConnectionString);
+            SqlDataReader reader;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        reader = command.ExecuteReader();
+                        table.Load(reader);
+                        reader.Close();
+                        connection.Close();
+                    }
+                }
+                error.Success();
+                return new JsonResult(table);
+            }
+            catch (Exception e)
+            {
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
+            }
+        }
+
+        [Route("getAllFinishedAppointments")]
+        [HttpGet]
+        public JsonResult GetFinished(int idUser)
+        {
+            string query = @"SELECT * FROM tblServicio";
+
+            DataTable table = new DataTable();
+            string sqlDataSource = (con.ReturnConnection().ConnectionString);
+            SqlDataReader reader;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        reader = command.ExecuteReader();
+                        table.Load(reader);
+                        reader.Close();
+                        connection.Close();
+                    }
+                }
+                error.Success();
+                return new JsonResult(table);
+            }
+            catch (Exception e)
+            {
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
+            }
+        }
+
+        [Route("getPendingAppointments")]
+        [HttpGet]
+        public JsonResult GetPending(int idUser)
+        {
+            string query = @"SELECT * FROM tblServicio";
+
+            DataTable table = new DataTable();
+            string sqlDataSource = (con.ReturnConnection().ConnectionString);
+            SqlDataReader reader;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        reader = command.ExecuteReader();
+                        table.Load(reader);
+                        reader.Close();
+                        connection.Close();
+                    }
+                }
+                error.Success();
+                return new JsonResult(table);
+            }
+            catch (Exception e)
+            {
+                error.ErrorCode = "400";
+                error.ErrorMessage = "Something went wrong";
+                error.Exception = "Get Exception Type: " + e.GetType() + "\n\r" + "  Message: " + e.Message;
+                return new JsonResult($"{error.ErrorMessage}: {error.ErrorMessage}\n\r{error.Exception}");
+            }
+        }
+
 
         // Adds information into the database
         /* Data access to register a service does not exist
@@ -94,10 +200,6 @@ namespace MWST_API.Controllers
         [HttpPut]
         public JsonResult Put(Service service)
         {
-            // Create, later, a data access for and to update
-            // Query to update the information of the user
-
-            // This only updates the table PerfilUsuario
             string query = @"update tblServicio
                              set Tipo_Servicio = @service, FechaPromesa = @promesa
                              where ID_Servicio = @idService and ID_Mantenimiento = @idMantenimiento";
@@ -120,6 +222,8 @@ namespace MWST_API.Controllers
                         command.Parameters.AddWithValue("@service", service.Service_Type);
                         command.Parameters.AddWithValue("@promesa", service.FechaPromesa);
 
+                        command.ExecuteNonQuery();
+
                         reader = command.ExecuteReader();
                         table.Load(reader);
                         reader.Close();
@@ -128,7 +232,7 @@ namespace MWST_API.Controllers
                 }
                 // Check for security
                 error.Success();
-                return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Service get!");
+                return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Service updated!");
             }
             catch (Exception e)
             {
@@ -141,11 +245,26 @@ namespace MWST_API.Controllers
 
         [Route("deleteService")]
         [HttpDelete]
-        public JsonResult Delete()
+        public JsonResult Delete(int idService)
         {
+            string query = "DELETE FROM tblServicio WHERE ID_Servicio = @idService";
+            string sqlDataSource = (con.ReturnConnection().ConnectionString);
+
             try
             {
-                return new JsonResult("Not implemented yet");
+                using (SqlConnection connection = new SqlConnection(sqlDataSource))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@idService", idService);
+
+                        command.ExecuteNonQuery();
+                        connection.Close();
+                    }
+                }
+
+                return new JsonResult(error.ErrorCode + ": " + error.ErrorMessage + "\n\r" + "Service deleted!");
             }
             catch (Exception e)
             {
