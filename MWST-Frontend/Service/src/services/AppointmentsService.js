@@ -75,7 +75,7 @@ export const getEmptyAppointment = () => {
     }
 }
 
-export const createAppointment = async (serviceType, title, vehicleId, formattedDate, userId) => {
+export const createAppointment = async (serviceType, title, vehicleId, formattedDate, userId, workshopId) => {
     const response = await fetch(`${API_URL}/services`, {
         method: 'POST',
         headers: {
@@ -91,7 +91,7 @@ export const createAppointment = async (serviceType, title, vehicleId, formatted
             expectedAt: formattedDate,
             finishedAt: formattedDate,
             paymentId: 1,
-            workshopId: 1,
+            workshopId: workshopId,
             userId: userId
         })
     })

@@ -6,6 +6,7 @@ import CustomText from "../../components/CustomText"
 import theme from "../../Theme"
 import * as Location from "expo-location"
 import { getAllWorkshops } from "../../services/WorkshopService"
+import { useNavigation } from "@react-navigation/native"
 
 const WorkshopsMarkerScreen = () => {
     const [ userLocation, setUserLocation ] = useState()
@@ -16,6 +17,8 @@ const WorkshopsMarkerScreen = () => {
         longitudeDelta: 0.0200,
     })
     const [ workshops, setWorkshops ] = useState([])
+
+    const navigation = useNavigation()
     const { t, i18n } = useTranslation()
 
     useEffect(() => {
@@ -74,6 +77,11 @@ const WorkshopsMarkerScreen = () => {
                 coordinate={{
                     latitude: workshop.latitude,
                     longitude: workshop.longitude
+                }}
+                onCalloutPress={e => {
+                    console.log(e.nativeEvent)
+                    console.log(index)
+                    navigation.navigate('AppointmentScheduling', { selectedWorkshop: workshops[index] })
                 }}
                 >
                     <Callout>

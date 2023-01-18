@@ -220,7 +220,7 @@ const appointmentRenderItem = ({ item }) => {
     )
 }
 
-const AppointmentsScreen = () => {
+const AppointmentsScreen = ({ route }) => {
     const d = new Date()
     const defaultCalendarValue = {
         day: d.getDate(),      // day of month (1-31)
@@ -234,13 +234,21 @@ const AppointmentsScreen = () => {
     const [ selectedTime, setSelectedTime ] = useState(new Date())
     const [ modalVisible, setModalVisible ] = useState(false)
     const [ appointments, setAppointments ] = useState([])
+    const isFocused = useIsFocused()
     const [ user, setUser] = useUser()
+    const navigation = useNavigation()
     const { height, width } = useWindowDimensions()
     const { t, i18n } = useTranslation() 
 
     useEffect(() => {
         fetchServices()
     }, [])
+
+    useEffect(() => {
+        if (isFocused && route.params?.shouldRefresh) {
+            fetchServices()
+        }
+    }, [isFocused])
 
     const marked = useMemo(() => {
         return {
@@ -250,7 +258,7 @@ const AppointmentsScreen = () => {
             selectedColor: theme.colors.primary
           }
         }
-      }, [selected])
+    }, [selected])
 
     const onDayPress = useCallback((date) => {
         setSelected(date.dateString)
@@ -261,7 +269,8 @@ const AppointmentsScreen = () => {
     }, [])
 
     const onAddAppointmentPress = () => {
-        setModalVisible(!modalVisible)
+        //setModalVisible(!modalVisible)
+        navigation.navigate('AppointmentScheduling', { selectedDateTime: selectedTime})
     }
 
     const onModalOkPress = (title, vehicleId, serviceType) => {
@@ -293,6 +302,7 @@ const AppointmentsScreen = () => {
                 data={appointments}
                 renderItem={appointmentRenderItem}
                 keyExtractor={item => item.id}
+                style={styles.appointmentList}
             />
             <AppointmentModal 
                 visible={modalVisible} 
@@ -330,6 +340,9 @@ const styles = StyleSheet.create({
         width: 50,
         borderRadius: 25,
     },
+    appointmentList: {
+        marginBottom: 20,
+    }
 })
 
 export default AppointmentsScreen
