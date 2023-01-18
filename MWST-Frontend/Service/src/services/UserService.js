@@ -1,8 +1,7 @@
 import { API_URL } from "@env"
 
-
 export const getUser = async (email, password) =>  {
-    const response = await fetch(`${API_URL}/users?email=${email}&password=${password}`, {
+    const response = await fetch(`${API_URL}/User/getUser?email=${email}&password=${password}`, {
         method: 'GET'
     })
     
@@ -21,7 +20,7 @@ export const getUser = async (email, password) =>  {
 }
 
 export const createUser = async (firstname, lastname, email, phone, username, idCard, password) => {
-    const response = await fetch(`${API_URL}/users`, {
+    const response = await fetch(`${API_URL}/User/registerUser`, {
         method: 'POST',
         headers: {
             'Content-type': 'application/json'
@@ -50,7 +49,7 @@ export const createUser = async (firstname, lastname, email, phone, username, id
 }
 
 export const isEmailTaken = async (email) => {
-    const response = await fetch(`${API_URL}/users?email=${email}`, {
+    const response = await fetch(`${API_URL}/User/isEmailTaken?email=${email}`, {
         method: 'GET'
     })
 
