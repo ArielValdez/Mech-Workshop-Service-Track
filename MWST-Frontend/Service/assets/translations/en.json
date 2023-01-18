@@ -106,6 +106,22 @@
         "noServiceInProgress": "You have no service in progress",
 
         "WorkshopsMarkerScreen": "Translation data for WorkshopsMarkerScreen",
-        "you": "You"
+        "you": "You",
+
+        "CreditCarEditScreen": "Translation data for credit card edit screen",
+        "creditCardNumber": "Card number",
+        "expirationDate": "Exp. date",
+        "expDateErrorMessage": "Invalid expiration date",
+        "name": "Name",
+
+        "AppointmentDetailScreen": "Translation data for the appointmentdetailscreen",
+        "workshopAddress": "Workshop Address",
+        "country": "Dominican Republic, Santo Domingo",
+        "serviceSchedule": "Schedule",
+        "mondayThroughFriday": "Monday through Friday",
+        "serviceDetails": "Service details",
+
+        "AppointmentSchedulingScreen": "Translation data for the AppointmentSchedulingScreen",
+        "selectWorkshopPlaceholder": "Select a workshop"
     }
 }

@@ -8,6 +8,9 @@ import { editCard, createCard } from "../../services/CreditCardsService"
 import { useUser } from "../../context/UserContext"
 import { useNavigation } from "@react-navigation/native"
 
+// Matches format: 07/25
+const expDateRegex = /^[0-9]{2}\/[0-9]{2}$/
+
 const CreditCarEditScreen = ({route}) => {
     const [ cardNumber1, setCardNumber1 ] = useState()
     const [ cardNumber2, setCardNumber2 ] = useState()
@@ -56,26 +59,31 @@ const CreditCarEditScreen = ({route}) => {
     return (
         <View style={styles.container}>
             <View>
-                <CustomText type="Medium">Número de tarjeta</CustomText>
+                <CustomText type="Medium">{t('creditCardNumber')}</CustomText>
                 <View style={styles.cardNumberRow}>
                     <View style={styles.numberInput}>
-                        <CustomInput value={cardNumber1} setValue={setCardNumber1} maxLength={4} keyboard-type="number-pad" />
+                        <CustomInput value={cardNumber1} setValue={setCardNumber1} maxLength={4} keyboard-type="number-pad" 
+                            placeholder='4125' />
                     </View>
                     <View style={styles.numberInput}>
-                        <CustomInput value={cardNumber2} setValue={setCardNumber2} maxLength={4} keyboard-type="number-pad" />
+                        <CustomInput value={cardNumber2} setValue={setCardNumber2} maxLength={4} keyboard-type="number-pad" 
+                            placeholder='9651' />
                     </View> 
                     <View style={styles.numberInput}>
-                        <CustomInput value={cardNumber3} setValue={setCardNumber3} maxLength={4} keyboard-type="number-pad" />
+                        <CustomInput value={cardNumber3} setValue={setCardNumber3} maxLength={4} keyboard-type="number-pad" 
+                            placeholder='3654' />
                     </View> 
                     <View style={styles.numberInput}>
-                        <CustomInput value={cardNumber4} setValue={setCardNumber4} maxLength={4} keyboard-type="number-pad" />
+                        <CustomInput value={cardNumber4} setValue={setCardNumber4} maxLength={4} keyboard-type="number-pad" 
+                            placeholder='5684' />
                     </View> 
                 </View>
             </View>
             <View style={styles.secondRow}>
                 <View style={styles.secondRowItem}>
-                    <CustomText type="Medium">Fecha de vto.</CustomText>
-                    <CustomInput value={expirationDate} setValue={setExpirationDate}/>
+                    <CustomText type="Medium">{t('expirationDate')}</CustomText>
+                    <CustomInput value={expirationDate} setValue={setExpirationDate} placeholder='07/25' 
+                        maxLength={5} pattern={expDateRegex} errorMessage={t('expDateErrorMessage')}/>
                 </View>
                 <View style={styles.secondRowItem}>
                     <CustomText type="Medium">CVV</CustomText>
@@ -84,8 +92,9 @@ const CreditCarEditScreen = ({route}) => {
                 </View>
             </View>
             <View style={styles.thirdRow}>
-                <CustomText type="Medium">Nombre</CustomText>
-                <CustomInput value={cardHolderName} setValue={setCardHolderName} />
+                <CustomText type="Medium">{t('name')}</CustomText>
+                <CustomInput value={cardHolderName} setValue={setCardHolderName} placeholder='JOSE ROQUE' 
+                    autoCapitalize='characters' maxLength={50} />
             </View>
 
             <CustomButton text={t('save')} onPress={onSavePress} />

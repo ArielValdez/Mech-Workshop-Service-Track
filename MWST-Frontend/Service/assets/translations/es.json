@@ -108,6 +108,22 @@
         "noServiceInProgress": "No tienes ningún servicio en progreso",
 
         "WorkshopsMarkerScreen": "Translation data for WorkshopsMarkerScreen",
-        "you": "Tú"
+        "you": "Tú",
+
+        "CreditCarEditScreen": "Translation data for credit card edit screen",
+        "creditCardNumber": "Número de tarjeta",
+        "expirationDate": "Fecha de vto.",
+        "expDateErrorMessage": "Fecha de expiración invalida",
+        "name": "Nombre",
+
+        "AppointmentDetailScreen": "Translation data for the appointmentdetailscreen",
+        "workshopAddress": "Dirección del taller",
+        "country": "Santo Domingo, República Dominicana",
+        "serviceSchedule": "Horario",
+        "mondayThroughFriday": "Lunes a Viernes",
+        "serviceDetails": "Detalles del servicio",
+
+        "AppointmentSchedulingScreen": "Translation data for the AppointmentSchedulingScreen",
+        "selectWorkshopPlaceholder": "Taller"
     }
 }

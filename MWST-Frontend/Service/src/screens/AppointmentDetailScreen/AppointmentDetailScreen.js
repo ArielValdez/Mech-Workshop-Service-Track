@@ -6,10 +6,13 @@ import { getEmptyAppointment } from "../../services/AppointmentsService"
 import { getWorkshop, getEmptyWorkshop } from "../../services/WorkshopService"
 import WorkshopImg from "../../../assets/WorkshopImg.jpg"
 import MapView, { Marker, Callout } from "react-native-maps"
+import { useTranslation } from "react-i18next"
 
 const AppointmentDetailScreen = ({ route }) => {
     const [ service, setService ] = useState(getEmptyAppointment())
     const [ workshop, setWorkshop ] = useState(getEmptyWorkshop())
+
+    const { t, i18n } = useTranslation()
 
     useEffect(() => {
         setService(route.params.service)
@@ -27,11 +30,11 @@ const AppointmentDetailScreen = ({ route }) => {
         />
         <View style={styles.infoContainer}>
             <CustomText style={styles.workshopName} type="Bold">Taller {workshop.name}</CustomText>
-            <CustomText style={styles.title} type="Medium">Dirección del taller</CustomText>
+            <CustomText style={styles.title} type="Medium">{t('workshopAddress')}</CustomText>
             <View style={styles.shadowContainer}>
                 <View style={styles.floatingContainer} >
                     <CustomText>{workshop.address}</CustomText>
-                    <CustomText>Santo Domingo, República Dominicana</CustomText>
+                    <CustomText>{t('country')}</CustomText>
                 </View>
             </View>
             { workshop.latitude &&
@@ -56,16 +59,16 @@ const AppointmentDetailScreen = ({ route }) => {
                 </Marker>
             </MapView>
             }           
-            <CustomText style={styles.title} type="Medium">Horario</CustomText>
+            <CustomText style={styles.title} type="Medium">{t('serviceSchedule')}</CustomText>
             <View style={styles.shadowContainer}>
                 <View style={styles.floatingContainer}>
                     <View style={styles.scheduleRow}>
                         <CustomText>{workshop.openAt}-{workshop.closedAt}</CustomText>
                     </View>
-                    <CustomText>Lunes a Viernes</CustomText>
+                    <CustomText>{t('mondayThroughFriday')}</CustomText>
                 </View>
             </View>
-            <CustomText style={styles.title} type="Medium">Detalles del servicio</CustomText>
+            <CustomText style={styles.title} type="Medium">{t('serviceDetails')}</CustomText>
             <View style={styles.shadowContainer}>
                 <View style={styles.floatingContainer}>
                     <CustomText>{service.state}</CustomText>

@@ -11,7 +11,7 @@ import * as ImagePicker from 'expo-image-picker'
 import theme from "../../Theme"
 
 const plateRegex = /^[A-Z0-9]{5,10}$/
-const modelRegex = /^[\w]{3,50}$/
+const modelRegex = /^[\w\s-]{3,50}$/
 const vinRegex = /^[A-Z0-9]{17}$/
 
 const AddVehicleScreen = ({ route }) => {

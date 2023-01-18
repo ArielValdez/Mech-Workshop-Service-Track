@@ -11,6 +11,7 @@ import AppointmentDetailScreen from './src/screens/AppointmentDetailScreen/Appoi
 import ItemListScreen from './src/screens/ItemListScreen/ItemListScreen';
 import CreditCarEditScreen from './src/screens/CreditCarEditScreen/CreditCarEditScreen.js'
 import WorkshopsMarkerScreen from './src/screens/WorkshopsMarkerScreen/WorkshopsMarkerScreen';
+import AppointmentSchedulingScreen from './src/screens/AppointmentSchedulingScreen.js/AppointmentSchedulingScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { LocaleConfig } from 'react-native-calendars'
@@ -113,6 +114,14 @@ export default function App() {
 								options={{
 									headerShown: true,
 									title: "Workshops"
+								}}
+							/>
+							<Stack.Screen 
+								name="AppointmentScheduling"
+								component={AppointmentSchedulingScreen}
+								options={{
+									headerShown: true,
+									title: "Appointment scheduling"
 								}}
 							/>
 						</Stack.Navigator>
