@@ -34,22 +34,11 @@ const AppointmentModal = ({visible, onRequestClose, onReturnPress, onOkPress, ti
     const [ selectedService, setSelectedService ] = useState(null)
     const [ openServiceDropdown, setOpenServiceDropdown ] = useState(false)
 
-    const isFocused = useIsFocused()
     const [ user, setUser ] = useUser()
 
     const { height, width } = useWindowDimensions()
     const { t, i18n } = useTranslation()
 
-    useEffect(() => {
-        if (isFocused) {
-            getAllVehicles(user.id)
-                .then(vehicles => {
-                    setVehicles(vehicles)
-                })
-                .catch(err => console.log(err))
-        }
-    }, [isFocused])
-    
     return (
 		<Modal
 			animationType="fade"

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Image, StyleSheet, useWindowDimensions } from "react-native";
-import Car from '../../assets/tesla.png'
+import Car from '../../assets/teslaModified.png'
 import ProgressBar from "../components/ProgressBar";
 import CustomText from "../components/CustomText";
 import { useUser } from "../context/UserContext";
@@ -8,6 +8,7 @@ import theme from "../Theme";
 import { BarIndicator, WaveIndicator } from "react-native-indicators";
 import { Ionicons } from "@expo/vector-icons"
 import { useTranslation } from "react-i18next";
+import { API_URL } from "@env"
 
 const ServiceStateFeedback = ({ service }) => {
     const { t, i18n } = useTranslation() 
@@ -50,18 +51,8 @@ const MyCarScreen = () => {
     const { t, i18n } = useTranslation()
     const [ user, setUser ] = useUser()
 
-    // useEffect(() => {
-    //     const interval = setInterval(() => {
-    //         setIndex((index + 1) % (10 + 1))
-    //     }, 1000);
-
-    //     return () => {
-    //         clearInterval(interval)
-    //     }
-    // }, [index])
-
     useEffect(() => {
-        fetch(`http://10.0.0.7:3000/services?userId=${user.id}`, {
+        fetch(`${API_URL}/services?userId=${user.id}`, {
             method: 'GET',
         })
             .then(response => response.json())
@@ -77,7 +68,7 @@ const MyCarScreen = () => {
                 <CustomText style={{fontSize: 20, marginBottom: 10, alignSelf: 'center'}} type="Bold">
                     {t('serviceState')}
                 </CustomText>
-                <Image source={Car} style={{height: height * 0.65, width: width * 0.9, resizeMode: 'stretch', backgroundColor: 'white'}} />
+                <Image source={Car} style={{height: height * 0.60, width: width * 0.9, resizeMode: 'stretch', backgroundColor: 'white', alignSelf: 'center'}} />
                 <ServiceStateFeedback service={service} />
             </View>
         </View>
@@ -91,7 +82,7 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     centeredContainer: {
-        textAlign: 'center'
+        textAlign: 'center',
     },
     progressText: {
         marginTop: 25

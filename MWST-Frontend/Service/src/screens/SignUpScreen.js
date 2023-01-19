@@ -121,7 +121,8 @@ const SignUpScreen = () => {
                 
                 <CustomText style={styles.politicsText}>
                     {t('politicsText1')}{' '}
-                    <CustomText style={styles.link} onPress={onTermsOfUsePressed}>{t('politicsText2')}</CustomText> y{' '}
+                    <CustomText style={styles.link} onPress={onTermsOfUsePressed}>{t('politicsText2')}</CustomText> 
+                    {t('and')} 
                     <CustomText style={styles.link} onPress={onPrivacyPoliticsPressed}>{t('politicsText3')}</CustomText>.
                 </CustomText>
 

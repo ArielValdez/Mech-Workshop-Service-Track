@@ -39,9 +39,11 @@ const VehicleRenderItem = ({ item, onDeleteCallback }) => {
                     <PressableOpacity animatedViewStyle={styles.icons} onPress={onEditPress}>
                         <AntDesign name='edit' size={30} />
                     </PressableOpacity>
+                    {/* 
                     <PressableOpacity animatedViewStyle={styles.icons} onPress={onDeletePress}>
                         <AntDesign name='delete' size={30} />
                     </PressableOpacity>
+                    */}
                 </View>
             </View>
             <LineBreak />
@@ -69,6 +71,7 @@ const styles = StyleSheet.create({
         flex: 2,
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'center',
     },
     icons: {
         marginHorizontal: 7,
