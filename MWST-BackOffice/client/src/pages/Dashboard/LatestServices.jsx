@@ -38,7 +38,7 @@ const LatestServices = ({ services, dataProvider }) => {
                 <td className="widgetLgUser">
                     <span className="widgetLgName">{user.name + ' ' + user.lastname}</span>
                 </td>
-                <td className="widgetLgDate">{service.startedAt}</td>
+                <td className="widgetLgDate">{new Date(service.startedAt).toLocaleDateString()}</td>
                 <td className="widgetLgAmount">${payment.amount}</td>
                 <td className="widgetLgStatus">
                     <Button state={service.state}/>
