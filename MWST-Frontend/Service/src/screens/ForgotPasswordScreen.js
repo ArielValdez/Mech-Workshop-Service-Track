@@ -6,15 +6,28 @@ import CustomButton from '../components/CustomButton'
 import CustomInput from '../components/Inputs/CustomInput'
 import UsernameInput from '../components/Inputs/UsernameInput'
 import CustomText from '../components/CustomText'
+import { getUserByUsername } from '../services/UserService'
+import ErrorModal from '../components/Modals/ErrorModal'
+import SuccessModal from '../components/Modals/SuccessModal'
 
 const ForgotPasswordScreen = () => {
     const [ username, setUsername ] = useState('')
+    const [ errorModalVisible, setErrorModalVisible ] = useState(false)
 
     const navigation = useNavigation()
     const { t, i18n } = useTranslation()
 
     const onNextPressed = () => {
-        navigation.navigate('NewPassword')
+        getUserByUsername(username)
+            .then(user => {
+                if (user) {
+                    navigation.navigate('NewPassword', { user: user })
+                    console.log(user)
+                }
+                else {
+                    setErrorModalVisible(true)
+                }
+            })
     }
 
     const onReturnPressed = () => {
@@ -23,6 +36,12 @@ const ForgotPasswordScreen = () => {
 
     return (
         <View style={styles.container}>
+            <ErrorModal
+                visible={errorModalVisible}
+                errorText={t('usernameNotFoundError')}
+                onRequestClose={() => setErrorModalVisible(false)}
+                buttonText='Ok'
+            />
             <CustomText style={styles.title}>{t('restartPassword')}</CustomText>
             
             <UsernameInput value={username} setValue={setUsername}/>

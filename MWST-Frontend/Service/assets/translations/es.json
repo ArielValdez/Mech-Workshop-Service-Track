@@ -132,6 +132,19 @@
         "appointmentFailedErrorMessage": "Debes llenar y seleccionar todos los campos",
         "selectWorkshopPlaceholder": "Taller",
         "cancel": "CANCELAR",
-        "accept": "ACEPTAR"
+        "accept": "ACEPTAR",
+
+        "serviceTypes": "",
+        "Reparation": "Reparación",
+        "Checkup": "Chequeo",
+
+        "serviceStates": "",
+        "Not started": "No empezado",
+        "In Process": "En proceso",
+        "Finished": "Finalizado",
+
+        "usernameNotFoundError": "No se encontró ningún usuario con el username usado.",
+        "genericErrorMessage": "Ha sucedido un error.",
+        "passwordChangedMessage": "La contraseña ha sido cambiada sin problemas."
     }
 }

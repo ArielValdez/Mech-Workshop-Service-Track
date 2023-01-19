@@ -21,7 +21,7 @@ const ServiceStateFeedback = ({ service }) => {
             return (
                 <View style={{alignItems: 'center'}}>
                     <BarIndicator style={{marginVertical: 25}} color={theme.colors.black} count={8} size={40}/>
-                    <CustomText style={{fontSize: 17}} type="Medium">{service.state}</CustomText>
+                    <CustomText style={{fontSize: 17}} type="Medium">{t(service.state)}</CustomText>
                 </View>
             )
         }
@@ -29,7 +29,7 @@ const ServiceStateFeedback = ({ service }) => {
             return (
                 <View>
                     <Ionicons name="checkmark-done" size={40} color={theme.colors.black}/>
-                    <CustomText style={{fontSize: 17}} type="Medium">{service.state}</CustomText>
+                    <CustomText style={{fontSize: 17}} type="Medium">{t(service.state)}</CustomText>
                 </View>
             )
         }

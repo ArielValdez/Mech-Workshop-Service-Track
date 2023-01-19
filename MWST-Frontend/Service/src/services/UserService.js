@@ -19,6 +19,26 @@ export const getUser = async (email, password) =>  {
     }
 }
 
+export const getUserByUsername = async (username) =>  {
+    const response = await fetch(`${API_URL}/users?username=${username}`, {
+        method: 'GET'
+    })
+    
+    if (response.ok) {
+        const result = await response.json()
+        if (result.length > 0) {
+            return Promise.resolve(result[0])
+        }
+        else {
+            return Promise.resolve(undefined)
+        }
+    }
+    else {
+        return Promise.reject(response)
+    }
+}
+
+
 export const createUser = async (firstname, lastname, email, phone, username, idCard, password) => {
     const response = await fetch(`${API_URL}/users`, {
         method: 'POST',
@@ -47,6 +67,35 @@ export const createUser = async (firstname, lastname, email, phone, username, id
         return Promise.reject('We failed to create the user for some reason')
     }
 }
+
+export const editUserPassword = async (user, newPassword) => {
+    const response = await fetch(`${API_URL}/users/${user.id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-type': 'application/json'
+        },
+        body: JSON.stringify({
+            "id": user.id,
+            "username": user.username,
+            "password": newPassword,
+            "email": user.email,
+            "name": user.name,
+            "lastname": user.lastname,
+            "idCard": user.idCard,
+            "role": user.role,
+            "phoneNumber": user.phoneNumber,
+            "id": user.id,
+            "active": user.active
+        })
+    })
+
+    if (response.ok) {
+        return Promise.resolve()
+    }
+    else {
+        return Promise.reject(response)
+    }
+} 
 
 export const isEmailTaken = async (email) => {
     const response = await fetch(`${API_URL}/users?email=${email}`, {

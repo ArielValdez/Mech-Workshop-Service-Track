@@ -23,7 +23,7 @@ const ServiceInfo = ({ service }) => {
             <View style={styles.container}>
                 <Entypo style={styles.icon} name="info-with-circle" size={40} />
                 <View style={styles.infoContainer}>
-                    <CustomText type="Medium">{service.serviceType}</CustomText>
+                    <CustomText type="Medium">{t(service.serviceType)}</CustomText>
                     <CustomText style={styles.grayText}>{printTime()}</CustomText>
                 </View>
                 <CustomText style={styles.price}>{'RD$' + service.payment.amount}</CustomText>

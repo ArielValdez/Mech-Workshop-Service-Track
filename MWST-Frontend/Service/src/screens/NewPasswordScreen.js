@@ -6,16 +6,35 @@ import CustomButton from '../components/CustomButton'
 import CustomInput from '../components/Inputs/CustomInput'
 import PasswordInput from '../components/Inputs/PasswordInput'
 import CustomText from '../components/CustomText'
+import { editUserPassword } from '../services/UserService'
+import { useUser } from '../context/UserContext'
+import SuccessModal from '../components/Modals/SuccessModal'
+import ErrorModal from '../components/Modals/ErrorModal'
 
-const NewPasswordScreen = () => {
+const passwordRegex = /[a-zA-Z0-9@]{8,}/
+
+const NewPasswordScreen = ({ route }) => {
     const [ newPassword, setNewPassword ] = useState('')
     const [ confirmNewPassword, setConfirmNewPassword ] = useState('')
+    const [ successModalVisible, setSuccessModalVisible ] = useState(false)
+    const [ errorModalVisible, setErrorModalVisible ] = useState(false)
 
     const navigation = useNavigation()
     const { t, i18n } = useTranslation()
 
     const onSendPressed = () => {
-        console.warn('Send pressed')
+        if (passwordRegex.test(newPassword) && newPassword == confirmNewPassword) {
+            console.log(route.params.user)
+            editUserPassword(route.params.user, newPassword)
+                .then(result => setSuccessModalVisible(true))
+                .catch(err => {
+                    setErrorModalVisible(true)
+                    console.log(err)
+                })
+        }
+        else {
+            setErrorModalVisible(true)
+        }
     }
 
     const onReturnPressed = () => {
@@ -24,6 +43,18 @@ const NewPasswordScreen = () => {
 
     return (
         <View style={styles.container}>
+            <SuccessModal
+                visible={successModalVisible} 
+                successText={t('passwordChangedMessage')}
+                onRequestClose={() => setSuccessModalVisible(false)}
+                buttonText={t('understood')}
+            />
+            <ErrorModal
+                visible={errorModalVisible}
+                errorText={t('genericErrorMessage')}
+                onRequestClose={() => setErrorModalVisible(false)}
+                buttonText='Ok'
+            />
             <CustomText style={styles.title}>{t('restartPassword')}</CustomText>
 
             <PasswordInput value={newPassword} setValue={setNewPassword} placeholder={t('newPassword')}/>

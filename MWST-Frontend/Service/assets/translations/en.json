@@ -130,6 +130,19 @@
         "appointmentFailedErrorMessage": "You must fill and select all fields",
         "selectWorkshopPlaceholder": "Select a workshop",
         "cancel": "CANCEL",
-        "accept": "ACCEPT"
+        "accept": "ACCEPT",
+
+        "serviceTypes": "",
+        "Reparation": "Reparation",
+        "Checkup": "Checkup",
+
+        "serviceStates": "",
+        "Not started": "Not Started",
+        "In Process": "In Process",
+        "Finished": "Finished",
+
+        "usernameNotFoundError": "No user was found that matches the given username.",
+        "genericErrorMessage": "An error has occurred.",
+        "passwordChangedMessage": "Your password has been changed successfully."
     }
 }

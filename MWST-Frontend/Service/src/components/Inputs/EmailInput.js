@@ -16,6 +16,7 @@ const EmailInput = ({value, setValue}) => {
 			pattern={emailRegex}
 			textContentType="emailAddress"
 			autoComplete="email"
+			autoCapitalize="none"
 		/>
 	)
 }
