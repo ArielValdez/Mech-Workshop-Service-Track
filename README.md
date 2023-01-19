@@ -55,8 +55,8 @@ The purpose of this program is to give users a layer of security when said user 
 * Frontend
   * git clone https://github.com/ArielValdez/Mech-Workshop-Service-Track.git
   * cd ../path/to/the/folder/Service
-  * expo install
-  * expo start
+  * npm install
+  * expo start --no-dev
 * Backend
   * Compile: MWST-ApiDao and MWST-Backend
 * Backoffice
@@ -64,6 +64,6 @@ The purpose of this program is to give users a layer of security when said user 
   * npm run
     * Once is finished, ctrl + c
   * npm install
-  * npm run dev
+  * npm run client
 
 Side information: To use the application in a special environment use ```lorem ipsum``` to start
