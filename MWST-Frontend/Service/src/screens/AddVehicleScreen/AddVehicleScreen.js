@@ -93,7 +93,7 @@ const AddVehicleScreen = ({ route }) => {
                 maxLength={50} pattern={modelRegex} errorMessage={t('invalidModelMessage')}/>
             <CustomInput placeholder={t('vin')} value={vin} setValue={setVin} showErrorMessage={showAllErrorMessages}
                 autoCapitalize='characters' maxLength={17} pattern={vinRegex} errorMessage={t('invalidVinMessage')}/>
-
+            {/* 
             <View>
                 <CustomButton text={t('pickImageText')} onPress={pickImage} 
                     bgColor={theme.colors.lightSecondary} fgColor={theme.colors.black} />
@@ -105,7 +105,7 @@ const AddVehicleScreen = ({ route }) => {
                 />
                 }
             </View>
-
+            */}
             <View style={styles.saveButton}>
                 <CustomButton onPress={onSavePress} text={t('save')} />
             </View>
