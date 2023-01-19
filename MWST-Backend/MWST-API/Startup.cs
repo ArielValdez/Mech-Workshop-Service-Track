@@ -35,7 +35,11 @@ namespace MWST_API
             });
 
             // Email Verification
-            //services.AddIdentity<IdentityUser, IdentityRole>()
+            //services.AddIdentity<IdentityUser, IdentityRole>( options =>
+            //{
+            //    options.Password.RequiredLength = 4;
+            //    options.SignIn.RequireConfirmedEmail = true;
+            //})
             //    .AddDefaultTokenProviders();
 
             //services.Configure<IdentityOptions>(options =>
