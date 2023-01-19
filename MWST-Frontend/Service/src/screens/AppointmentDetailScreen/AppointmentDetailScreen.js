@@ -7,17 +7,22 @@ import { getWorkshop, getEmptyWorkshop } from "../../services/WorkshopService"
 import WorkshopImg from "../../../assets/WorkshopImg.jpg"
 import MapView, { Marker, Callout } from "react-native-maps"
 import { useTranslation } from "react-i18next"
+import { format } from "date-fns"
 
 const AppointmentDetailScreen = ({ route }) => {
     const [ service, setService ] = useState(getEmptyAppointment())
     const [ workshop, setWorkshop ] = useState(getEmptyWorkshop())
+    const [ isLoaded, setIsLoaded ] = useState(false)
 
     const { t, i18n } = useTranslation()
 
     useEffect(() => {
         setService(route.params.service)
         getWorkshop(route.params.service.workshopId)
-            .then(workshop => setWorkshop(workshop))
+            .then(workshop => {
+                setWorkshop(workshop)
+                setIsLoaded(true)
+            })
             .catch(err => console.log(err))
     }, [])
 
@@ -63,7 +68,11 @@ const AppointmentDetailScreen = ({ route }) => {
             <View style={styles.shadowContainer}>
                 <View style={styles.floatingContainer}>
                     <View style={styles.scheduleRow}>
-                        <CustomText>{workshop.openAt}-{workshop.closedAt}</CustomText>
+                        <CustomText>
+                            { isLoaded && 
+                                format(new Date(workshop.openAt), 'h:mm aaa') + ' - ' + format(new Date(workshop.closedAt), 'h:mm aaa')
+                            }
+                        </CustomText>
                     </View>
                     <CustomText>{t('mondayThroughFriday')}</CustomText>
                 </View>
@@ -71,9 +80,9 @@ const AppointmentDetailScreen = ({ route }) => {
             <CustomText style={styles.title} type="Medium">{t('serviceDetails')}</CustomText>
             <View style={styles.shadowContainer}>
                 <View style={styles.floatingContainer}>
-                    <CustomText>{service.state}</CustomText>
+                    <CustomText>{t('state') + service.state}</CustomText>
                     <CustomText>{service.stateDescription}</CustomText>
-                    <CustomText>{service.serviceType}</CustomText>
+                    <CustomText>{t('type') + service.serviceType}</CustomText>
                     <CustomText>{service.description}</CustomText>
                 </View>
             </View>

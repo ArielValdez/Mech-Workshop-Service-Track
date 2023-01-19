@@ -14,9 +14,9 @@ import { getAllWorkshops } from "../../services/WorkshopService";
 import { createAppointment } from "../../services/AppointmentsService";
 import theme from "../../Theme"
 import { format, subHours } from "date-fns";
+import ErrorModal from "../../components/Modals/ErrorModal"
 
 const appointmentTitleRegex = /[a-zA-Z]{3,}/
-const appointmentTitleErrorMessage = 'Título de cita debe tener al menos 3 carácteres'
 
 const AppointmentSchedulingScreen = ({ route }) => {
     const [ appointmentTitle, setAppointmentTitle ] = useState('')
@@ -37,6 +37,7 @@ const AppointmentSchedulingScreen = ({ route }) => {
     const [ workshops, setWorkshops ] = useState([])
     const [ selectedWorkshopId, setSelectedWorkshopId ] = useState(null)
     const [ openWorkshopDropdown, setOpenWorkshopDropdown ] = useState(false)
+    const [ errorModalVisible, setErrorModalVisible ] = useState(false)
 
     const isFocused = useIsFocused()
     const [ user, setUser ] = useUser()
@@ -71,6 +72,7 @@ const AppointmentSchedulingScreen = ({ route }) => {
     }
 
     const onSchedulingPress = () => {
+        console.log(appointmentTitle)
         if (appointmentTitle.length >= 3 && selectedDateTime && selectedVehicleId
             && selectedServiceType && selectedWorkshopId) {
             const formattedDate = format(selectedDateTime, "yyyy-MM-dd'T'HH:mm:ss")
@@ -79,20 +81,27 @@ const AppointmentSchedulingScreen = ({ route }) => {
                 .catch(err => console.log(err))
         }
         else {
-            // Show alert or error modal
+            setErrorModalVisible(true)
         } 
     }
 
     return (
 		<View style={{flex: 1}}>
 			<View style={styles.container}>
+                <ErrorModal 
+                    visible={errorModalVisible}
+                    errorText={t('appointmentFailedErrorMessage')}
+                    onRequestClose={() => setErrorModalVisible(!errorModalVisible)}
+                    buttonText={t('tryAgain')}
+                />
+
 				<CustomText style={styles.title} type="Bold">{t("newAppointment")}</CustomText>
 				<CustomInput
 					value={appointmentTitle}
 					setValue={setAppointmentTitle}
-					placeholder="Título cita"
+					placeholder={t('appointmentTitlePlaceholder')}
 					pattern={appointmentTitleRegex}
-					errorMessage={appointmentTitleErrorMessage}
+					errorMessage={t('appointmentTitleErrorMessage')}
 				/>
                 <View style={styles.clockRow}>
                     <CustomText style={styles.timeText} type="Medium">{format(selectedDateTime, 'h:mm aaa')}</CustomText>
@@ -158,12 +167,7 @@ const AppointmentSchedulingScreen = ({ route }) => {
                 <CustomButton
 					text={t("schedule")}
                     marginVertical={20}
-					onPress={() => {
-						const regex = new RegExp(appointmentTitleRegex);
-						if (regex.test(appointmentTitle)) {
-							onSchedulingPress()
-						}
-					}}
+					onPress={onSchedulingPress}
 				/>
 			</View>
             {showTimePicker && (

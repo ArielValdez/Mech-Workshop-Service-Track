@@ -29,6 +29,7 @@
         "invalidNameMessage": "El nombre debe de estar entre 3 y 25 carácteres",
         "invalidPhoneMessage": "Debe proveer 10 números",
         "invalidIdCardMessage": "Debe proveer 11 números",
+        "and": " y ",
 
         "_comment3": "Forgot password screen translation data",
         
@@ -122,8 +123,15 @@
         "serviceSchedule": "Horario",
         "mondayThroughFriday": "Lunes a Viernes",
         "serviceDetails": "Detalles del servicio",
+        "state": "Estado: ",
+        "type": "Tipo: ",
 
         "AppointmentSchedulingScreen": "Translation data for the AppointmentSchedulingScreen",
-        "selectWorkshopPlaceholder": "Taller"
+        "appointmentTitlePlaceholder": "Título cita",
+        "appointmentTitleErrorMessage": "Título de cita debe tener al menos 3 carácteres",
+        "appointmentFailedErrorMessage": "Debes llenar y seleccionar todos los campos",
+        "selectWorkshopPlaceholder": "Taller",
+        "cancel": "CANCELAR",
+        "accept": "ACEPTAR"
     }
 }

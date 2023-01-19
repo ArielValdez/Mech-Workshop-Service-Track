@@ -24,8 +24,7 @@ const ForgotPasswordScreen = () => {
     return (
         <View style={styles.container}>
             <CustomText style={styles.title}>{t('restartPassword')}</CustomText>
-
-            <CustomText>Usuario *</CustomText>
+            
             <UsernameInput value={username} setValue={setUsername}/>
             <CustomButton onPress={onNextPressed} text={t('nextButtonText')}/>
             <CustomButton onPress={onReturnPressed} text={t('returnToSignInButtonText')} type='Tertiary'/>

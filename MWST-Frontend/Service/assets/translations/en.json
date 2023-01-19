@@ -28,6 +28,7 @@
         "invalidNameMessage": "The name must be between 3 and 25 characters",
         "invalidPhoneMessage": "Must provide 10 numbers",
         "invalidIdCardMessage": "Must provide 11 numbers",
+        "and": " and ",
 
         "_comment3": "Forgot password screen translation data",
         
@@ -120,8 +121,15 @@
         "serviceSchedule": "Schedule",
         "mondayThroughFriday": "Monday through Friday",
         "serviceDetails": "Service details",
+        "state": "State: ",
+        "type": "Type: ",
 
         "AppointmentSchedulingScreen": "Translation data for the AppointmentSchedulingScreen",
-        "selectWorkshopPlaceholder": "Select a workshop"
+        "appointmentTitlePlaceholder": "Appointment title",
+        "appointmentTitleErrorMessage": "Title must have at least 3 alphanumeric characters",
+        "appointmentFailedErrorMessage": "You must fill and select all fields",
+        "selectWorkshopPlaceholder": "Select a workshop",
+        "cancel": "CANCEL",
+        "accept": "ACCEPT"
     }
 }
