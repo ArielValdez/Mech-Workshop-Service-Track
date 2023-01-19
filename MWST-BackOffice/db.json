@@ -253,6 +253,34 @@
       "workshopId": 1,
       "userId": "IX1uW2W",
       "id": "UK2pEZ3"
+    },
+    {
+      "serviceType": "Reparation",
+      "description": "Cita 6",
+      "state": "Not started",
+      "stateDescription": "The mechanics have not looked at the vehicle",
+      "vehicleId": 1,
+      "startedAt": "2023-01-17T17:00:42",
+      "expectedAt": "2023-01-17T17:00:42",
+      "finishedAt": "2023-01-17T17:00:42",
+      "paymentId": 1,
+      "workshopId": "1",
+      "userId": "1",
+      "id": "vy0-Hmq"
+    },
+    {
+      "serviceType": "Checkup",
+      "description": "Hello",
+      "state": "Not started",
+      "stateDescription": "The mechanics have not looked at the vehicle",
+      "vehicleId": 1,
+      "startedAt": "2023-01-17T22:35:37",
+      "expectedAt": "2023-01-17T22:35:37",
+      "finishedAt": "2023-01-17T22:35:37",
+      "paymentId": 1,
+      "workshopId": "dwbmVbz",
+      "userId": "1",
+      "id": "sdG67F1"
     }
   ],
   "workshops": [
@@ -262,7 +290,7 @@
       "managerId": "2",
       "address": "Av. de los Próceres 49, Santo Domingo 10602",
       "openAt": "2023-01-10T13:00:11.386Z",
-      "closedAt": "22:00",
+      "closedAt": "2023-01-10T23:00:54.081Z",
       "longitude": -69.939752,
       "latitude": 18.468213
     },

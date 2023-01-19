@@ -3,7 +3,7 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { React, useEffect, useState } from "react";
 import restProvider from "ra-data-simple-rest"
 
-const dataProvider = restProvider("http://localhost:3000")
+const dataProvider = restProvider("https://handsomely-spectacular-shoemaker.glitch.me")
 
 const getMostCommonProp = (obj) => {
     let mostCommonVal = 0
@@ -35,7 +35,7 @@ const FeaturedInfo = () => {
         dataProvider
 			.getList("vehicles", {
 				sort: { field: "model", order: "ASC" },
-				pagination: { page: 1, perPage: 5 },
+				pagination: { page: 1, perPage: 20 },
 			})
 			.then((result) => {
 				const models = result.data.reduce((prev, curr) => {
@@ -49,7 +49,7 @@ const FeaturedInfo = () => {
         dataProvider
             .getList('services', {
                 sort: { field: 'serviceType', order: 'ASC' },
-                pagination: { page: 1, perPage: 20 }
+                pagination: { page: 1, perPage: 5 }
             })
             .then(result => {
                 const services = result.data.reduce((prev, curr) => {
@@ -57,7 +57,6 @@ const FeaturedInfo = () => {
                     return prev
                 }, {})
 
-                console.log(services)
                 setMostCommonService(getMostCommonProp(services))
             })
     }, [])

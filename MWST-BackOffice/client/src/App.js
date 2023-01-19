@@ -17,7 +17,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 
 const App = () => {
 	return (
-		<Admin dashboard={Dashboard} dataProvider={restProvider("http://localhost:3000")} authProvider={authProvider}>
+		<Admin dashboard={Dashboard} dataProvider={restProvider("https://handsomely-spectacular-shoemaker.glitch.me")} authProvider={authProvider}>
 			<Resource name="users" list={UserList} create={UserCreate} 
 				edit={UserEdit} icon={PersonIcon} recordRepresentation="name">
 			</Resource>

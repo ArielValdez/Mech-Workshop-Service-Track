@@ -6,7 +6,7 @@ import FeaturedInfo from "./FeaturedInfo"
 import LatestServices from "./LatestServices";
 import restProvider from "ra-data-simple-rest"
 
-const dataProvider = restProvider("http://localhost:3000")
+const dataProvider = restProvider("https://handsomely-spectacular-shoemaker.glitch.me")
 
 const getMostCommonProp = (obj) => {
     let mostCommonVal = 0
@@ -28,7 +28,7 @@ const Dashboard = () => {
         dataProvider.getList('services', {
             sort: { field: 'id', order: 'ASC' },
             pagination: { page: 1, perPage: 5 }
-        }).then(result => setServices(result.data))
+        }).then(result => setServices(result.data.slice(0, 5)))
     }, [])
 
     return (

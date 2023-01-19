@@ -11,7 +11,7 @@ export const UserList = (props) => {
                 <TextField source='name' />
                 <TextField source='lastname' />
                 <TextField source='password' />
-                <TextField source='id_card'/>
+                <TextField source='idCard'/>
                 <TextField source='role' />
                 <TextField source='active' />
                 <EditButton />
