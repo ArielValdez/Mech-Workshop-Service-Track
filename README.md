@@ -67,5 +67,3 @@ The purpose of this program is to give users a layer of security when said user 
   * npm run dev
 
 Side information: To use the application in a special environment use ```lorem ipsum``` to start
-
-![AngryMadeline2](https://user-images.githubusercontent.com/65257215/183744379-e1ee0991-f5bd-4e5f-ad90-479ab0ef3929.jpg)
