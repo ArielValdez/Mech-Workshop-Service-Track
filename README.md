@@ -67,3 +67,4 @@ The purpose of this program is to give users a layer of security when said user 
   * npm run client
 
 Side information: To use the application in a special environment use ```lorem ipsum``` to start
+Final update before graduation
